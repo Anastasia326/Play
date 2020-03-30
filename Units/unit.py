@@ -58,6 +58,11 @@ class Unit(ABC):
         self.count = count
         self.last_creature_hp = health
 
+    def add_count(self, count) -> str:
+        """Добавление существ"""
+        self.count += count
+        return str(count) + " " + str(self.name) + " was added"
+
     def get_damaged(self, damage) -> str:
         """Получение урона существом"""
         if (self.count - 1) * self.health_points + self.last_creature_hp <= \
@@ -72,8 +77,12 @@ class Unit(ABC):
             self.count = tmp // self.health_points + (tmp %
                                                       self.health_points > 0)
             log -= self.count
-            self.last_creature_hp = tmp % self.health_points
-            return str(log) + " " + str(self.name) + " died"
+            if tmp % self.health_points == 0:
+                self.last_creature_hp = self.health_points
+            else:
+                self.last_creature_hp = tmp % self.health_points
+            return str(log) + " " + str(self.name) + " died. " + str(
+                damage) + " was taken"
 
     def move(self, to) -> str:
         """Передвижение существа"""
@@ -91,8 +100,9 @@ class Unit(ABC):
 
     def defend(self) -> str:
         """Оборона"""
-        self.protection = int(self.protection * 1.3) + (self.protection - int(
-            self.protection * 1.3) >= 0.5)
+        self.protection = int(self.protection * 1.3) + \
+                          (self.protection * 1.3 - int(
+                              self.protection * 1.3) >= 0.5)
         self.improvement_characteristics += {"Defend", 3}
         self.improvement_duration += {"Defend", 1}
         return str(self.name) + " is defending"

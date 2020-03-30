@@ -40,4 +40,3 @@ class FirstUpgraded(Unit):
                          None,  # spells
                          0)  # count)
 
-
