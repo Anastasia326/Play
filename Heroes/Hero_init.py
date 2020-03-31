@@ -13,66 +13,62 @@ class Hero(ABC):
         - Удача (шанс нанести увеличенный урон)
         - Колдовство (определяет эффективность заклинания)
         - Знание (влияет на количество маны и скорость ее востановления)
-        - Предметы
         - Армия
 
     Методы:
         - Создание
         - Изучение заклинания
-        - Улучшение характеристие
+        - Улучшение характеристик
         - Использовать заклинание
         - Показать доступные заклинания
         - Показать Армию
         - Добавить в армию
         - Удалить из армии
         - Атаковать
-        - Ждать
 
     """
-    def __init__(self):
-        self.spells = {}
-        self.attack = 0
-        self.protection = 0
-        self.morale = 0
-        self.luck = 0
-        self.witchcraft = 0
-        self.knowledge = 0
-        self.items = []
-        self.army = []
-        self.skills = []
+    def __init__(self, name, spells, attack, protection , morale, luck, witchraft, knowledge):
+        self.name = name
+        self.spells = spells
+        self.attack = attack
+        self.protection = protection
+        self.morale = morale
+        self.luck = luck
+        self.witchcraft = witchraft
+        self.knowledge = knowledge
+        self.army = [None]*7
+       # self.skills = []
 
     @abstractmethod
     def learn_spell(self, spell):
         pass
 
-    @abstractmethod
-    def improve_skill(self, name_of_skill, points):
-        pass
+    def improve_skill(self, name_of_skill, points) -> str:
+        """Улучшение характеристики"""
+        if name_of_skill == "morale":
+            self.morale += points
+        elif name_of_skill == "luck":
+            self.luck += points
+        elif name_of_skill == "witchcraft":
+            self.witchcraft += points
+        elif name_of_skill == "attack":
+            self.attack += points
+        elif name_of_skill == "protection":
+            self.protection += points
+        elif name_of_skill == "knowledge":
+            self.knowledge += points
+        return str(self.name) + "nas improved" + str(name_of_skill)  + "by" + str(points) + "points"
 
     @abstractmethod
     def cast_spell(self, spell):
         pass
 
-    @abstractmethod
     def show_available_spells(self):
-        pass
+        """Я знаю заклинания: """
+        return str.spells
 
-    @abstractmethod
     def show_army(self):
-        pass
+        """Армия"""
+        for i in range(len(self.army)):
+            print(self.army[i])
 
-    @abstractmethod
-    def add_to_army(self):
-        pass
-
-    @abstractmethod
-    def remove_from_army(self):
-        pass
-
-    @abstractmethod
-    def attack(self):
-        pass
-
-    @abstractmethod
-    def wait(self):
-        pass
