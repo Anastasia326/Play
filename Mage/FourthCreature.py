@@ -17,7 +17,7 @@ class FourthNotUpgraded(Unit):
                          90,  # upgrade
                          1,  # length
                          1,  # width
-                         ,  # spells
+                         {},  # spells
                          0)  # count
 
 
@@ -37,5 +37,5 @@ class FourthUpgraded(Unit):
                          None,  # upgrade
                          1,  # length
                          1,  # width
-                         ,  # spells
+                         {},  # spells
                          0)  # count)

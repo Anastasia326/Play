@@ -58,6 +58,7 @@ class Unit(ABC):
         self.count = count
         self.last_creature_hp = health
 
+    @staticmethod
     def add_count(self, count) -> str:
         """Добавление существ"""
         self.count += count
