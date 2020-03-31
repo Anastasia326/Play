@@ -17,7 +17,7 @@ class FifthNotUpgraded(Unit):
                          170,  # upgrade
                          2,  # length
                          2,  # width
-                         ,  # spells
+                         {},  # spells
                          0)  # count)
 
 
@@ -37,5 +37,5 @@ class FifthUpgraded(Unit):
                          None,  # upgrade
                          2,  # length
                          2,  # width
-                         None,  # spells
+                         {},  # spells
                          0)  # count)
