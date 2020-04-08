@@ -2,6 +2,13 @@ from Units.unit import Unit
 
 
 class FourthNotUpgraded(Unit):
+    """
+    Биография:
+        Druids - это жрецы Sylanna, Elemental Dragon of Earth, и живое
+        воплощение Природы. Именно поэтому, они награждены умением
+        контролировать магию стихий. Druids всегда приходят, когда их просят
+        помочь в грозные времена.
+    """
     def __init__(self):
         super().__init__("Druid",  # name
                          7,  # attack
@@ -22,6 +29,14 @@ class FourthNotUpgraded(Unit):
 
 
 class FourthUpgraded(Unit):
+    """
+    Биография:
+        Druid Elders достигли мастерства в магии стихий, а также получили
+        доступ к секретным знаниям, которые они держат в секрете внутри своей
+        касты. Верные своим союзникам, так как и любому другому живому светлому
+        существу, они способны передать свою собственную ману дружественному
+        герою.
+    """
     def __init__(self):
         super().__init__("Druid Elder",  # name
                          12,  # attack

@@ -2,6 +2,12 @@ from Units.unit import Unit
 
 
 class SixthNotUpgraded(Unit):
+    """
+    Биография:
+        Cavaliers - это ударная сила Holy Griffin Empire. Посаженные на могучих
+        боевых коней и тяжело вооружённые, они показывают всё на что они
+        способны, особенно если начинают атаку издалека.
+    """
     def __init__(self):
         super().__init__("Cavalier",  # name
                          23,  # attack
@@ -22,6 +28,14 @@ class SixthNotUpgraded(Unit):
 
 
 class SixthUpgraded(Unit):
+    """
+    Биография:
+        Paladins - это совершенные стражники и элитные солдаты
+        Holy Griffin Empire. Посаженные на могучих боевых коней и тяжело
+        вооружённые, они показывают всё на что они способны, особенно если
+        начинают атаку издалека. Но даже и это не все, ибо Paladins обладают
+        имением снимать вражеские проклятия со своих союзников.
+    """
     def __init__(self):
         super().__init__("Paladin",  # name
                          24,  # attack

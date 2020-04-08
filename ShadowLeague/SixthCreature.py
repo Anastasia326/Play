@@ -2,6 +2,12 @@ from Units.unit import Unit
 
 
 class SixthNotUpgraded(Unit):
+    """
+    Биография:
+         Shadow Witches - это жрицы Malassa. Они используют свои плети в
+         ближнем бою, но они намного более смертельны, если используют свои
+         магические заклинания.
+    """
     def __init__(self):
         super().__init__("Shadow Witch",  # name
                          18,  # attack
@@ -17,11 +23,18 @@ class SixthNotUpgraded(Unit):
                          300,  # upgrade
                          1,  # length
                          1,  # width
-                         ,  # spells
+                         {},  # spells
                          0)  # count)
 
 
 class SixthUpgraded(Unit):
+    """
+    Биография:
+         Shadow Matriarchs - это правящая элита армий Dark Elves. Если их
+         вынуждают к ближнему бою, они будут использовать плети, как оружие, но
+          предпочитают полагаться на свои более могущественные магические
+          способности. Matriarchs применяют больше заклинания, чем Witches.
+    """
     def __init__(self):
         super().__init__("Shadow Matriarch",  # name
                          20,  # attack
@@ -37,5 +50,5 @@ class SixthUpgraded(Unit):
                          None,  # upgrade
                          1,  # length
                          1,  # width
-                         ,  # spells
+                         {},  # spells
                          0)  # count)

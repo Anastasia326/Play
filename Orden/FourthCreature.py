@@ -2,6 +2,14 @@ from Units.unit import Unit
 
 
 class FourthNotUpgraded(Unit):
+    """
+    Биография:
+        Griffins одни из быстрейших солдат в Griffin Empire, которая носит их
+        имя. Они непревзойденные бойцы в быстрых рейдах, врываясь налету в ряды
+        противника. Хотя, они довольно слабы, когда вынуждены перейти к
+        рукопашной схватке, но они всегда будут защищать себя до последнего
+        издыхания.
+    """
     def __init__(self):
         super().__init__("Griffin",  # name
                          7,  # attack
@@ -22,6 +30,12 @@ class FourthNotUpgraded(Unit):
 
 
 class FourthUpgraded(Unit):
+    """
+    Биография:
+        Imperial Griffins самые быстрые солдаты Griffin Empire. Они превосходны
+        в быстрых рейдах, разрывая налету стройные ряды врагов или бросаясь с
+        небес во время битвы.
+    """
     def __init__(self):
         super().__init__("Imperial Griffin",  # name
                          9,  # attack

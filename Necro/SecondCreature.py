@@ -2,6 +2,13 @@ from Units.unit import Unit
 
 
 class SecondNotUpgraded(Unit):
+    """
+    Биография:
+        Zombies - это гнилые тела, поднятые Necromancers для того, чтобы
+        принести смерть и разрушения врагам. Хотя они очень медленные и
+        неуклюжие, Zombies не чувствуют боли и страха. Это позволяет им
+        запугивать врагов. По сути, это идеальное пушечное мясо.
+    """
     def __init__(self):
         super().__init__("Zombie",  # name
                          1,  # attack
@@ -22,6 +29,13 @@ class SecondNotUpgraded(Unit):
 
 
 class SecondUpgraded(Unit):
+    """
+    Биография:
+        Plague Zombies - это гнилые тела поднятые Necromancers для того, чтобы
+        сеять смерть среди врагов. Plague Zombies не чувствуют боли и могут
+        выдержать огромное количество ударов. В дополнение ко всему, их гнилое
+        оружие может заразить любое живое существо изнуряющей болезнью.
+    """
     def __init__(self):
         super().__init__("Plague Zombie",  # name
                          2,  # attack
