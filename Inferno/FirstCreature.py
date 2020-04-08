@@ -2,6 +2,12 @@ from Units.unit import Unit
 
 
 class FirstNotUpgraded(Unit):
+    """
+    Биография:
+        Imps - маленькие проворные существа, которые достаточно слабы в ближнем
+        бою - их сила в их численности. У Imps есть умение Mana Destroyer,
+        который позволяет им уничтожать магическую энергию вражеских героев.
+    """
     def __init__(self):
         super().__init__("Imp",  # name
                          2,  # attack
@@ -22,6 +28,13 @@ class FirstNotUpgraded(Unit):
 
 
 class FirstUpgraded(Unit):
+    """
+    Биография:
+        Familiars - маленькие проворные существа, которые достаточно слабы в
+        ближнем бою - их сила в их численности. Familiars обладают умением Mana
+        Stealer, который позволяет им красть магическую энергию у врагов и
+        передавать её своему герою.
+    """
     def __init__(self):
         super().__init__("Familiar",  # name
                          3,  # attack

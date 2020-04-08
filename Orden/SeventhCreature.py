@@ -2,6 +2,14 @@ from Units.unit import Unit
 
 
 class SeventhNotUpgraded(Unit):
+    """
+    Биография:
+        Angels - это живая реинкарнация Elrath в Ashan, и поэтому они являются
+        совершенными представителями этой силы. Эти существа Света неистовы в
+        битве, а их атаки всегда смертельны. Ангел не может быть убит, если его
+        тело было уничтожено, он вернется в форму духа и воссоединится со своим
+        хозяином.
+    """
     def __init__(self):
         super().__init__("Angel",  # name
                          27,  # attack
@@ -23,6 +31,12 @@ class SeventhNotUpgraded(Unit):
 
 
 class SeventhUpgraded(Unit):
+    """
+    Биография:
+        Более возвышенней и могущественней Angels только Archangels. Как прямые
+        помощники Elrath, они благословлены величайшей силой воскрешать солдат,
+        которые пали в битве и дать им ещё шанс послужить своему Knight Lord.
+    """
     def __init__(self):
         super().__init__("Archangel",  # name
                          31,  # attack

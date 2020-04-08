@@ -2,6 +2,12 @@ from Units.unit import Unit
 
 
 class SecondNotUpgraded(Unit):
+    """
+    Биография:
+        Archers очень полезны на поле боя для того, чтобы ослабить вражеские
+        силы до начала рукопашной атаки. Archers в Griffin Empire превосходны в
+        подавлении врагов огромным количеством стрел.
+    """
     def __init__(self):
         super().__init__("Archer",  # name
                          4,  # attack
@@ -22,6 +28,12 @@ class SecondNotUpgraded(Unit):
 
 
 class SecondUpgraded(Unit):
+    """
+    Биография:
+        Marksmen ключевые солдаты в битве, поскольку могут ослаблять вражеские
+        силы, до начала рукопашной атаки. Их могучие арбалеты заряжены
+        утяжелёнными болтами и особенно смертельны на близких расстояниях.
+    """
     def __init__(self):
         super().__init__("Marksman",  # name
                          4,  # attack

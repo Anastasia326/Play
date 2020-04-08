@@ -2,6 +2,11 @@ from Units.unit import Unit
 
 
 class SixthNotUpgraded(Unit):
+    """
+    Биография:
+        Wights - это проклятые души, испытывающие жажду мести ко всем живым
+        существам.
+    """
     def __init__(self):
         super().__init__("Wight",  # name
                          24,  # attack
@@ -22,6 +27,12 @@ class SixthNotUpgraded(Unit):
 
 
 class SixthUpgraded(Unit):
+    """
+    Биография:
+         Wraiths - это и есть сама Смерть, ничто не может выдержать их Harm
+         Touch и выжить после этого. Из любого существа, которое воюет против
+         них, они вытягивают душу.
+    """
     def __init__(self):
         super().__init__("Wraith",  # name
                          26,  # attack

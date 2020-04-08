@@ -2,6 +2,12 @@ from Units.unit import Unit
 
 
 class FirstNotUpgraded(Unit):
+    """
+    Биография:
+        Peasants - базовая пехота Holy Griffin Empire. Хотя они слабы и очень
+        плохо обучены, они выигрывают числом. К тому же, Peasants - это важный
+        источник дохода для своих хозяев.
+    """
     def __init__(self):
         super().__init__("Villager",  # name
                          1,  # attack
@@ -22,6 +28,12 @@ class FirstNotUpgraded(Unit):
 
 
 class FirstUpgraded(Unit):
+    """
+    Биография:
+        Conscripts - базовая пехота Holy Griffin Empire. Они относительно слабы
+        и частично обучены, но они очень многочисленны. Conscripts - эксперты в
+        искусстве оглушения своих врагов во время рукопашной атаки.
+    """
     def __init__(self):
         super().__init__("Conscript",  # name
                          1,  # attack
