@@ -109,8 +109,9 @@ def create_window(length: int = 800, width: int = 600):
                 str(os.path.abspath(__file__)).split(
                     "Game")[0] + str(length) + "x" + str(width) + ".jpg")
         else:
-            background_image = pygame.image.load(str(length) + "x" + str(width) +
-                                                 ".jpg")
+            background_image = pygame.image.load(
+                str(length) + "x" + str(width) +
+                ".jpg")
     global window
     global fullscreen
     if fullscreen:
@@ -477,7 +478,27 @@ def show_unit(unit_name: str):
     :param unit_name: what unit should be shown
     :return:
     """
-    pass
+    create_window_of_the_same_size()
+    length = pygame.display.get_surface().get_width()
+    width = pygame.display.get_surface().get_height()
+    if os.name == "nt":
+        background_image_of_unit = pygame.image.load(
+            str(os.path.abspath(__file__)).split(
+                "Game")[0] + "заготовка.png")
+    else:
+        background_image_of_unit = pygame.image.load("заготовка.png")
+    window.blit(background_image_of_unit, [0, 0])
+    draw_button((128, 0, 0), (length - 200, width - width // 10, 170, 100),
+                "Return")
+    if os.name == "nt":
+        background_image_of_unit_face = pygame.image.load(
+            str(os.path.abspath(__file__)).split(
+                "Game")[0] + unit_name + ".png")
+    else:
+        background_image_of_unit_face = pygame.image.load(unit_name + ".png")
+    window.blit(background_image_of_unit_face, [40, 60])
+    pygame.display.update()
+    return [(length - 200, width - width // 10, 170, 100)]
 
 
 pygame.init()
@@ -485,7 +506,90 @@ pygame.init()
 creatures_name = []
 buttons_list = create_window()
 run = True
-
+array_of_Inferno = ["Imp",
+                    "Horned Demon",
+                    "Hell Hound",
+                    "Succubus",
+                    "Hell Charger",
+                    "Pit Fiend",
+                    "Devil",
+                    "Familiar",
+                    "Horned Overseer",
+                    "Cerberus",
+                    "Succubus Mistress",
+                    "Nightmare",
+                    "Pit Lord",
+                    "Arch Devil"]
+array_of_Orden = ["Villager",
+                  "Archer",
+                  "Footman",
+                  "Griffin",
+                  "Priest",
+                  "Cavalier",
+                  "Angel",
+                  "Conscript",
+                  "Marksman",
+                  "Squire",
+                  "Imperial Griffin",
+                  "Inquisitor",
+                  "Paladin",
+                  "Archangel"]
+array_of_Necro = ["Skeleton",
+                  "Zombie",
+                  "Ghost",
+                  "Vampire",
+                  "Lich",
+                  "Wight",
+                  "Bone Dragon",
+                  "Skeleton Archer",
+                  "Plague Zombie",
+                  "Spectre",
+                  "Vampire Lord",
+                  "Archlich",
+                  "Wraith",
+                  "Spectral Dragon"]
+array_of_Forest = ["Pixie",
+                   "Blade Dancer",
+                   "Hunter",
+                   "Druid",
+                   "Unicorn",
+                   "Treant",
+                   "Green Dragon",
+                   "Sprite",
+                   "War Dancer",
+                   "Master Hunter",
+                   "Druid Elder",
+                   "Silver Unicorn",
+                   "Ancien Treant",
+                   "Emerald Dragon"]
+array_of_Shedows = ["Scout",
+                    "Blood Maiden",
+                    "Minotaur",
+                    "Dark Rider",
+                    "Hydra",
+                    "Shadow Witch",
+                    "Shadow Dragon",
+                    "Assassin",
+                    "Blood Fury",
+                    "Minotaur Guard",
+                    "Grim Rider",
+                    "Deep Hydra",
+                    "Shadow Matriarch",
+                    "Black Dragon"]
+array_of_Mage = ["Gremlin",
+                 "Stone Gargoyle",
+                 "Iron Golem",
+                 "Mage",
+                 "Djinn",
+                 "Rakshasa Rani",
+                 "Colossus",
+                 "Master Gremlin",
+                 "Obsidian Gargoyle",
+                 "Steel Golem",
+                 "Archmage",
+                 "Djinn Sultan",
+                 "Rakshasa Raja",
+                 "Titan"]
 page = "Main menu"
 i = 0
 while run:
@@ -754,6 +858,17 @@ while run:
                     i = 0
                     page = "Units"
                     buttons_list = choose_class_display()
+                else:
+                    for index in range(14):
+                        if buttons_list[index][0] < mouse_x < buttons_list[
+                            index][0] + buttons_list[index][2] and \
+                                buttons_list[index][1] < mouse_y < \
+                                buttons_list[index][1] + buttons_list[index][
+                            3]:
+                            i = 0
+                            page = creatures_name[index]
+                            buttons_list = show_unit(creatures_name[index])
+                            break
         elif page == "Necropolis Units":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
@@ -772,8 +887,9 @@ while run:
                                 buttons_list[index][1] + buttons_list[index][
                             3]:
                             i = 0
-                            page = creatures_name[i]
-                            buttons_list = show_unit(creatures_name[i])
+                            page = creatures_name[index]
+                            buttons_list = show_unit(creatures_name[index])
+                            break
         elif page == "Nature Protection Units":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
@@ -789,10 +905,12 @@ while run:
                         if buttons_list[index][0] < mouse_x < buttons_list[
                             index][0] + buttons_list[index][2] and \
                                 buttons_list[index][1] < mouse_y < \
-                                buttons_list[index][1] + buttons_list[index][3]:
+                                buttons_list[index][1] + buttons_list[index][
+                            3]:
                             i = 0
-                            page = creatures_name[i]
-                            buttons_list = show_unit(creatures_name[i])
+                            page = creatures_name[index]
+                            buttons_list = show_unit(creatures_name[index])
+                            break
         elif page == "Shadow League Units":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
@@ -808,10 +926,12 @@ while run:
                         if buttons_list[index][0] < mouse_x < buttons_list[
                             index][0] + buttons_list[index][2] and \
                                 buttons_list[index][1] < mouse_y < \
-                                buttons_list[index][1] + buttons_list[index][3]:
+                                buttons_list[index][1] + buttons_list[index][
+                            3]:
                             i = 0
-                            page = creatures_name[i]
-                            buttons_list = show_unit(creatures_name[i])
+                            page = creatures_name[index]
+                            buttons_list = show_unit(creatures_name[index])
+                            break
         elif page == "Inferno Units":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
@@ -823,15 +943,16 @@ while run:
                     page = "Units"
                     buttons_list = choose_class_display()
                 else:
-                    for index in range(15):
+                    for index in range(14):
                         if buttons_list[index][0] < mouse_x < buttons_list[
                             index][0] + buttons_list[index][2] and \
                                 buttons_list[index][1] < mouse_y < \
                                 buttons_list[index][1] + buttons_list[
                             index][3]:
                             i = 0
-                            page = creatures_name[i]
-                            buttons_list = show_unit(creatures_name[i])
+                            page = creatures_name[index]
+                            buttons_list = show_unit(creatures_name[index])
+                            break
         elif page == "Mage Units":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
@@ -850,8 +971,9 @@ while run:
                                 buttons_list[index][1] + buttons_list[index][
                             3]:
                             i = 0
-                            page = creatures_name[i]
-                            buttons_list = show_unit(creatures_name[i])
+                            page = creatures_name[index]
+                            buttons_list = show_unit(creatures_name[index])
+                            break
         elif page == "Orden Heroes":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
@@ -912,6 +1034,67 @@ while run:
                     i = 0
                     page = "Heroes"
                     buttons_list = choose_class_display()
+        elif page in array_of_Inferno:
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                if buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
+                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
+                        < buttons_list[0][1] + buttons_list[0][3]:
+                    i = 0
+                    page = "Inferno Units"
+                    buttons_list, creatures_name = show_units("Inferno")
+        elif page in array_of_Forest:
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                if buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
+                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
+                        < buttons_list[0][1] + buttons_list[0][3]:
+                    i = 0
+                    page = "Nature Protection Units"
+                    buttons_list, creatures_name = show_units("Nature "
+                                                              "Protection")
+        elif page in array_of_Mage:
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                if buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
+                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
+                        < buttons_list[0][1] + buttons_list[0][3]:
+                    i = 0
+                    page = "Mage Units"
+                    buttons_list, creatures_name = show_units("Mage")
+        elif page in array_of_Necro:
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                if buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
+                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
+                        < buttons_list[0][1] + buttons_list[0][3]:
+                    i = 0
+                    page = "Necropolis Units"
+                    buttons_list, creatures_name = show_units("Necropolis")
+        elif page in array_of_Shedows:
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                if buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
+                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
+                        < buttons_list[0][1] + buttons_list[0][3]:
+                    i = 0
+                    page = "Shadow League Units"
+                    buttons_list, creatures_name = show_units("Shadow League")
+        elif page in array_of_Orden:
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                if buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
+                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
+                        < buttons_list[0][1] + buttons_list[0][3]:
+                    i = 0
+                    page = "Orden Units"
+                    buttons_list, creatures_name = show_units("Orden")
         else:
             print("Something went wrong. "
                   "Please, tell Anastasia Kemova about that kemova"
