@@ -93,7 +93,7 @@ def create_window(length: int = 800, width: int = 600):
         current_h = user32.GetSystemMetrics(1)
         background_image = pygame.image.load(
             str(os.path.abspath(__file__)).split(
-                "Game")[0] + str(size[0]) + "x" + str(size[1]) + ".jpg")
+                "Game")[0] + str(length) + "x" + str(width) + ".jpg")
     else:
         info_object = str(get_monitors()).split("=")
         current_w = int(info_object[3].split(",")[0])
@@ -104,6 +104,13 @@ def create_window(length: int = 800, width: int = 600):
         print("you can't choose that. Default was set")
         length = 800
         width = 600
+        if os.name == "nt":
+            background_image = pygame.image.load(
+                str(os.path.abspath(__file__)).split(
+                    "Game")[0] + str(length) + "x" + str(width) + ".jpg")
+        else:
+            background_image = pygame.image.load(str(length) + "x" + str(width) +
+                                                 ".jpg")
     global window
     global fullscreen
     if fullscreen:
