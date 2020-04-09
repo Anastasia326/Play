@@ -83,7 +83,6 @@ def create_window(length: int = 800, width: int = 600):
     :param length: Length of screen
     :param width: Width of screen
     :return: array of buttons
-
     Creating window of game(depends on format)
     Make main buttons
     """
@@ -136,7 +135,6 @@ def create_window(length: int = 800, width: int = 600):
 def start_menu():
     """
     :return: array of buttons on start menu
-
     Creating start menu
     """
     size = [pygame.display.get_surface().get_width(),
@@ -222,7 +220,6 @@ def option_menu():
 def information_menu():
     """
     :return: information buttons
-
     Create information window
     """
     create_window_of_the_same_size()
@@ -246,7 +243,6 @@ def information_menu():
 def spell_menu():
     """
     :return: spell menu buttons
-
     Create a spell menu
     """
     create_window_of_the_same_size()
@@ -271,7 +267,6 @@ def spell_menu():
 def choose_class_display():
     """
     :return: buttons of choosing class
-
     Create a window to choose class
     """
     create_window_of_the_same_size()
@@ -302,7 +297,6 @@ def show_heroes(class_name: str):
     """
     :param class_name: Witch class should be shown
     :return: buttons coordinates
-
     Create Hero menu
     """
     create_window_of_the_same_size()
@@ -348,7 +342,6 @@ def show_units(class_name: str):
     """
     :param class_name: what class should be shown
     :return: buttons for units
-
     Create menu for information of Creatures
     """
     create_window_of_the_same_size()
@@ -496,6 +489,34 @@ def show_unit(unit_name: str):
                 "Game")[0] + unit_name + ".png")
     else:
         background_image_of_unit_face = pygame.image.load(unit_name + ".png")
+    window.blit(background_image_of_unit_face, [40, 60])
+    pygame.display.update()
+    return [(length - 200, width - width // 10, 170, 100)]
+
+
+def show_hero(hero_name: str):
+    """
+    :param unit_name: what unit should be shown
+    :return:
+    """
+    create_window_of_the_same_size()
+    length = pygame.display.get_surface().get_width()
+    width = pygame.display.get_surface().get_height()
+    if os.name == "nt":
+        background_image_of_unit = pygame.image.load(
+            str(os.path.abspath(__file__)).split(
+                "Game")[0] + "заготовка.png")
+    else:
+        background_image_of_unit = pygame.image.load("заготовка.png")
+    window.blit(background_image_of_unit, [0, 0])
+    draw_button((128, 0, 0), (length - 200, width - width // 10, 170, 100),
+                "Return")
+    if os.name == "nt":
+        background_image_of_unit_face = pygame.image.load(
+            str(os.path.abspath(__file__)).split(
+                "Game")[0] + hero_name + ".png")
+    else:
+        background_image_of_unit_face = pygame.image.load(hero_name + ".png")
     window.blit(background_image_of_unit_face, [40, 60])
     pygame.display.update()
     return [(length - 200, width - width // 10, 170, 100)]
@@ -984,6 +1005,17 @@ while run:
                     i = 0
                     page = "Heroes"
                     buttons_list = choose_class_display()
+                else:
+                    for index in range(2):
+                        if buttons_list[index][0] < mouse_x < buttons_list[
+                            index][0] + buttons_list[index][2] and \
+                                buttons_list[index][1] < mouse_y < \
+                                buttons_list[index][1] + buttons_list[index][
+                            3]:
+                            i = 0
+                            page = creatures_name[index]
+                            buttons_list = show_hero(creatures_name[index])
+                            break
         elif page == "Necropolis Heroes":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
@@ -994,6 +1026,17 @@ while run:
                     i = 0
                     page = "Heroes"
                     buttons_list = choose_class_display()
+                else:
+                    for index in range(2):
+                        if buttons_list[index][0] < mouse_x < buttons_list[
+                            index][0] + buttons_list[index][2] and \
+                                buttons_list[index][1] < mouse_y < \
+                                buttons_list[index][1] + buttons_list[index][
+                            3]:
+                            i = 0
+                            page = creatures_name[index]
+                            buttons_list = show_hero(creatures_name[index])
+                            break
         elif page == "Nature Protection Heroes":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
@@ -1004,6 +1047,17 @@ while run:
                     i = 0
                     page = "Heroes"
                     buttons_list = choose_class_display()
+                else:
+                    for index in range(2):
+                        if buttons_list[index][0] < mouse_x < buttons_list[
+                            index][0] + buttons_list[index][2] and \
+                                buttons_list[index][1] < mouse_y < \
+                                buttons_list[index][1] + buttons_list[index][
+                            3]:
+                            i = 0
+                            page = creatures_name[index]
+                            buttons_list = show_hero(creatures_name[index])
+                            break
         elif page == "Shadow League Heroes":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
@@ -1014,6 +1068,17 @@ while run:
                     i = 0
                     page = "Heroes"
                     buttons_list = choose_class_display()
+                else:
+                    for index in range(2):
+                        if buttons_list[index][0] < mouse_x < buttons_list[
+                            index][0] + buttons_list[index][2] and \
+                                buttons_list[index][1] < mouse_y < \
+                                buttons_list[index][1] + buttons_list[index][
+                            3]:
+                            i = 0
+                            page = creatures_name[index]
+                            buttons_list = show_hero(creatures_name[index])
+                            break
         elif page == "Inferno Heroes":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
@@ -1024,6 +1089,17 @@ while run:
                     i = 0
                     page = "Heroes"
                     buttons_list = choose_class_display()
+                else:
+                    for index in range(2):
+                        if buttons_list[index][0] < mouse_x < buttons_list[
+                            index][0] + buttons_list[index][2] and \
+                                buttons_list[index][1] < mouse_y < \
+                                buttons_list[index][1] + buttons_list[index][
+                            3]:
+                            i = 0
+                            page = creatures_name[index]
+                            buttons_list = show_hero(creatures_name[index])
+                            break
         elif page == "Mage Heroes":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
@@ -1034,6 +1110,17 @@ while run:
                     i = 0
                     page = "Heroes"
                     buttons_list = choose_class_display()
+                else:
+                    for index in range(2):
+                        if buttons_list[index][0] < mouse_x < buttons_list[
+                            index][0] + buttons_list[index][2] and \
+                                buttons_list[index][1] < mouse_y < \
+                                buttons_list[index][1] + buttons_list[index][
+                            3]:
+                            i = 0
+                            page = creatures_name[index]
+                            buttons_list = show_hero(creatures_name[index])
+                            break
         elif page in array_of_Inferno:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
@@ -1095,6 +1182,126 @@ while run:
                     i = 0
                     page = "Orden Units"
                     buttons_list, creatures_name = show_units("Orden")
+        elif page == " 	Agrail":
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                if buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
+                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
+                        < buttons_list[0][1] + buttons_list[0][3]:
+                    i = 0
+                    page = "Inferno Heroes"
+                    buttons_list, creatures_name = show_heroes("Inferno")
+        elif page == "Shacherizada":
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                if buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
+                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
+                        < buttons_list[0][1] + buttons_list[0][3]:
+                    i = 0
+                    page = "Inferno Heroes"
+                    buttons_list, creatures_name = show_heroes("Inferno")
+        elif page == "Zexir":
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                if buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
+                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
+                        < buttons_list[0][1] + buttons_list[0][3]:
+                    i = 0
+                    page = "Mage Heroes"
+                    buttons_list, creatures_name = show_heroes("Mage")
+        elif page == "Orra":
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                if buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
+                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
+                        < buttons_list[0][1] + buttons_list[0][3]:
+                    i = 0
+                    page = "Mage Heroes"
+                    buttons_list, creatures_name = show_heroes("Mage")
+        elif page == "Legolas":
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                if buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
+                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
+                        < buttons_list[0][1] + buttons_list[0][3]:
+                    i = 0
+                    page = "Nature Protection Heroes"
+                    buttons_list, creatures_name = show_heroes("Nature Protection")
+        elif page == "Faidaen":
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                if buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
+                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
+                        < buttons_list[0][1] + buttons_list[0][3]:
+                    i = 0
+                    page = "Nature Protection Heroes"
+                    buttons_list, creatures_name = show_heroes("Nature Protection")
+        elif page == "Tiamovax":
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                if buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
+                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
+                        < buttons_list[0][1] + buttons_list[0][3]:
+                    i = 0
+                    page = "Necropolis Heroes"
+                    buttons_list, creatures_name = show_heroes("Necropolis")
+        elif page == "Markel":
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                if buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
+                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
+                        < buttons_list[0][1] + buttons_list[0][3]:
+                    i = 0
+                    page = "Necropolis Heroes"
+                    buttons_list, creatures_name = show_heroes("Necropolis")
+        elif page == "Shadiia":
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                if buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
+                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
+                        < buttons_list[0][1] + buttons_list[0][3]:
+                    i = 0
+                    page = "Shadow League Heroes"
+                    buttons_list, creatures_name = show_heroes("Shadow League")
+        elif page == "Railag":
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                if buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
+                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
+                        < buttons_list[0][1] + buttons_list[0][3]:
+                    i = 0
+                    page = "Shadow League Heroes"
+                    buttons_list, creatures_name = show_heroes("Shadow League")
+        elif page == "Ivanhoe":
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                if buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
+                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
+                        < buttons_list[0][1] + buttons_list[0][3]:
+                    i = 0
+                    page = "Orden Heroes"
+                    buttons_list, creatures_name = show_heroes("Orden")
+        elif page == "Swerchok":
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                if buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
+                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
+                        < buttons_list[0][1] + buttons_list[0][3]:
+                    i = 0
+                    page = "Orden Heroes"
+                    buttons_list, creatures_name = show_heroes("Orden")
         else:
             print("Something went wrong. "
                   "Please, tell Anastasia Kemova about that kemova"
