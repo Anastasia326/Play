@@ -27,6 +27,12 @@ def draw_button(colour: tuple, coordinates: tuple, name: str, font: int = 40):
 
 
 def draw_some_buttons(count: int, names: list, paper_size: tuple):
+    """
+    :param count: Count of buttons that should be drawn
+    :param names: list of names of buttons
+    :param paper_size: size of menu
+    :return: coordinats of all buttons
+    """
     answer = []
     for number in range(count):
         draw_button((128, 0, 0),
@@ -45,6 +51,10 @@ def draw_some_buttons(count: int, names: list, paper_size: tuple):
 
 
 def create_window_of_the_same_size():
+    """
+    :return: nothing
+    This function is used to create window of already chosen size
+    """
     size = [pygame.display.get_surface().get_width(),
             pygame.display.get_surface().get_height()]
     global window
@@ -181,6 +191,11 @@ def option_menu():
 
 
 def information_menu():
+    """
+    :return: information buttons
+
+    Create information window
+    """
     create_window_of_the_same_size()
     length = pygame.display.get_surface().get_width()
     width = pygame.display.get_surface().get_height()
@@ -200,6 +215,11 @@ def information_menu():
 
 
 def spell_menu():
+    """
+    :return: spell menu buttons
+
+    Create a spell menu
+    """
     create_window_of_the_same_size()
     length = pygame.display.get_surface().get_width()
     width = pygame.display.get_surface().get_height()
@@ -220,6 +240,11 @@ def spell_menu():
 
 
 def choose_class_display():
+    """
+    :return: buttons of choosing class
+
+    Create a window to choose class
+    """
     create_window_of_the_same_size()
     length = pygame.display.get_surface().get_width()
     width = pygame.display.get_surface().get_height()
@@ -245,6 +270,12 @@ def choose_class_display():
 
 
 def show_heroes(class_name: str):
+    """
+    :param class_name: Witch class should be shown
+    :return: buttons coordinates
+
+    Create Hero menu
+    """
     create_window_of_the_same_size()
     length = pygame.display.get_surface().get_width()
     width = pygame.display.get_surface().get_height()
@@ -285,6 +316,12 @@ def show_heroes(class_name: str):
 
 
 def show_units(class_name: str):
+    """
+    :param class_name: what class should be shown
+    :return: buttons for units
+
+    Create menu for information of Creatures
+    """
     create_window_of_the_same_size()
     length = pygame.display.get_surface().get_width()
     width = pygame.display.get_surface().get_height()
@@ -404,11 +441,20 @@ def show_units(class_name: str):
                                   length // 3,
                                   width // 7))
     pygame.display.update()
-    return buttons
+    return buttons, unit_list
+
+
+def show_unit(unit_name: str):
+    """
+    :param unit_name: what unit should be shown
+    :return:
+    """
+    pass
 
 
 pygame.init()
 
+creatures_name = []
 buttons_list = create_window()
 run = True
 
@@ -550,36 +596,37 @@ while run:
                         < buttons_list[0][1] + buttons_list[0][3]:
                     i = 0
                     page = "Orden Units"
-                    buttons_list = show_units("Orden")
+                    buttons_list, creatures_name = show_units("Orden")
                 elif buttons_list[1][0] < mouse_x < buttons_list[1][0] + \
                         buttons_list[1][2] and buttons_list[1][1] < mouse_y \
                         < buttons_list[1][1] + buttons_list[1][3]:
                     i = 0
                     page = "Necropolis Units"
-                    buttons_list = show_units("Necropolis")
+                    buttons_list, creatures_name = show_units("Necropolis")
                 elif buttons_list[2][0] < mouse_x < buttons_list[2][0] + \
                         buttons_list[2][2] and buttons_list[2][1] < mouse_y \
                         < buttons_list[2][1] + buttons_list[2][3]:
                     i = 0
                     page = "Inferno Units"
-                    buttons_list = show_units("Inferno")
+                    buttons_list, creatures_name = show_units("Inferno")
                 elif buttons_list[3][0] < mouse_x < buttons_list[3][0] + \
                         buttons_list[3][2] and buttons_list[3][1] < mouse_y \
                         < buttons_list[3][1] + buttons_list[3][3]:
                     page = "Nature Protection Units"
-                    buttons_list = show_units("Nature Protection")
+                    buttons_list, creatures_name = show_units(
+                        "Nature Protection")
                     i = 0
                 elif buttons_list[4][0] < mouse_x < buttons_list[4][0] + \
                         buttons_list[4][2] and buttons_list[4][1] < mouse_y \
                         < buttons_list[4][1] + buttons_list[4][3]:
                     page = "Shadow League Units"
-                    buttons_list = show_units("Shadow League")
+                    buttons_list, creatures_name = show_units("Shadow League")
                     i = 0
                 elif buttons_list[5][0] < mouse_x < buttons_list[5][0] + \
                         buttons_list[5][2] and buttons_list[5][1] < mouse_y \
                         < buttons_list[5][1] + buttons_list[5][3]:
                     page = "Mage Units"
-                    buttons_list = show_units("Mage")
+                    buttons_list, creatures_name = show_units("Mage")
                     i = 0
                 elif buttons_list[6][0] < mouse_x < buttons_list[6][0] + \
                         buttons_list[6][2] and buttons_list[6][1] < mouse_y \
@@ -689,6 +736,16 @@ while run:
                     i = 0
                     page = "Units"
                     buttons_list = choose_class_display()
+                else:
+                    for index in range(14):
+                        if buttons_list[index][0] < mouse_x < buttons_list[
+                            index][0] + buttons_list[index][2] and \
+                                buttons_list[index][1] < mouse_y < \
+                                buttons_list[index][1] + buttons_list[index][
+                            3]:
+                            i = 0
+                            page = creatures_name[i]
+                            buttons_list = show_unit(creatures_name[i])
         elif page == "Nature Protection Units":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
@@ -699,6 +756,16 @@ while run:
                     i = 0
                     page = "Units"
                     buttons_list = choose_class_display()
+                else:
+                    for index in range(14):
+                        if buttons_list[index][0] < mouse_x < buttons_list[
+                            index][0] + buttons_list[index][2] and \
+                                buttons_list[index][1] < mouse_y < \
+                                buttons_list[index][1] + buttons_list[index][
+                            3]:
+                            i = 0
+                            page = creatures_name[i]
+                            buttons_list = show_unit(creatures_name[i])
         elif page == "Shadow League Units":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
@@ -709,6 +776,16 @@ while run:
                     i = 0
                     page = "Units"
                     buttons_list = choose_class_display()
+                else:
+                    for index in range(14):
+                        if buttons_list[index][0] < mouse_x < buttons_list[
+                            index][0] + buttons_list[index][2] and \
+                                buttons_list[index][1] < mouse_y < \
+                                buttons_list[index][1] + buttons_list[index][
+                            3]:
+                            i = 0
+                            page = creatures_name[i]
+                            buttons_list = show_unit(creatures_name[i])
         elif page == "Inferno Units":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
@@ -719,6 +796,16 @@ while run:
                     i = 0
                     page = "Units"
                     buttons_list = choose_class_display()
+                else:
+                    for index in range(14):
+                        if buttons_list[index][0] < mouse_x < buttons_list[
+                            index][0] + buttons_list[index][2] and \
+                                buttons_list[index][1] < mouse_y < \
+                                buttons_list[index][1] + buttons_list[index][
+                            3]:
+                            i = 0
+                            page = creatures_name[i]
+                            buttons_list = show_unit(creatures_name[i])
         elif page == "Mage Units":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
@@ -729,6 +816,16 @@ while run:
                     i = 0
                     page = "Units"
                     buttons_list = choose_class_display()
+                else:
+                    for index in range(14):
+                        if buttons_list[index][0] < mouse_x < buttons_list[
+                            index][0] + buttons_list[index][2] and \
+                                buttons_list[index][1] < mouse_y < \
+                                buttons_list[index][1] + buttons_list[index][
+                            3]:
+                            i = 0
+                            page = creatures_name[i]
+                            buttons_list = show_unit(creatures_name[i])
         elif page == "Orden Heroes":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
