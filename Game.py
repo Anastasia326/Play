@@ -1,5 +1,7 @@
 import pygame
 from screeninfo import get_monitors
+import os
+import ctypes
 
 window = None
 fullscreen = False
@@ -63,8 +65,14 @@ def create_window_of_the_same_size():
         window = pygame.display.set_mode((size[0], size[1]), pygame.FULLSCREEN)
     else:
         window = pygame.display.set_mode((size[0], size[1]))
-    background_image = pygame.image.load(str(size[0]) + "x" + str(size[1]) +
-                                         ".jpg")
+    if os.name == "nt":
+        background_image = pygame.image.load(str(os.path.abspath(
+            __file__)).split("Game")[0] + str(size[0]) + "x" + str(size[1])
+                                             + ".jpg")
+    else:
+        background_image = pygame.image.load(
+            str(size[0]) + "x" + str(size[1]) +
+            ".jpg")
     window.blit(background_image, [0, 0])
     pygame.display.set_caption("Герои меча и магии(Arthur's and Anastasia's "
                                "remake)")
@@ -79,9 +87,19 @@ def create_window(length: int = 800, width: int = 600):
     Creating window of game(depends on format)
     Make main buttons
     """
-    info_object = str(get_monitors()).split("=")
-    current_w = int(info_object[3].split(",")[0])
-    current_h = int(info_object[4].split(",")[0])
+    if os.name == "nt":
+        user32 = ctypes.windll.user32
+        current_w = user32.GetSystemMetrics(0)
+        current_h = user32.GetSystemMetrics(1)
+        background_image = pygame.image.load(
+            str(os.path.abspath(__file__)).split(
+                "Game")[0] + str(size[0]) + "x" + str(size[1]) + ".jpg")
+    else:
+        info_object = str(get_monitors()).split("=")
+        current_w = int(info_object[3].split(",")[0])
+        current_h = int(info_object[4].split(",")[0])
+        background_image = pygame.image.load(str(length) + "x" + str(width) +
+                                             ".jpg")
     if current_w < length or current_h < width:
         print("you can't choose that. Default was set")
         length = 800
@@ -93,8 +111,6 @@ def create_window(length: int = 800, width: int = 600):
                                          pygame.HWSURFACE | pygame.FULLSCREEN)
     else:
         window = pygame.display.set_mode((length, width))
-    background_image = pygame.image.load(str(length) + "x" + str(width) +
-                                         ".jpg")
     window.blit(background_image, [0, 0])
     pygame.display.set_caption("Герои меча и магии(Arthur's and Anastasia's "
                                "remake)")
@@ -761,8 +777,7 @@ while run:
                         if buttons_list[index][0] < mouse_x < buttons_list[
                             index][0] + buttons_list[index][2] and \
                                 buttons_list[index][1] < mouse_y < \
-                                buttons_list[index][1] + buttons_list[index][
-                            3]:
+                                buttons_list[index][1] + buttons_list[index][3]:
                             i = 0
                             page = creatures_name[i]
                             buttons_list = show_unit(creatures_name[i])
@@ -781,8 +796,7 @@ while run:
                         if buttons_list[index][0] < mouse_x < buttons_list[
                             index][0] + buttons_list[index][2] and \
                                 buttons_list[index][1] < mouse_y < \
-                                buttons_list[index][1] + buttons_list[index][
-                            3]:
+                                buttons_list[index][1] + buttons_list[index][3]:
                             i = 0
                             page = creatures_name[i]
                             buttons_list = show_unit(creatures_name[i])
@@ -797,12 +811,12 @@ while run:
                     page = "Units"
                     buttons_list = choose_class_display()
                 else:
-                    for index in range(14):
+                    for index in range(15):
                         if buttons_list[index][0] < mouse_x < buttons_list[
                             index][0] + buttons_list[index][2] and \
                                 buttons_list[index][1] < mouse_y < \
-                                buttons_list[index][1] + buttons_list[index][
-                            3]:
+                                buttons_list[index][1] + buttons_list[
+                            index][3]:
                             i = 0
                             page = creatures_name[i]
                             buttons_list = show_unit(creatures_name[i])
