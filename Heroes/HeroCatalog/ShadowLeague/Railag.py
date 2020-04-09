@@ -3,7 +3,7 @@ from Heroes.Hero_init import Hero
 
 class Priest(Hero):
     def __init__(self):
-        super().__init__("Swerchok",  # name
+        super().__init__("Railag",  # name
                          None,  # spells
                          1,  # attack
                          0,  # protection

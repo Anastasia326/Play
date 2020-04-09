@@ -3,7 +3,7 @@ from Heroes.Hero_init import Hero
 
 class KnightOfDeath(Hero):
     def __init__(self):
-        super().__init__("Faidaen",  # name
+        super().__init__("Tiamovax",  # name
                          None,  # spells
                          1,  # attack
                          2,  # protection

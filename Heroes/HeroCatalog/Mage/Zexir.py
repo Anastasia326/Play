@@ -3,7 +3,7 @@ from Heroes.Hero_init import Hero
 
 class Alchemist(Hero):
     def __init__(self):
-        super().__init__("Orra",  # name
+        super().__init__("Zexir",  # name
                          None,  # spells
                          1,  # attack
                          1,  # protection
