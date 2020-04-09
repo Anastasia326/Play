@@ -173,9 +173,14 @@ def option_menu():
                       width // 5,
                       length // 3,
                       2 * width // 5 + (2 * width // 5 - 90) // 6 + 20))
-    info_object = str(get_monitors()).split("=")
-    current_w = int(info_object[3].split(",")[0])
-    current_h = int(info_object[4].split(",")[0])
+    if os.name == "nt":
+        user32 = ctypes.windll.user32
+        current_w = user32.GetSystemMetrics(0)
+        current_h = user32.GetSystemMetrics(1)
+    else:
+        info_object = str(get_monitors()).split("=")
+        current_w = int(info_object[3].split(",")[0])
+        current_h = int(info_object[4].split(",")[0])
     button_names = []
     button_name = "800x600"
     if current_w < 800 or current_h < 600:
