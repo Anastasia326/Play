@@ -1,7 +1,7 @@
 from Units.Creator import Creator
 from NatureProtection.FirstCreature import FirstUpgraded, FirstNotUpgraded
 from NatureProtection.SecondCreature import SecondUpgraded, SecondNotUpgraded
-from NatureProtection.ThirdCreatures import ThirdUpgraded, ThirdNotUpgraded
+from NatureProtection.ThirdCreature import ThirdUpgraded, ThirdNotUpgraded
 from NatureProtection.FourthCreature import FourthUpgraded, FourthNotUpgraded
 from NatureProtection.FifthCreature import FifthUpgraded, FifthNotUpgraded
 from NatureProtection.SixthCreature import SixthUpgraded, SixthNotUpgraded

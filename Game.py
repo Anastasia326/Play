@@ -1,7 +1,28 @@
+import ctypes
+import os
+
 import pygame
 from screeninfo import get_monitors
-import os
-import ctypes
+
+import Orden
+import Necro
+import NatureProtection
+import ShadowLeague
+import Inferno
+import Mage
+
+from Orden import FirstCreature, SecondCreature, ThirdCreature, \
+    FourthCreature, FifthCreature, SixthCreature, SeventhCreature
+from Necro import FirstCreature, SecondCreature, ThirdCreature, \
+    FourthCreature, FifthCreature, SixthCreature, SeventhCreature
+from NatureProtection import FirstCreature, SecondCreature, ThirdCreature, \
+    FourthCreature, FifthCreature, SixthCreature, SeventhCreature
+from ShadowLeague import FirstCreature, SecondCreature, ThirdCreature, \
+    FourthCreature, FifthCreature, SixthCreature, SeventhCreature
+from Inferno import FirstCreature, SecondCreature, ThirdCreature, \
+    FourthCreature, FifthCreature, SixthCreature, SeventhCreature
+from Mage import FirstCreature, SecondCreature, ThirdCreature, \
+    FourthCreature, FifthCreature, SixthCreature, SeventhCreature
 
 window = None
 fullscreen = False
@@ -476,8 +497,26 @@ def show_units(class_name: str):
 def show_unit(unit_name: str):
     """
     :param unit_name: what unit should be shown
-    :return:
+    :return: return button
+    
+    shows information about units
     """
+    global opened_catalog
+    global array_of_Orden, array_of_Necro, array_of_Mage, array_of_Forest, \
+        array_of_Inferno, array_of_Shadows
+    position = 0
+    if opened_catalog == Orden:
+        position = array_of_Orden.index(unit_name)
+    elif opened_catalog == Necro:
+        position = array_of_Necro.index(unit_name)
+    elif opened_catalog == NatureProtection:
+        position = array_of_Forest.index(unit_name)
+    elif opened_catalog == Mage:
+        position = array_of_Mage.index(unit_name)
+    elif opened_catalog == Inferno:
+        position = array_of_Inferno.index(unit_name)
+    elif opened_catalog == ShadowLeague:
+        position = array_of_Shadows.index(unit_name)
     create_window_of_the_same_size()
     length = pygame.display.get_surface().get_width()
     width = pygame.display.get_surface().get_height()
@@ -497,6 +536,42 @@ def show_unit(unit_name: str):
     else:
         background_image_of_unit_face = pygame.image.load(unit_name + ".png")
     window.blit(background_image_of_unit_face, [40, 60])
+    if position // 7 == 1:
+        if position % 7 == 0:
+            creature = opened_catalog.FirstCreature.FirstNotUpgraded
+        elif position % 7 == 1:
+            creature = opened_catalog.SecondCreature.SecondNotUpgraded
+        elif position % 7 == 2:
+            creature = opened_catalog.ThirdCreature.ThirdNotUpgraded
+        elif position % 7 == 3:
+            creature = opened_catalog.FourthCreature.FourthNotUpgraded
+        elif position % 7 == 4:
+            creature = opened_catalog.FifthCreature.FifthNotUpgraded
+        elif position % 7 == 5:
+            creature = opened_catalog.SixthCreature.SixthNotUpgraded
+        elif position % 7 == 6:
+            creature = opened_catalog.SeventhCreature.SeventhNotUpgraded
+    else:
+        if position % 7 == 0:
+            creature = opened_catalog.FirstCreature.FirstUpgraded
+        elif position % 7 == 1:
+            creature = opened_catalog.SecondCreature.SecondUpgraded
+        elif position % 7 == 2:
+            creature = opened_catalog.ThirdCreature.ThirdUpgraded
+        elif position % 7 == 3:
+            creature = opened_catalog.FourthCreature.FourthUpgraded
+        elif position % 7 == 4:
+            creature = opened_catalog.FifthCreature.FifthUpgraded
+        elif position % 7 == 5:
+            creature = opened_catalog.SixthCreature.SixthUpgraded
+        elif position % 7 == 6:
+            creature = opened_catalog.SeventhCreature.SeventhUpgraded
+    font = pygame.font.Font(None, 20)
+    text_to_print = (str(creature.__doc__).split("\n"))
+    for number in range(len(text_to_print)):
+        text = font.render(text_to_print[number], True,
+                           [0, 0, 0])
+        window.blit(text, [40, 290 + number * 20])
     pygame.display.update()
     return [(length - 200, width - width // 10, 170, 100)]
 
@@ -506,90 +581,30 @@ pygame.init()
 creatures_name = []
 buttons_list = create_window()
 run = True
-array_of_Inferno = ["Imp",
-                    "Horned Demon",
-                    "Hell Hound",
-                    "Succubus",
-                    "Hell Charger",
-                    "Pit Fiend",
-                    "Devil",
-                    "Familiar",
-                    "Horned Overseer",
-                    "Cerberus",
-                    "Succubus Mistress",
-                    "Nightmare",
-                    "Pit Lord",
-                    "Arch Devil"]
-array_of_Orden = ["Villager",
-                  "Archer",
-                  "Footman",
-                  "Griffin",
-                  "Priest",
-                  "Cavalier",
-                  "Angel",
-                  "Conscript",
-                  "Marksman",
-                  "Squire",
-                  "Imperial Griffin",
-                  "Inquisitor",
-                  "Paladin",
-                  "Archangel"]
-array_of_Necro = ["Skeleton",
-                  "Zombie",
-                  "Ghost",
-                  "Vampire",
-                  "Lich",
-                  "Wight",
-                  "Bone Dragon",
-                  "Skeleton Archer",
-                  "Plague Zombie",
-                  "Spectre",
-                  "Vampire Lord",
-                  "Archlich",
-                  "Wraith",
+array_of_Inferno = ["Imp", "Horned Demon", "Hell Hound", "Succubus",
+                    "Hell Charger", "Pit Fiend", "Devil", "Familiar",
+                    "Horned Overseer", "Cerberus", "Succubus Mistress",
+                    "Nightmare", "Pit Lord", "Arch Devil"]
+array_of_Orden = ["Villager", "Archer", "Footman", "Griffin", "Priest",
+                  "Cavalier", "Angel", "Conscript", "Marksman", "Squire",
+                  "Imperial Griffin", "Inquisitor", "Paladin", "Archangel"]
+array_of_Necro = ["Skeleton", "Zombie", "Ghost", "Vampire",  "Lich",
+                  "Wight", "Bone Dragon", "Skeleton Archer", "Plague Zombie",
+                  "Spectre", "Vampire Lord", "Archlich", "Wraith",
                   "Spectral Dragon"]
-array_of_Forest = ["Pixie",
-                   "Blade Dancer",
-                   "Hunter",
-                   "Druid",
-                   "Unicorn",
-                   "Treant",
-                   "Green Dragon",
-                   "Sprite",
-                   "War Dancer",
-                   "Master Hunter",
-                   "Druid Elder",
-                   "Silver Unicorn",
-                   "Ancien Treant",
-                   "Emerald Dragon"]
-array_of_Shedows = ["Scout",
-                    "Blood Maiden",
-                    "Minotaur",
-                    "Dark Rider",
-                    "Hydra",
-                    "Shadow Witch",
-                    "Shadow Dragon",
-                    "Assassin",
-                    "Blood Fury",
-                    "Minotaur Guard",
-                    "Grim Rider",
-                    "Deep Hydra",
-                    "Shadow Matriarch",
-                    "Black Dragon"]
-array_of_Mage = ["Gremlin",
-                 "Stone Gargoyle",
-                 "Iron Golem",
-                 "Mage",
-                 "Djinn",
-                 "Rakshasa Rani",
-                 "Colossus",
-                 "Master Gremlin",
-                 "Obsidian Gargoyle",
-                 "Steel Golem",
-                 "Archmage",
-                 "Djinn Sultan",
-                 "Rakshasa Raja",
-                 "Titan"]
+array_of_Forest = ["Pixie", "Blade Dancer", "Hunter", "Druid", "Unicorn",
+                   "Treant", "Green Dragon", "Sprite", "War Dancer",
+                   "Master Hunter", "Druid Elder", "Silver Unicorn",
+                   "Ancien Treant", "Emerald Dragon"]
+array_of_Shadows = ["Scout", "Blood Maiden", "Minotaur", "Dark Rider",
+                    "Hydra", "Shadow Witch", "Shadow Dragon", "Assassin",
+                    "Blood Fury", "Minotaur Guard", "Grim Rider", "Deep Hydra",
+                    "Shadow Matriarch", "Black Dragon"]
+array_of_Mage = ["Gremlin", "Stone Gargoyle", "Iron Golem", "Mage",
+                 "Djinn", "Rakshasa Rani", "Colossus", "Master Gremlin",
+                 "Obsidian Gargoyle", "Steel Golem", "Archmage",
+                 "Djinn Sultan", "Rakshasa Raja", "Titan"]
+opened_catalog = None
 page = "Main menu"
 i = 0
 while run:
@@ -728,18 +743,21 @@ while run:
                         < buttons_list[0][1] + buttons_list[0][3]:
                     i = 0
                     page = "Orden Units"
+                    opened_catalog = Orden
                     buttons_list, creatures_name = show_units("Orden")
                 elif buttons_list[1][0] < mouse_x < buttons_list[1][0] + \
                         buttons_list[1][2] and buttons_list[1][1] < mouse_y \
                         < buttons_list[1][1] + buttons_list[1][3]:
                     i = 0
                     page = "Necropolis Units"
+                    opened_catalog = Necro
                     buttons_list, creatures_name = show_units("Necropolis")
                 elif buttons_list[2][0] < mouse_x < buttons_list[2][0] + \
                         buttons_list[2][2] and buttons_list[2][1] < mouse_y \
                         < buttons_list[2][1] + buttons_list[2][3]:
                     i = 0
                     page = "Inferno Units"
+                    opened_catalog = Inferno
                     buttons_list, creatures_name = show_units("Inferno")
                 elif buttons_list[3][0] < mouse_x < buttons_list[3][0] + \
                         buttons_list[3][2] and buttons_list[3][1] < mouse_y \
@@ -747,17 +765,20 @@ while run:
                     page = "Nature Protection Units"
                     buttons_list, creatures_name = show_units(
                         "Nature Protection")
+                    opened_catalog = NatureProtection
                     i = 0
                 elif buttons_list[4][0] < mouse_x < buttons_list[4][0] + \
                         buttons_list[4][2] and buttons_list[4][1] < mouse_y \
                         < buttons_list[4][1] + buttons_list[4][3]:
                     page = "Shadow League Units"
+                    opened_catalog = ShadowLeague
                     buttons_list, creatures_name = show_units("Shadow League")
                     i = 0
                 elif buttons_list[5][0] < mouse_x < buttons_list[5][0] + \
                         buttons_list[5][2] and buttons_list[5][1] < mouse_y \
                         < buttons_list[5][1] + buttons_list[5][3]:
                     page = "Mage Units"
+                    opened_catalog = Mage
                     buttons_list, creatures_name = show_units("Mage")
                     i = 0
                 elif buttons_list[6][0] < mouse_x < buttons_list[6][0] + \
@@ -1075,7 +1096,7 @@ while run:
                     i = 0
                     page = "Necropolis Units"
                     buttons_list, creatures_name = show_units("Necropolis")
-        elif page in array_of_Shedows:
+        elif page in array_of_Shadows:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
                 mouse_x, mouse_y = pos[0], pos[1]

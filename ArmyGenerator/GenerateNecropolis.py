@@ -1,7 +1,7 @@
 from Units.Creator import Creator
 from Necro.FirstCreature import FirstUpgraded, FirstNotUpgraded
 from Necro.SecondCreature import SecondUpgraded, SecondNotUpgraded
-from Necro.ThirdCreatures import ThirdUpgraded, ThirdNotUpgraded
+from Necro.ThirdCreature import ThirdUpgraded, ThirdNotUpgraded
 from Necro.FourthCreature import FourthUpgraded, FourthNotUpgraded
 from Necro.FifthCreature import FifthUpgraded, FifthNotUpgraded
 from Necro.SixthCreature import SixthUpgraded, SixthNotUpgraded
