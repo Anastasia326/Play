@@ -10,6 +10,16 @@ import Orden
 import ShadowLeague
 from Orden import FirstCreature, SecondCreature, ThirdCreature, \
     FourthCreature, FifthCreature, SixthCreature, SeventhCreature
+from Mage import FirstCreature, SecondCreature, ThirdCreature, \
+    FourthCreature, FifthCreature, SixthCreature, SeventhCreature
+from Necro import FirstCreature, SecondCreature, ThirdCreature, \
+    FourthCreature, FifthCreature, SixthCreature, SeventhCreature
+from NatureProtection import FirstCreature, SecondCreature, ThirdCreature, \
+    FourthCreature, FifthCreature, SixthCreature, SeventhCreature
+from ShadowLeague import FirstCreature, SecondCreature, ThirdCreature, \
+    FourthCreature, FifthCreature, SixthCreature, SeventhCreature
+from Inferno import FirstCreature, SecondCreature, ThirdCreature, \
+    FourthCreature, FifthCreature, SixthCreature, SeventhCreature
 from Working_with_textures.Main_menu import create_window
 from Working_with_textures.choice_display import choose_class_display
 from Working_with_textures.create_window_of_the_same_size import \
@@ -136,20 +146,6 @@ catalogs = [Orden, Necro, Inferno, Mage, ShadowLeague, NatureProtection]
 arrays_list = [array_of_Orden, array_of_Necro, array_of_Inferno,
                array_of_Mage, array_of_Shadows, array_of_Forest]
 opened_catalog = Orden
-creatures_types = [opened_catalog.FirstCreature.FirstNotUpgraded,
-                   opened_catalog.SecondCreature.SecondNotUpgraded,
-                   opened_catalog.ThirdCreature.ThirdNotUpgraded,
-                   opened_catalog.FourthCreature.FourthNotUpgraded,
-                   opened_catalog.FifthCreature.FifthNotUpgraded,
-                   opened_catalog.SixthCreature.SixthNotUpgraded,
-                   opened_catalog.SeventhCreature.SeventhNotUpgraded,
-                   opened_catalog.FirstCreature.FirstUpgraded,
-                   opened_catalog.SecondCreature.SecondUpgraded,
-                   opened_catalog.ThirdCreature.ThirdUpgraded,
-                   opened_catalog.FourthCreature.FourthUpgraded,
-                   opened_catalog.FifthCreature.FifthUpgraded,
-                   opened_catalog.SixthCreature.SixthUpgraded,
-                   opened_catalog.SeventhCreature.SeventhUpgraded]
 
 page = "Main menu"
 i = 0
@@ -266,6 +262,21 @@ while run:
                     if next_page in classes_list:
                         opened_catalog = catalogs[classes_list.index(
                             next_page)]
+                        creatures_types = [
+                            opened_catalog.FirstCreature.FirstNotUpgraded,
+                            opened_catalog.SecondCreature.SecondNotUpgraded,
+                            opened_catalog.ThirdCreature.ThirdNotUpgraded,
+                            opened_catalog.FourthCreature.FourthNotUpgraded,
+                            opened_catalog.FifthCreature.FifthNotUpgraded,
+                            opened_catalog.SixthCreature.SixthNotUpgraded,
+                            opened_catalog.SeventhCreature.SeventhNotUpgraded,
+                            opened_catalog.FirstCreature.FirstUpgraded,
+                            opened_catalog.SecondCreature.SecondUpgraded,
+                            opened_catalog.ThirdCreature.ThirdUpgraded,
+                            opened_catalog.FourthCreature.FourthUpgraded,
+                            opened_catalog.FifthCreature.FifthUpgraded,
+                            opened_catalog.SixthCreature.SixthUpgraded,
+                            opened_catalog.SeventhCreature.SeventhUpgraded]
                         buttons_list, creatures_name = show_units(window,
                                                                   fullscreen,
                                                                   classes_list,
