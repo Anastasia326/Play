@@ -1,7 +1,7 @@
 from Units.Creator import Creator
 from ShadowLeague.FirstCreature import FirstUpgraded, FirstNotUpgraded
 from ShadowLeague.SecondCreature import SecondUpgraded, SecondNotUpgraded
-from ShadowLeague.ThirdCreatures import ThirdUpgraded, ThirdNotUpgraded
+from ShadowLeague.ThirdCreature import ThirdUpgraded, ThirdNotUpgraded
 from ShadowLeague.FourthCreature import FourthUpgraded, FourthNotUpgraded
 from ShadowLeague.FifthCreature import FifthUpgraded, FifthNotUpgraded
 from ShadowLeague.SixthCreature import SixthUpgraded, SixthNotUpgraded

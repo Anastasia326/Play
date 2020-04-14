@@ -1,7 +1,7 @@
 from Units.Creator import Creator
 from Mage.FirstCreature import FirstUpgraded, FirstNotUpgraded
 from Mage.SecondCreature import SecondUpgraded, SecondNotUpgraded
-from Mage.ThirdCreatures import ThirdUpgraded, ThirdNotUpgraded
+from Mage.ThirdCreature import ThirdUpgraded, ThirdNotUpgraded
 from Mage.FourthCreature import FourthUpgraded, FourthNotUpgraded
 from Mage.FifthCreature import FifthUpgraded, FifthNotUpgraded
 from Mage.SixthCreature import SixthUpgraded, SixthNotUpgraded

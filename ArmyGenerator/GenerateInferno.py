@@ -1,7 +1,7 @@
 from Units.Creator import Creator
 from Inferno.FirstCreature import FirstUpgraded, FirstNotUpgraded
 from Inferno.SecondCreature import SecondUpgraded, SecondNotUpgraded
-from Inferno.ThirdCreatures import ThirdUpgraded, ThirdNotUpgraded
+from Inferno.ThirdCreature import ThirdUpgraded, ThirdNotUpgraded
 from Inferno.FourthCreature import FourthUpgraded, FourthNotUpgraded
 from Inferno.FifthCreature import FifthUpgraded, FifthNotUpgraded
 from Inferno.SixthCreature import SixthUpgraded, SixthNotUpgraded

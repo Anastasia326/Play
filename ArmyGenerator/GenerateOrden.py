@@ -1,7 +1,7 @@
 from Units.Creator import Creator
 from Orden.FirstCreature import FirstUpgraded, FirstNotUpgraded
 from Orden.SecondCreature import SecondUpgraded, SecondNotUpgraded
-from Orden.ThirdCreatures import ThirdUpgraded, ThirdNotUpgraded
+from Orden.ThirdCreature import ThirdUpgraded, ThirdNotUpgraded
 from Orden.FourthCreature import FourthUpgraded, FourthNotUpgraded
 from Orden.FifthCreature import FifthUpgraded, FifthNotUpgraded
 from Orden.SixthCreature import SixthUpgraded, SixthNotUpgraded
