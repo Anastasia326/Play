@@ -52,7 +52,7 @@ class Unit(ABC):
         self.length = length
         self.width = width
         self.spells = spells
-        self.position_on_battle_ground = [0, 0]
+        self.position_on_battle_ground = None
         self.improvement_duration = OrderedDict
         self.improvement_characteristics = OrderedDict
         self.count = count
@@ -66,6 +66,10 @@ class Unit(ABC):
 
     def get_damaged(self, damage) -> str:
         """Получение урона существом"""
+        if int(damage * 10) % 10 >= 5:
+            damage = int(damage) + 1
+        else:
+            damage = int(damage)
         if (self.count - 1) * self.health_points + self.last_creature_hp <= \
                 damage:
             self.count = 0
