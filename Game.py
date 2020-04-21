@@ -2,6 +2,7 @@ import ctypes
 import os
 
 import pygame
+import pygame as pygame
 from screeninfo import get_monitors
 
 import Orden
@@ -162,6 +163,26 @@ def start_menu():
     size = [pygame.display.get_surface().get_width(),
             pygame.display.get_surface().get_height()]
     create_window_of_the_same_size()
+    length = pygame.display.get_surface().get_width()
+    width = pygame.display.get_surface().get_height()
+    pygame.draw.rect(window,
+                     (205, 133, 63),
+                     (length // 3,
+                      width // 3,
+                      length // 3,
+                      width // 3))
+    buttons = draw_some_buttons(4, ["Duel", "Quick Game", "Normal Game", "Return"],
+                                (length // 3,
+                                 width // 3,
+                                 length // 3,
+                                 width // 3))
+    pygame.display.update()
+    return buttons
+
+def comming_soon():
+    size = [pygame.display.get_surface().get_width(),
+            pygame.display.get_surface().get_height()]
+    create_window_of_the_same_size()
     fond = pygame.font.Font(None, 40)
     text = fond.render("Coming soon", True, [0, 0, 0])
     window.blit(text, [size[0] // 3 + 24, size[1] // 3])
@@ -171,13 +192,12 @@ def start_menu():
                          size[1] // 3 - 70) // 4,
                  size[0] // 3 - 50,
                  (size[1] // 3 - 70) // 4),
-                "Return to main")
+                "Return")
     pygame.display.update()
     return [(size[0] // 3 + 24,
              size[1] // 3 + 50 + 3 * (size[1] // 3 - 70) // 4,
              size[0] // 3 - 50,
              (size[1] // 3 - 70) // 4)]
-
 
 def option_menu():
     """
@@ -681,6 +701,43 @@ while run:
                     else:
                         run = False
                         print("Look in main menu realization")
+        elif page == "Start Menu":
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                was_clicked, next_page = button_was_clicked(
+                    buttons_list,
+                    ["Duel", "Quick Game", "Normal Game", "Main menu"],
+                    [mouse_x, mouse_y]
+                )
+                if was_clicked:
+                    page = next_page
+                    i = 0
+                    if page == "Main menu":
+                        size = [pygame.display.get_surface().get_width(),
+                                pygame.display.get_surface().get_height()]
+                        buttons_list = create_window(size[0], size[1])
+                    elif page == "Quick Game" or page == "Normal Game":
+                        buttons_list = comming_soon()
+                    else:
+                        run = False
+                        print("look information page")
+        elif page == "Quick Game":
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                if buttons_list[0][0] + buttons_list[0][2] and buttons_list[0][1] < mouse_y < buttons_list[0][1] + buttons_list[0][3]:
+                    i = 0
+                    page = "Start Menu"
+                    buttons_list = start_menu()
+        elif page == "Normal Game":
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                mouse_x, mouse_y = pos[0], pos[1]
+                if buttons_list[0][0] + buttons_list[0][2] and buttons_list[0][1] < mouse_y < buttons_list[0][1] + buttons_list[0][3]:
+                    i = 0
+                    page = "Start Menu"
+                    buttons_list = start_menu()
         elif page == "Options":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
@@ -810,7 +867,7 @@ while run:
                         buttons_list[6][2] and buttons_list[6][1] < mouse_y \
                         < buttons_list[6][1] + buttons_list[6][3]:
                     page = "Information"
-                    buttons_list, hero_name = information_menu()
+                    buttons_list = information_menu()
                     i = 0
         elif page == "Spells":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -1107,5 +1164,8 @@ while run:
                     i = 0
                     page = "Orden Heroes"
                     buttons_list, creatures_name = show_heroes("Orden")
+        else:
+            print(page)
+            run = False
 
 pygame.quit()

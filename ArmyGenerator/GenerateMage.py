@@ -6,7 +6,8 @@ from Mage.FourthCreature import FourthUpgraded, FourthNotUpgraded
 from Mage.FifthCreature import FifthUpgraded, FifthNotUpgraded
 from Mage.SixthCreature import SixthUpgraded, SixthNotUpgraded
 from Mage.SeventhCreature import SeventhUpgraded, SeventhNotUpgraded
-
+from Heroes.HeroCatalog.Mage.Orra import Mage
+from Heroes.HeroCatalog.Mage.Zexir import Alchemist
 
 class mage(Creator):
     def create_first_type_creatures(self):
@@ -37,5 +38,8 @@ class mage(Creator):
         self.seventh_creature = SeventhNotUpgraded()
         self.seventh_creature_upgraded = SeventhUpgraded()
 
-    def create_hero(self, name):
-        pass
+    def create_hero_First(self):
+        self.first_hero = Mage()
+
+    def create_hero_Second(self):
+        self.second_hero = Alchemist()

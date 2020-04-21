@@ -6,7 +6,8 @@ from NatureProtection.FourthCreature import FourthUpgraded, FourthNotUpgraded
 from NatureProtection.FifthCreature import FifthUpgraded, FifthNotUpgraded
 from NatureProtection.SixthCreature import SixthUpgraded, SixthNotUpgraded
 from NatureProtection.SeventhCreature import SeventhUpgraded, SeventhNotUpgraded
-
+from Heroes.HeroCatalog.NatureProtection.Faidaen import Druid
+from Heroes.HeroCatalog.NatureProtection.Legolas import Ranger
 
 class Nature(Creator):
     def create_first_type_creatures(self):
@@ -37,5 +38,8 @@ class Nature(Creator):
         self.seventh_creature = SeventhNotUpgraded()
         self.seventh_creature_upgraded = SeventhUpgraded()
 
-    def create_hero(self, name):
-        pass
+    def create_hero_First(self):
+        self.first_hero = Druid()
+
+    def create_hero_Second(self):
+        self.second_hero = Ranger()
