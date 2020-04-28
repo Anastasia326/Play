@@ -1,0 +1,47 @@
+from Battle.count_damage import count_damage
+from Units.unit import Unit
+
+
+class BattleUnit(Unit):
+
+    def __init__(self, base: Unit, conter_attack_counter):
+        self.base = base
+        self.can_conter_attack = conter_attack_counter
+        self.conter_attack = 0
+
+    def move(self, to) -> str:
+        return self.base.move(to)
+
+    def add_count(self, count) -> str:
+        return self.base.add_count(self.base, count)
+
+    def get_damaged(self, damage) -> str:
+        return self.base.get_damaged(damage)
+
+    def wait(self) -> str:
+        return self.base.wait()
+
+    def defend(self) -> str:
+        return self.base.defend()
+
+    def melee_attack(self, other_creature, first_attack=True):
+        deeling_damage = count_damage(self.base, other_creature)
+        message_to_return = [other_creature.get_damage(deeling_damage)]
+        if other_creature.conter_attack != other_creature.can_conter_attack \
+                and "is dead" not in message_to_return[0] and first_attack:
+            other_creature.conter_attack += 1
+            message_to_return += [other_creature.melee_attack(self.base,
+                                                              False)]
+        return message_to_return
+
+    def move_and_melee_attack(self, other_creature, coordinates):
+        message_to_return = [str(self.base.position_on_battle_ground)]
+        message_to_return += [str(self.base.move(coordinates))]
+        deeling_damage = count_damage(self.base, other_creature)
+        message_to_return = [other_creature.get_damage(deeling_damage)]
+        if other_creature.conter_attack != other_creature.can_conter_attack \
+                and "is dead" not in message_to_return[0]:
+            other_creature.conter_attack += 1
+            message_to_return += [other_creature.melee_attack(self.base,
+                                                              False)]
+        return message_to_return

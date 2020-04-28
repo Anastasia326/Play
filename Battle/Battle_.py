@@ -6,6 +6,7 @@ from ArmyGenerator.GenerateOrden import orden
 from ArmyGenerator.GenerateNature import Nature
 from Battle.army import Army
 from Battle.ArmyStatus import ArmyStatus
+from Units.unit import Unit
 
 borders = [[[0, 9], [0, 1]], [[0, 9], [10, 11]]]
 
@@ -224,7 +225,7 @@ class Battle:
                 self.second_army_status.army_on_field.index([coordinate_x,
                                                              coordinate_y])] \
                 = [coordinate_x_to, coordinate_y_to]
-        creature.position_on_battle_ground = [coordinate_x_to, coordinate_y_to]
+        creature.move([coordinate_x_to, coordinate_y_to])
         if creature.length == 2:
             self.map[coordinate_x][coordinate_y + 1] = None
             self.map[coordinate_x_to][coordinate_y_to + 1] = creature.name
@@ -358,6 +359,7 @@ class Battle:
             else:
                 print("wrong command")
         print("The game was ended")
+
 
 
 first = orden()

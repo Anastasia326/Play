@@ -1,6 +1,7 @@
 import pygame
 import os
 
+
 def create_window_of_the_same_size(window, fullscreen):
     """
     :return: nothing
