@@ -1,31 +1,13 @@
 from random import randint
 
+from Battle.count_damage import count_damage
 from BattleGround.BattleFields.ClearMap import ClearMap
-from Heroes.Hero_init import Hero
 from ArmyGenerator.GenerateOrden import orden
 from ArmyGenerator.GenerateNature import Nature
+from Battle.army import Army
+from Battle.ArmyStatus import ArmyStatus
 
-
-class ArmyStatus:
-    def __init__(self, hero_: Hero,
-                 army_: list):
-        self.hero = hero_
-        self.starting_army = army_
-        self.current_army = army_
-        self.stash = []
-        self.army_on_field = []
-
-
-def count_damage(first_creature, second_creature):
-    base_damage = first_creature.min_damage + randint(
-        first_creature.min_damage, first_creature.max_damage)
-    if first_creature.attack > second_creature.protection:
-        attack_defense_modifier = 1 + (first_creature.attack -
-                                       second_creature.protection) * 0.05
-    else:
-        attack_defense_modifier = 1 / (1 + (first_creature.attack -
-                                            second_creature.protection) * 0.05)
-    return first_creature.count * base_damage * attack_defense_modifier
+borders = [[[0, 9], [0, 1]], [[0, 9], [10, 11]]]
 
 
 class Battle:
@@ -44,84 +26,64 @@ class Battle:
                 print("Wrong stash number")
             else:
                 creature = army.stash[int(command[1])]
-                if first_army_turn:
-                    if creature.length == 2:
-                        if int(command[3]) >= 1 or int(command[3]) < 0 or \
-                                int(command[2]) < 1 or int(command[2]) > 9:
-                            print("Wrong place")
-                        elif self.map[int(command[1])][int(command[2])] is not \
-                                None:
-                            print("Wrong place to put")
-                            return next_player
-                        else:
-                            army.stash.pop(int(command[1]))
-                            self.map[int(command[2])][0] = creature.name
-                            self.map[int(command[2]) - 1][0] = creature.name
-                            self.map[int(command[2])][1] = creature.name
-                            self.map[int(command[2]) - 1][1] = creature.name
-                            army.army_on_field += [[int(command[2]),
-                                                    int(command[3])]]
-                            army.starting_army.position_on_battle_ground = [
-                                int(
-                                    command[2]), int(command[3])]
-                            print("Creature was placed on coordinates:\n x" + \
-                                  (command[2]) + " y 0\n" + \
-                                  "x" + str(int(command[2]) - 1) + " y 1\n" + \
-                                  "x" + str(int(command[2]) - 1) + " y 0\n" + \
-                                  "x" + str(int(command[2]) - 1) + " y 1\n")
+                if creature.length == 2:
+                    if int(command[3]) != \
+                            borders[0 if first_army_turn else 1][0][0] or \
+                            int(command[2]) < 1 or int(command[2]) > 9:
+                        print("Wrong place")
+                    elif self.map[int(command[2])][int(command[3])] is not \
+                            None or \
+                            self.map[int(command[2]) - 1][int(command[3])] is \
+                            not None or \
+                            self.map[int(command[2])][int(command[3]) + 1] is \
+                            not None or \
+                            self.map[int(command[2]) - 1][int(command[3]) + 1] \
+                            is not None:
+                        print("Wrong place to put")
+                        return next_player
                     else:
-                        if int(command[3]) > 1 or int(command[3]) < 0 or \
-                                int(command[2]) < 0 or int(command[2]) > 9:
-                            print("Wrong place")
-                        elif self.map[int(command[1])][int(command[2])] is not \
-                                None:
-                            print("Wrong place to put")
-                            return next_player
-                        else:
-                            army.stash.pop(int(command[1]))
-                            army.army_on_field += [[int(command[2]),
-                                                    int(command[3])]]
-                            self.map[int(command[2])][int(command[3])] = \
-                                creature.name
-                            creature.position_on_battle_ground = [int(
+                        army.stash.pop(int(command[1]))
+                        self.map[int(command[2])][int(command[3])] = \
+                            creature.name
+                        self.map[int(command[2]) - 1][int(command[3])] = \
+                            creature.name
+                        self.map[int(command[2])][int(command[3]) + 1] = \
+                            creature.name
+                        self.map[int(command[2]) - 1][int(command[3]) + 1] = \
+                            creature.name
+                        army.army_on_field += [[int(command[2]),
+                                                int(command[3])]]
+                        army.starting_army[army.starting_army.index(
+                            creature)].position_on_battle_ground = [
+                            int(
                                 command[2]), int(command[3])]
-                            print("Creature was placed on coordinates:\n x" + \
-                                  (command[2]) + " y " + command[3])
+                        print("Creature was placed on coordinates:\n x" + \
+                              (command[2]) + " y " + command[3] + \
+                              "\nx" + str(int(command[2]) - 1) + " y 1\n" + \
+                              "x" + str(int(command[2]) - 1) + " y 0\n" + \
+                              "x" + str(int(command[2]) - 1) + " y 1\n")
                 else:
-                    if creature.length == 2:
-                        if int(command[3]) <= 10 or int(command[3]) > 11 or \
-                                int(command[2]) < 0 or int(command[2]) > 9:
-                            print("Wrong place")
-                        else:
-                            army.stash.pop(int(command[1]))
-                            self.map[int(command[2])][0] = creature.name
-                            self.map[int(command[2]) - 1][0] = creature.name
-                            self.map[int(command[2])][1] = creature.name
-                            self.map[int(command[2]) - 1][1] = creature.name
-                            army.army_on_field += [[int(command[2]),
-                                                    int(command[3])]]
-                            army.starting_army.position_on_battle_ground = [
-                                int(
-                                    command[2]), int(command[3])]
-                            print("Creature was placed on coordinates:\n x" + \
-                                  (command[2]) + " y 0\n" + \
-                                  "x" + str(int(command[2]) - 1) + " y 1\n" + \
-                                  "x" + str(int(command[2]) - 1) + " y 0\n" + \
-                                  "x" + str(int(command[2]) - 1) + " y 1\n")
+                    if int(command[3]) > borders[0
+                    if first_army_turn
+                    else 1][1][1] or \
+                            int(command[3]) < borders[0 if first_army_turn
+                    else 1][1][0] or \
+                            int(command[2]) < 0 or int(command[2]) > 9:
+                        print("Wrong place")
+                    elif self.map[int(command[2])][int(command[3])] is not \
+                            None:
+                        print("Wrong place to put")
+                        return next_player
                     else:
-                        if int(command[3]) < 10 or int(command[3]) > 11 or \
-                                int(command[2]) < 0 or int(command[2]) > 9:
-                            print("Wrong place")
-                        else:
-                            army.stash.pop(int(command[1]))
-                            army.army_on_field += [[int(command[2]),
-                                                    int(command[3])]]
-                            self.map[int(command[2])][int(command[3])] = \
-                                creature.name
-                            creature.position_on_battle_ground = [int(
-                                command[2]), int(command[3])]
-                            print("Creature was placed on coordinates:\n x" + \
-                                  (command[2]) + " y " + command[3])
+                        army.stash.pop(int(command[1]))
+                        army.army_on_field += [[int(command[2]),
+                                                int(command[3])]]
+                        self.map[int(command[2])][int(command[3])] = \
+                            creature.name
+                        creature.position_on_battle_ground = [int(
+                            command[2]), int(command[3])]
+                        print("Creature was placed on coordinates:\n x" + \
+                              (command[2]) + " y " + command[3])
         elif command[0] == "move":
             if self.map[int(command[1])][int(command[2])] is None:
                 print("Wrong from coordinates")
@@ -147,7 +109,15 @@ class Battle:
                         print("Wrong creature")
                     elif command[3] == "to":
                         if self.map[int(command[4])][int(command[5])] is not \
-                                None:
+                                None or \
+                                int(command[4]) > borders[0 if first_army_turn
+                        else 1][0][1] or \
+                                int(command[4]) < borders[0 if first_army_turn
+                        else 1][0][0] or \
+                                int(command[5]) > borders[0 if first_army_turn
+                        else 1][1][1] or \
+                                int(command[5]) < borders[0 if first_army_turn
+                        else 1][1][0]:
                             print("Wrong place to put")
                             return next_player
                         for creature in army.starting_army:
@@ -160,6 +130,8 @@ class Battle:
                                                    int(command[5]))
                                 return next_player
                         print("Wrong creature")
+                    else:
+                        print("Wrong command")
                 else:
                     print("Wrong creature")
         elif command[0] == "end":
@@ -232,10 +204,12 @@ class Battle:
                       coordinate_x_to, coordinate_y_to):
         if coordinate_y_to >= 12 or coordinate_y_to < 0 or \
                 coordinate_x_to < 0 or coordinate_x_to > 9:
+            print("Wrong to coordinates")
             return
         if creature.length == 2:
             if coordinate_y_to >= 11 or coordinate_y_to < 0 or \
                     coordinate_x_to < 1 or coordinate_x_to > 9:
+                print("Wrong to coordinates")
                 return
         self.map[coordinate_x][coordinate_y] = None
         self.map[coordinate_x_to][coordinate_y_to] = creature.name
@@ -263,22 +237,54 @@ class Battle:
                         coordinate_x_to, coordinate_y_to,
                         attacked_coordinate_x, attacked_coordinate_y,
                         attacked_army):
-        self.move_creature(creature, coordinate_x, coordinate_y,
-                           coordinate_x_to, coordinate_y_to)
+        if abs(attacked_coordinate_x - coordinate_x_to) + \
+                abs(attacked_coordinate_y - coordinate_y_to) == 1 or \
+                abs(attacked_coordinate_y - coordinate_y_to) == 1 and \
+                abs(attacked_coordinate_x - coordinate_x_to) == 1:
+            self.move_creature(creature, coordinate_x, coordinate_y,
+                               coordinate_x_to, coordinate_y_to)
+            if [attacked_coordinate_x, attacked_coordinate_y] not in \
+                    attacked_army.army_on_field:
+                print("Wrong target. Only moved")
+            second_creature = attacked_army.current_army[
+                attacked_army.army_on_field.index([attacked_coordinate_x,
+                                                   attacked_coordinate_y])]
+            message = second_creature.get_damaged(count_damage(creature,
+                                                               second_creature))
+            print(message)
+            if "is dead" in message:
+                attacked_army.army_on_field.pop(
+                    attacked_army.army_on_field.index([attacked_coordinate_x,
+                                                       attacked_coordinate_y]))
+                self.map[attacked_coordinate_x][attacked_coordinate_y] = None
+            return True
+        else:
+            print("range attack couldn't be done in moving")
+            return False
+
+    def range_attack(self, creature, attacked_coordinate_x,
+                     attacked_coordinate_y, attacked_army):
         if [attacked_coordinate_x, attacked_coordinate_y] not in \
                 attacked_army.army_on_field:
-            print("Wrong target. Only moved")
+            print("Wrong target")
+            return False
         second_creature = attacked_army.current_army[
             attacked_army.army_on_field.index([attacked_coordinate_x,
                                                attacked_coordinate_y])]
-        message = second_creature.get_damaged(count_damage(creature,
-                                                           second_creature))
+        damage = count_damage(creature, second_creature)
+        if abs(creature.position_on_battle_ground[0] -
+               attacked_coordinate_x) + \
+                abs(creature.position_on_battle_ground[1] -
+                    attacked_coordinate_y) > 8:
+            damage *= 0.5
+        message = second_creature.get_damaged(damage)
         print(message)
         if "is dead" in message:
             attacked_army.army_on_field.pop(
                 attacked_army.army_on_field.index([attacked_coordinate_x,
                                                    attacked_coordinate_y]))
             self.map[attacked_coordinate_x][attacked_coordinate_y] = None
+        return True
 
     def next_turn(self, creature, coordinates):
         self.queue_of_creatures.pop(0)
@@ -291,6 +297,7 @@ class Battle:
         Use commands:
             move x_from y_from x_to y_to
             move_attack x_from y_from x_to y_to x_attacked y_attacked
+            range_attack x_attacked y_attacked
             exit
         ''')
         while len(self.first_army_status.army_on_field) != 0 and len(
@@ -316,6 +323,10 @@ class Battle:
                 if [int(com[1]), int(com[2])] != tmp:
                     print("wrong command")
                     continue
+                if (abs(int(com[3]) - int(com[1])) +
+                    abs(int(com[2]) - int(com[4]))) > creature.speed:
+                    print("Can't move so far")
+                    continue
                 self.move_creature(creature, int(com[1]),
                                    int(com[2]), int(com[3]), int(com[4]))
                 self.next_turn(creature, [int(com[3]), int(com[4])])
@@ -323,21 +334,30 @@ class Battle:
                 if [int(com[1]), int(com[2])] != tmp:
                     print("wrong command")
                     continue
-                self.move_and_attack(creature, int(com[1]),
-                                     int(com[2]), int(com[3]), int(com[4]),
-                                     int(com[5]), int(com[6]), attacked_army)
-                self.next_turn(creature, [int(com[3]), int(com[4])])
+                if (abs(int(com[3]) - int(com[1])) +
+                    abs(int(com[2]) - int(com[4]))) > creature.speed:
+                    print("Can't move so far")
+                    continue
+                if self.move_and_attack(creature, int(com[1]),
+                                        int(com[2]), int(com[3]), int(com[4]),
+                                        int(com[5]), int(com[6]),
+                                        attacked_army):
+                    self.next_turn(creature, [int(com[3]), int(com[4])])
             elif com[0] == "exit":
                 break
+            elif com[0] == "range_attack":
+                if creature.shots == 0 or creature.shots is None:
+                    print("could't attack on distance")
+                    continue
+                if not self.range_attack(creature, int(com[1]), int(com[2]),
+                                         attacked_army):
+                    print("something wrong, try again")
+                else:
+                    self.next_turn(creature,
+                                   creature.position_on_battle_ground)
             else:
                 print("wrong command")
         print("The game was ended")
-
-
-class army:
-    def __init__(self, hero_, soldiers):
-        self.hero = hero_
-        self.soldiers = soldiers
 
 
 first = orden()
@@ -351,11 +371,11 @@ second.second_creature.add_count(second.second_creature, 20)
 second.third_creature.add_count(second.third_creature, 10)
 second.fourth_creature.add_count(second.fourth_creature, 5)
 
-first_army = army(None, [first.first_creature,
+first_army = Army(None, [first.first_creature,
                          first.second_creature,
                          first.third_creature,
                          first.fourth_creature])
-second_army = army(None, [second.first_creature,
+second_army = Army(None, [second.first_creature,
                           second.second_creature,
                           second.third_creature,
                           second.fourth_creature])

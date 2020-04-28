@@ -119,7 +119,7 @@ array_of_Necro = ["Skeleton", "Zombie", "Ghost", "Vampire", "Lich",
 array_of_Forest = ["Pixie", "Blade Dancer", "Hunter", "Druid", "Unicorn",
                    "Treant", "Green Dragon", "Sprite", "War Dancer",
                    "Master Hunter", "Druid Elder", "Silver Unicorn",
-                   "Ancien Treant", "Emerald Dragon"]
+                   "Ancient Treant", "Emerald Dragon"]
 array_of_Shadows = ["Scout", "Blood Maiden", "Minotaur", "Dark Rider",
                     "Hydra", "Shadow Witch", "Shadow Dragon", "Assassin",
                     "Blood Fury", "Minotaur Guard", "Grim Rider", "Deep Hydra",
@@ -128,11 +128,11 @@ array_of_Mage = ["Gremlin", "Stone Gargoyle", "Iron Golem", "Mage",
                  "Djinn", "Rakshasa Rani", "Colossus", "Master Gremlin",
                  "Obsidian Gargoyle", "Steel Golem", "Archmage",
                  "Djinn Sultan", "Rakshasa Raja", "Titan"]
-classes_list = ["Orden", "Necropolis", "Inferno", "Mage", "ShadowLeague",
-                "NatureProtection"]
+classes_list = ["Orden", "Necropolis", "Inferno", "NatureProtection",
+                "ShadowLeague", "Mage"]
 catalogs = [Orden, Necro, Inferno, Mage, ShadowLeague, NatureProtection]
 arrays_list = [array_of_Orden, array_of_Necro, array_of_Inferno,
-               array_of_Mage, array_of_Shadows, array_of_Forest]
+               array_of_Forest, array_of_Shadows, array_of_Mage]
 opened_catalog = Orden
 page = "Main menu"
 i = 0
