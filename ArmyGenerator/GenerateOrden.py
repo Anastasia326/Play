@@ -9,6 +9,7 @@ from Orden.SeventhCreature import SeventhUpgraded, SeventhNotUpgraded
 from Heroes.HeroCatalog.Orden.Ivanhoe import Knight
 from Heroes.HeroCatalog.Orden.Swerchok import Priest
 
+
 class orden(Creator):
     def create_first_type_creatures(self):
         self.first_creature = FirstNotUpgraded()
@@ -38,7 +39,7 @@ class orden(Creator):
         self.seventh_creature = SeventhNotUpgraded()
         self.seventh_creature_upgraded = SeventhUpgraded()
 
-    def create_hero_First(self):
+    def create_hero(self):
         self.first_hero = Knight()
 
     def create_hero_Second(self):

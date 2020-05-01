@@ -1,11 +1,9 @@
 from abc import ABC
-from _collections import OrderedDict
 
 
 class Unit(ABC):
     """
     Юнит хранит информацию о юнитах(войсках)
-
     Характеристики существ:
         - Атака существа
         - Защита существа
@@ -25,7 +23,6 @@ class Unit(ABC):
         - Расположение на боевой площадке
         - Полученные улучшения и их длительность
         - Какие параметры были улушены, насколько, в каком порядке
-
     Методы:
         - Инициализация (установление изначальных параметров существа)
         - Получение урона
@@ -52,9 +49,9 @@ class Unit(ABC):
         self.length = length
         self.width = width
         self.spells = spells
-        self.position_on_battle_ground = [0, 0]
-        self.improvement_duration = OrderedDict
-        self.improvement_characteristics = OrderedDict
+        self.position_on_battle_ground = None
+        self.improvement_duration = {}
+        self.improvement_characteristics = {}
         self.count = count
         self.last_creature_hp = health
 
@@ -66,6 +63,10 @@ class Unit(ABC):
 
     def get_damaged(self, damage) -> str:
         """Получение урона существом"""
+        if int(damage * 10) % 10 >= 5:
+            damage = int(damage) + 1
+        else:
+            damage = int(damage)
         if (self.count - 1) * self.health_points + self.last_creature_hp <= \
                 damage:
             self.count = 0
@@ -94,16 +95,18 @@ class Unit(ABC):
 
     def wait(self) -> str:
         """Юнит ожидает"""
-        self.improvement_characteristics += {"Wait", 3}
+        self.improvement_characteristics["Wait"] = ["initiative", 3]
         self.initiative += 3
-        self.improvement_duration += {"Wait", 1}
+        self.improvement_duration["Wait"] = 1
         return str(self.name) + " is waiting"
 
     def defend(self) -> str:
         """Оборона"""
-        self.protection = int(self.protection * 1.3) + \
-                          (self.protection * 1.3 - int(
-                              self.protection * 1.3) >= 0.5)
-        self.improvement_characteristics += {"Defend", 3}
-        self.improvement_duration += {"Defend", 1}
+        increase_protection = int(self.protection * 1.3) + \
+                              (self.protection * 1.3 - int(
+                                  self.protection * 1.3) >= 0.5)
+        self.protection = increase_protection
+        self.improvement_characteristics["Defend"] = ["protection",
+                                                      increase_protection]
+        self.improvement_duration["Defend"] = 1
         return str(self.name) + " is defending"

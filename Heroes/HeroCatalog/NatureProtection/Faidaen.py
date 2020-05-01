@@ -3,11 +3,11 @@ from Heroes.Hero_init import Hero
 
 class Druid(Hero):
     def __init__(self):
-        super().__init__(name = "Faidaen",
-                         spells = None,
-                         attack = 0,
-                         protection = 2,
-                         morale = 0,
-                         luck = 0,
-                         witchcraft = 1,
-                         knowledge = 2)
+        super().__init__("Faidaen",  # name
+                         None,  # spells
+                         0,  # attack
+                         2,  # protection
+                         0,  # morale
+                         0,  # luck
+                         1,  # witchcraft
+                         2)  # knowledge

@@ -39,10 +39,6 @@ class Hero(ABC):
         self.army = [None]*7
        # self.skills = []
 
-    @abstractmethod
-    def learn_spell(self, spell):
-        pass
-
     def improve_skill(self, name_of_skill, points) -> str:
         """Улучшение характеристики"""
         if name_of_skill == "morale":
@@ -58,10 +54,6 @@ class Hero(ABC):
         elif name_of_skill == "knowledge":
             self.knowledge += points
         return str(self.name) + "nas improved" + str(name_of_skill)  + "by" + str(points) + "points"
-
-    @abstractmethod
-    def cast_spell(self, spell):
-        pass
 
     def show_available_spells(self):
         """Я знаю заклинания: """
