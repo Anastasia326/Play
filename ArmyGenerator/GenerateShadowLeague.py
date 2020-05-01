@@ -1,11 +1,13 @@
+from Heroes.HeroCatalog.ShadowLeague.Railag import DarkElf
+from Heroes.HeroCatalog.ShadowLeague.Shadiia import Witch
 from Units.Creator import Creator
-from ShadowLeague.FirstCreature import FirstUpgraded, FirstNotUpgraded
-from ShadowLeague.SecondCreature import SecondUpgraded, SecondNotUpgraded
-from ShadowLeague.ThirdCreature import ThirdUpgraded, ThirdNotUpgraded
-from ShadowLeague.FourthCreature import FourthUpgraded, FourthNotUpgraded
-from ShadowLeague.FifthCreature import FifthUpgraded, FifthNotUpgraded
-from ShadowLeague.SixthCreature import SixthUpgraded, SixthNotUpgraded
-from ShadowLeague.SeventhCreature import SeventhUpgraded, SeventhNotUpgraded
+from Classes.ShadowLeague.FirstCreature import FirstUpgraded, FirstNotUpgraded
+from Classes.ShadowLeague.SecondCreature import SecondUpgraded, SecondNotUpgraded
+from Classes.ShadowLeague.ThirdCreature import ThirdUpgraded, ThirdNotUpgraded
+from Classes.ShadowLeague.FourthCreature import FourthUpgraded, FourthNotUpgraded
+from Classes.ShadowLeague.FifthCreature import FifthUpgraded, FifthNotUpgraded
+from Classes.ShadowLeague.SixthCreature import SixthUpgraded, SixthNotUpgraded
+from Classes.ShadowLeague.SeventhCreature import SeventhUpgraded, SeventhNotUpgraded
 
 
 class Shadow(Creator):
@@ -37,5 +39,8 @@ class Shadow(Creator):
         self.seventh_creature = SeventhNotUpgraded()
         self.seventh_creature_upgraded = SeventhUpgraded()
 
-    def create_hero(self, name):
-        pass
+    def create_hero_First(self):
+        self.first_hero = DarkElf()
+
+    def create_hero_Second(self):
+        self.second_hero = Witch()

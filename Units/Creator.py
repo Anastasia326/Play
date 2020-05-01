@@ -60,9 +60,10 @@ class Creator(ABC):
         pass
 
     @abstractmethod
-    def create_hero(self, name):
+    def create_hero_First(self):
         pass
 
-    '''
-    Остановись и подумай о создании города и соответствующих зданий
-    '''
+    @abstractmethod
+    def create_hero_Second(self):
+        pass
+

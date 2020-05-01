@@ -8,8 +8,8 @@ class TripleAttackCreature(BattleUnit):
         self.can_conter_attack = base.can_conter_attack
         self.conter_attack = 0
 
-    def melee_attack(self, other_creature: BattleUnit, other_army=None,
-                     first_attack=True):
+    def melee_attack(self, other_creature, this_creature_army=None,
+                     other_army=None, first_attack=True):
         message_to_return = super().melee_attack(other_creature)
         list_of_around_creatures = [[1, 0],
                                     [1, 1],
@@ -46,8 +46,12 @@ class TripleAttackCreature(BattleUnit):
                 if soldier.base.position_on_battle_ground == left_coordinates:
                     target = soldier
             if target is not None:
-                message_to_return += super().melee_attack(target,
-                                                          None, False)
+                message_to_return += super().melee_attack(
+                    target,
+                    other_army,
+                    this_creature_army,
+                    False
+                )
         if in_borders(right_coordinates) and \
                 right_coordinates in other_army.current_army:
             target = None
@@ -55,6 +59,10 @@ class TripleAttackCreature(BattleUnit):
                 if soldier.base.position_on_battle_ground == right_coordinates:
                     target = soldier
             if target is not None:
-                message_to_return += super().melee_attack(target, None,
-                                                          False)
+                message_to_return += super().melee_attack(
+                    target,
+                    other_army,
+                    this_creature_army,
+                    False
+                )
         return message_to_return

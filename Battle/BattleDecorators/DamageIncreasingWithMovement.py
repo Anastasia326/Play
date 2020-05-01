@@ -9,6 +9,7 @@ class DamageIncreasingWithMovement(BattleUnit):
         self.conter_attack = 0
 
     def move_and_melee_attack(self, other_creature, coordinates,
+                              this_creature_army=None,
                               other_army=None):
         distance = abs(self.base.position_on_battle_ground[0] - coordinates[
             0]) + abs(self.base.position_on_battle_ground[1] - coordinates[1])
@@ -19,7 +20,10 @@ class DamageIncreasingWithMovement(BattleUnit):
         if other_creature.conter_attack != other_creature.can_conter_attack \
                 and "is dead" not in message_to_return[0]:
             other_creature.conter_attack += 1
-            message_to_return += other_creature.melee_attack(self,
-                                                             None,
-                                                             False)
+            message_to_return += other_creature.melee_attack(
+                self,
+                other_army,
+                this_creature_army,
+                False
+            )
         return message_to_return
