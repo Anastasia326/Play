@@ -1,5 +1,5 @@
 from random import randint
-from Battle.borders import in_borders
+from Battle.borders import in_borders, borders
 from BattleGround.BattleFields.ClearMap import ClearMap
 from Battle.ArmyStatus import ArmyStatus
 
