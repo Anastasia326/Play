@@ -1,13 +1,12 @@
 from random import randint
-from Battle.borders import in_borders
-from BattleGround.BattleFields.ClearMap import ClearMap
-from ArmyGenerator.GenerateOrden import orden
-from ArmyGenerator.GenerateNature import Nature
-from Battle.army import Army
+
 from Battle.ArmyStatus import ArmyStatus
-from Working_with_textures.choose_units_to_kill import choose_units_to_kill
+from Battle.borders import in_borders
 from Battle.wait import wait
-from Battle.worker_after_wait_for_preparing import worker_after_wait_for_preparing
+from Battle.worker_after_wait_for_preparing import \
+    worker_after_wait_for_preparing
+from BattleGround.BattleFields.ClearMap import ClearMap
+from Working_with_textures.choose_units_to_kill import choose_units_to_kill
 from Working_with_textures.draw_commans import draw_commans
 from Working_with_textures.map_draw import map_draw
 from Working_with_textures.waaar import waaar
@@ -39,6 +38,7 @@ class Battle:
                             creatures
                         )
                     )
+                    print(self.queue_of_creatures)
                     self.queue_of_creatures.pop(
                         self.queue_of_creatures.index(
                             creatures.base.position_on_battle_ground
