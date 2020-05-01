@@ -25,14 +25,15 @@ class Hero(ABC):
         - Атаковать
 
     """
-    def __init__(self, name, spells, attack, protection , morale, luck, witchraft, knowledge):
+    def __init__(self, name, spells, attack, protection, morale, luck,
+                 witchcraft, knowledge):
         self.name = name
         self.spells = spells
         self.attack = attack
         self.protection = protection
         self.morale = morale
         self.luck = luck
-        self.witchcraft = witchraft
+        self.witchcraft = witchcraft
         self.knowledge = knowledge
         self.army = [None]*7
 
