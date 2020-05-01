@@ -13,7 +13,8 @@ class LifeStealCreature(BattleUnit):
         deeling_damage = count_damage(self.base, other_creature.base)
         self.base.last_creature_hp += int(deeling_damage / 2)
         self.base.add_count(self.base,
-                            self.base.last_creature_hp // self.health_points)
+                            self.base.last_creature_hp //
+                            self.base.health_points)
         self.base.last_creature_hp %= self.base.health_points
         message_to_return = [other_creature.get_damage(deeling_damage)]
         message_to_return += ["Restoring " + str(int(deeling_damage / 2)) +
