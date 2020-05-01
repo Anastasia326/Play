@@ -4,7 +4,7 @@ from Units.unit import Unit
 
 class BattleUnit(Unit):
 
-    def __init__(self, base: Unit, conter_attack_counter):
+    def __init__(self, base: Unit, conter_attack_counter=1):
         self.base = base
         self.can_conter_attack = conter_attack_counter
         self.conter_attack = 0
@@ -15,7 +15,7 @@ class BattleUnit(Unit):
     def add_count(self, count) -> str:
         return self.base.add_count(self.base, count)
 
-    def get_damaged(self, damage) -> str:
+    def get_damage(self, damage) -> str:
         return self.base.get_damaged(damage)
 
     def wait(self) -> str:
@@ -24,24 +24,19 @@ class BattleUnit(Unit):
     def defend(self) -> str:
         return self.base.defend()
 
-    def melee_attack(self, other_creature, first_attack=True):
-        deeling_damage = count_damage(self.base, other_creature)
+    def melee_attack(self, other_creature, other_army=None, first_attack=True):
+        deeling_damage = count_damage(self.base, other_creature.base)
         message_to_return = [other_creature.get_damage(deeling_damage)]
         if other_creature.conter_attack != other_creature.can_conter_attack \
                 and "is dead" not in message_to_return[0] and first_attack:
             other_creature.conter_attack += 1
-            message_to_return += [other_creature.melee_attack(self.base,
-                                                              False)]
+            message_to_return += other_creature.melee_attack(self,
+                                                             None,
+                                                             False)
         return message_to_return
 
-    def move_and_melee_attack(self, other_creature, coordinates):
-        message_to_return = [str(self.base.position_on_battle_ground)]
-        message_to_return += [str(self.base.move(coordinates))]
-        deeling_damage = count_damage(self.base, other_creature)
-        message_to_return = [other_creature.get_damage(deeling_damage)]
-        if other_creature.conter_attack != other_creature.can_conter_attack \
-                and "is dead" not in message_to_return[0]:
-            other_creature.conter_attack += 1
-            message_to_return += [other_creature.melee_attack(self.base,
-                                                              False)]
+    def move_and_melee_attack(self, other_creature, coordinates,
+                              other_army=None):
+        message_to_return = [str(self.base.move(coordinates))]
+        message_to_return += self.melee_attack(other_creature, other_army)
         return message_to_return

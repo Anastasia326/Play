@@ -21,7 +21,7 @@ class ThirdNotUpgraded(Unit):
                          10,  # health
                          10,  # initiative
                          5,  # speed
-                         None,  # shots
+                         15,  # shots
                          None,  # mana
                          120,  # cost
                          70,  # upgrade
