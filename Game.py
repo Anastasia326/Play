@@ -1,4 +1,6 @@
 import pygame
+
+from Battle.Field import Start_Battle
 from Working_with_textures.arrays import arrays_list, array_of_Forest, \
     array_of_Shadows, array_of_Mage, array_of_Inferno, array_of_Necro, \
     array_of_Orden, classes_list, opened_catalog, catalogs, creatures_name, \
@@ -6,6 +8,7 @@ from Working_with_textures.arrays import arrays_list, array_of_Forest, \
     hero_of_Inferno, hero_of_Necro, hero_of_Orden
 from Working_with_textures.Main_menu import create_window
 from Working_with_textures.choice_display import choose_class_display
+from Working_with_textures.choose_mod import choose_mod
 from Working_with_textures.information_menu import information_menu
 from Working_with_textures.option_menu import option_menu
 from Working_with_textures.show_hero import show_hero
@@ -26,6 +29,8 @@ window.value, buttons_list = create_window(window.value, fullscreen.value)
 run = True
 page = "Main menu"
 i = 0
+
+
 while run:
     i += 1
     if i == 120000:
@@ -47,7 +52,7 @@ while run:
                     page = next_page
                     i = 0
                     if page == "Start Menu":
-                        buttons_list = start_menu(window.value,
+                        buttons_list = choose_mod(window.value,
                                                   fullscreen.value)
                     elif page == "Options":
                         buttons_list = option_menu(window.value, fullscreen.value)
@@ -120,9 +125,9 @@ while run:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
                 mouse_x, mouse_y = pos[0], pos[1]
-                if buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
-                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
-                        < buttons_list[0][1] + buttons_list[0][3]:
+                if buttons_list[1][0] < mouse_x < buttons_list[1][0] + \
+                        buttons_list[1][2] and buttons_list[1][1] < mouse_y \
+                        < buttons_list[1][1] + buttons_list[1][3]:
                     i = 0
                     page = "Main menu"
                     size = [pygame.display.get_surface().get_width(),
@@ -131,6 +136,11 @@ while run:
                                                                fullscreen.value,
                                                                size[0],
                                                                size[1])
+                elif buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
+                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
+                        < buttons_list[0][1] + buttons_list[0][3]:
+                    Start_Battle(window.value, fullscreen.value)
+                    run = False
         elif page == "Units":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
@@ -591,5 +601,11 @@ while run:
                     buttons_list, creatures_name = show_heroes(window.value,
                                                                fullscreen.value,
                                                                "Orden")
+        else:
+            print("Something went wrong. "
+                  "Please, tell Anastasia Kemova about that kemova"
+                  "kemova.aiu@phystech.edu\n"
+                  "say that page is", page)
+            run = False
 
 pygame.quit()
