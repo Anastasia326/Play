@@ -2,11 +2,19 @@ import os
 
 import pygame
 
-from Classes import Inferno, Mage
-import NatureProtection
-import Necro
-import Orden
-import ShadowLeague
+from Classes import Inferno, Mage, NatureProtection, Necro, Orden, ShadowLeague
+from Classes.Orden import FirstCreature, SecondCreature, ThirdCreature, \
+    FourthCreature, FifthCreature, SixthCreature, SeventhCreature
+from Classes.Mage import FirstCreature, SecondCreature, ThirdCreature, \
+    FourthCreature, FifthCreature, SixthCreature, SeventhCreature
+from Classes.Necro import FirstCreature, SecondCreature, ThirdCreature, \
+    FourthCreature, FifthCreature, SixthCreature, SeventhCreature
+from Classes.NatureProtection import FirstCreature, SecondCreature, ThirdCreature, \
+    FourthCreature, FifthCreature, SixthCreature, SeventhCreature
+from Classes.ShadowLeague import FirstCreature, SecondCreature, ThirdCreature, \
+    FourthCreature, FifthCreature, SixthCreature, SeventhCreature
+from Classes.Inferno import FirstCreature, SecondCreature, ThirdCreature, \
+    FourthCreature, FifthCreature, SixthCreature, SeventhCreature
 from Working_with_textures.Main_menu import create_window
 from Working_with_textures.choice_display import choose_class_display
 from Working_with_textures.create_window_of_the_same_size import \
@@ -129,7 +137,7 @@ array_of_Mage = ["Gremlin", "Stone Gargoyle", "Iron Golem", "Mage",
                  "Djinn Sultan", "Rakshasa Raja", "Titan"]
 classes_list = ["Orden", "Necropolis", "Inferno", "NatureProtection",
                 "ShadowLeague", "Mage"]
-catalogs = [Orden, Necro, Inferno, Mage, ShadowLeague, NatureProtection]
+catalogs = [Orden, Necro, Inferno, NatureProtection, ShadowLeague, Mage]
 arrays_list = [array_of_Orden, array_of_Necro, array_of_Inferno,
                array_of_Forest, array_of_Shadows, array_of_Mage]
 opened_catalog = Orden
@@ -249,20 +257,20 @@ while run:
                         opened_catalog = catalogs[classes_list.index(
                             next_page)]
                         creatures_types = [
-                            Classes.Mage.FirstCreature.FirstNotUpgraded,
-                            Classes.Mage.SecondCreature.SecondNotUpgraded,
-                            Classes.Mage.ThirdCreature.ThirdNotUpgraded,
-                            Classes.Mage.FourthCreature.FourthNotUpgraded,
-                            Classes.Mage.FifthCreature.FifthNotUpgraded,
-                            Classes.Mage.SixthCreature.SixthNotUpgraded,
-                            Classes.Mage.SeventhCreature.SeventhNotUpgraded,
-                            Classes.Mage.FirstCreature.FirstUpgraded,
-                            Classes.Mage.SecondCreature.SecondUpgraded,
-                            Classes.Mage.ThirdCreature.ThirdUpgraded,
-                            Classes.Mage.FourthCreature.FourthUpgraded,
-                            Classes.Mage.FifthCreature.FifthUpgraded,
-                            Classes.Mage.SixthCreature.SixthUpgraded,
-                            Classes.Mage.SeventhCreature.SeventhUpgraded]
+                            opened_catalog.FirstCreature.FirstNotUpgraded,
+                            opened_catalog.SecondCreature.SecondNotUpgraded,
+                            opened_catalog.ThirdCreature.ThirdNotUpgraded,
+                            opened_catalog.FourthCreature.FourthNotUpgraded,
+                            opened_catalog.FifthCreature.FifthNotUpgraded,
+                            opened_catalog.SixthCreature.SixthNotUpgraded,
+                            opened_catalog.SeventhCreature.SeventhNotUpgraded,
+                            opened_catalog.FirstCreature.FirstUpgraded,
+                            opened_catalog.SecondCreature.SecondUpgraded,
+                            opened_catalog.ThirdCreature.ThirdUpgraded,
+                            opened_catalog.FourthCreature.FourthUpgraded,
+                            opened_catalog.FifthCreature.FifthUpgraded,
+                            opened_catalog.SixthCreature.SixthUpgraded,
+                            opened_catalog.SeventhCreature.SeventhUpgraded]
                         buttons_list, creatures_name = show_units(window,
                                                                   fullscreen,
                                                                   classes_list,

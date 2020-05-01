@@ -1,9 +1,6 @@
 from random import randint
 from Battle.borders import in_borders
 from BattleGround.BattleFields.ClearMap import ClearMap
-from ArmyGenerator.GenerateOrden import orden
-from ArmyGenerator.GenerateNature import Nature
-from Battle.army import Army
 from Battle.ArmyStatus import ArmyStatus
 
 
