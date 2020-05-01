@@ -1,3 +1,5 @@
+from random import randint
+
 from Units.unit import Unit
 
 
@@ -26,6 +28,10 @@ class ThirdNotUpgraded(Unit):
                          None,  # spells
                          0)  # count
 
+    def get_damaged(self, damage) -> str:
+        if randint(0, 100) < 50:
+            return super().get_damaged(damage)
+
 
 class ThirdUpgraded(Unit):
     """
@@ -53,3 +59,7 @@ class ThirdUpgraded(Unit):
                          1,  # width
                          None,  # spells
                          0)  # count)
+
+    def get_damaged(self, damage) -> str:
+        if randint(0, 100) < 40:
+            return super().get_damaged(damage)
