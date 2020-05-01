@@ -2,8 +2,7 @@ import os
 
 import pygame
 
-import Inferno
-import Mage
+from Classes import Inferno, Mage
 import NatureProtection
 import Necro
 import Orden
@@ -250,20 +249,20 @@ while run:
                         opened_catalog = catalogs[classes_list.index(
                             next_page)]
                         creatures_types = [
-                            opened_catalog.FirstCreature.FirstNotUpgraded,
-                            opened_catalog.SecondCreature.SecondNotUpgraded,
-                            opened_catalog.ThirdCreature.ThirdNotUpgraded,
-                            opened_catalog.FourthCreature.FourthNotUpgraded,
-                            opened_catalog.FifthCreature.FifthNotUpgraded,
-                            opened_catalog.SixthCreature.SixthNotUpgraded,
-                            opened_catalog.SeventhCreature.SeventhNotUpgraded,
-                            opened_catalog.FirstCreature.FirstUpgraded,
-                            opened_catalog.SecondCreature.SecondUpgraded,
-                            opened_catalog.ThirdCreature.ThirdUpgraded,
-                            opened_catalog.FourthCreature.FourthUpgraded,
-                            opened_catalog.FifthCreature.FifthUpgraded,
-                            opened_catalog.SixthCreature.SixthUpgraded,
-                            opened_catalog.SeventhCreature.SeventhUpgraded]
+                            Classes.Mage.FirstCreature.FirstNotUpgraded,
+                            Classes.Mage.SecondCreature.SecondNotUpgraded,
+                            Classes.Mage.ThirdCreature.ThirdNotUpgraded,
+                            Classes.Mage.FourthCreature.FourthNotUpgraded,
+                            Classes.Mage.FifthCreature.FifthNotUpgraded,
+                            Classes.Mage.SixthCreature.SixthNotUpgraded,
+                            Classes.Mage.SeventhCreature.SeventhNotUpgraded,
+                            Classes.Mage.FirstCreature.FirstUpgraded,
+                            Classes.Mage.SecondCreature.SecondUpgraded,
+                            Classes.Mage.ThirdCreature.ThirdUpgraded,
+                            Classes.Mage.FourthCreature.FourthUpgraded,
+                            Classes.Mage.FifthCreature.FifthUpgraded,
+                            Classes.Mage.SixthCreature.SixthUpgraded,
+                            Classes.Mage.SeventhCreature.SeventhUpgraded]
                         buttons_list, creatures_name = show_units(window,
                                                                   fullscreen,
                                                                   classes_list,

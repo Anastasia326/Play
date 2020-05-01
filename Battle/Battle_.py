@@ -6,8 +6,6 @@ from ArmyGenerator.GenerateNature import Nature
 from Battle.army import Army
 from Battle.ArmyStatus import ArmyStatus
 
-borders = [[[0, 9], [0, 1]], [[0, 9], [10, 11]]]
-
 
 class Battle:
     def __init__(self, first_army, second_army):
@@ -496,26 +494,3 @@ class Battle:
                 print("wrong command")
         print("The game was ended")
 
-
-first = orden()
-second = Nature()
-first.first_creature.add_count(first.first_creature, 40)
-first.second_creature.add_count(first.second_creature, 20)
-first.third_creature.add_count(first.third_creature, 10)
-first.fourth_creature.add_count(first.fourth_creature, 5)
-second.first_creature.add_count(second.first_creature, 40)
-second.second_creature.add_count(second.second_creature, 20)
-second.third_creature.add_count(second.third_creature, 10)
-second.fourth_creature.add_count(second.fourth_creature, 5)
-
-first_army = Army(None, [first.first_creature,
-                         first.second_creature,
-                         first.third_creature,
-                         first.fourth_creature])
-second_army = Army(None, [second.first_creature,
-                          second.second_creature,
-                          second.third_creature,
-                          second.fourth_creature])
-
-battle = Battle(first_army, second_army)
-battle.battle()

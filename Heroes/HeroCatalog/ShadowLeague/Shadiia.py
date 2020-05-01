@@ -1,7 +1,7 @@
 from Heroes.Hero_init import Hero
 
 
-class Priest(Hero):
+class Witch(Hero):
     def __init__(self):
         super().__init__("Shadia",  # name
                          None,  # spells

@@ -1,7 +1,7 @@
 from Heroes.Hero_init import Hero
 
 
-class Priest(Hero):
+class DarkElf(Hero):
     def __init__(self):
         super().__init__("Railag",  # name
                          None,  # spells

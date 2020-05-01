@@ -10,6 +10,7 @@ class ThirdNotUpgraded(Unit):
         Necromancer, которые смогли подчинить их себе. Их тела бестелесны,
         что делает сложным нанести по ним удар.
     """
+
     def __init__(self):
         super().__init__("Ghost",  # name
                          5,  # attack
@@ -31,6 +32,8 @@ class ThirdNotUpgraded(Unit):
     def get_damaged(self, damage) -> str:
         if randint(0, 100) < 50:
             return super().get_damaged(damage)
+        else:
+            return super().get_damaged(0)
 
 
 class ThirdUpgraded(Unit):
@@ -42,6 +45,7 @@ class ThirdUpgraded(Unit):
         может высасывать ману вражеских существ, восстанавливая самих Spectres
         с помощью похищенной магии.
     """
+
     def __init__(self):
         super().__init__("Spectre",  # name
                          5,  # attack
@@ -63,3 +67,5 @@ class ThirdUpgraded(Unit):
     def get_damaged(self, damage) -> str:
         if randint(0, 100) < 40:
             return super().get_damaged(damage)
+        else:
+            return super().get_damaged(0)
