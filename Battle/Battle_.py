@@ -43,6 +43,18 @@ class Battle:
                     )
                     self.map[creatures.base.position_on_battle_ground[0]][
                         creatures.base.position_on_battle_ground[1]] = None
+                    if creatures.base.length == 2:
+                        self.map[creatures.base.position_on_battle_ground[0]
+                                 - 1][
+                            creatures.base.position_on_battle_ground[1]] = None
+                        self.map[creatures.base.position_on_battle_ground[0]
+                                 - 1][
+                            creatures.base.position_on_battle_ground[1] + 1] \
+                            = None
+                        self.map[creatures.base.position_on_battle_ground[0]][
+                            creatures.base.position_on_battle_ground[1] + 1] \
+                            = None
+
                 else:
                     for soldier in army.current_army:
                         if soldier.base.name == lines.split()[0]:
@@ -64,6 +76,17 @@ class Battle:
                     )
                     self.map[creatures.base.position_on_battle_ground[0]][
                         creatures.base.position_on_battle_ground[1]] = None
+                    if creatures.base.length == 2:
+                        self.map[creatures.base.position_on_battle_ground[0]
+                                 - 1][
+                            creatures.base.position_on_battle_ground[1]] = None
+                        self.map[creatures.base.position_on_battle_ground[0]
+                                 - 1][
+                            creatures.base.position_on_battle_ground[1] + 1] \
+                            = None
+                        self.map[creatures.base.position_on_battle_ground[0]][
+                            creatures.base.position_on_battle_ground[1] + 1] \
+                            = None
             print(lines)
 
     def work_with_command(self, army, command, first_army_turn=True):
@@ -343,7 +366,8 @@ class Battle:
                     if self.map[i][j] is None:
                         if abs(creature.base.position_on_battle_ground[0] -
                                i) + \
-                                abs(creature.base.position_on_battle_ground[
+                                abs(
+                                    creature.base.position_on_battle_ground[
                                         1] - j) <= \
                                 creature.base.speed:
                             print("%s" % "|____++____|", end=" ")
@@ -359,8 +383,9 @@ class Battle:
                     abs(int(com[2]) - int(tmp[1]))) > creature.base.speed:
                     print("Can't move so far")
                     continue
-                print(self.move_creature(creature, int(tmp[0]), int(tmp[1]),
-                                         int(com[1]), int(com[2])))
+                print(
+                    self.move_creature(creature, int(tmp[0]), int(tmp[1]),
+                                       int(com[1]), int(com[2])))
                 self.next_turn(creature, [int(com[1]), int(com[2])])
             elif com[0] == "move_attack":
                 if (abs(int(com[1]) - int(tmp[0])) +
@@ -369,7 +394,8 @@ class Battle:
                     continue
                 attacked_creature = None
                 for soldier in attacked_army.current_army:
-                    if soldier.base.name == self.map[int(com[3])][int(com[4])]:
+                    if soldier.base.name == self.map[int(com[3])][
+                        int(com[4])]:
                         attacked_creature = soldier
                 if attacked_creature is None:
                     print("Wrong target.")
@@ -377,13 +403,29 @@ class Battle:
                 else:
                     self.map[tmp[0]][tmp[1]] = None
                     self.map[int(com[1])][int(com[2])] = creature.base.name
+                    if creature.base.length == 2:
+                        self.map[tmp[0] - 1][tmp[1]] = None
+                        self.map[int(com[1]) - 1][int(com[2])] = \
+                            creature.base.name
+                        self.map[tmp[0] - 1][tmp[1] + 1] = None
+                        self.map[int(com[1]) - 1][int(com[2]) + 1] = \
+                            creature.base.name
+                        self.map[tmp[0]][tmp[1] + 1] = None
+                        self.map[int(com[1])][int(com[2]) + 1] = \
+                            creature.base.name
+
                     army.army_on_field[army.army_on_field.index(tmp)] = [
                         int(com[1]), int(com[2])]
+                    tmp2 = attacked_creature.base.position_on_battle_ground
+                    attacked_creature.base.position_on_battle_ground = [int(
+                        com[3]), int(com[4])]
                     message = creature.move_and_melee_attack(
                         attacked_creature,
                         [int(com[1]), int(com[2])],
+                        army,
                         attacked_army
                     )
+                    attacked_creature.base.position_on_battle_ground = tmp2
                     print(message[0])
                     self.use_info_from_message(message[1::], army,
                                                attacked_army)
@@ -396,7 +438,8 @@ class Battle:
                     continue
                 attacked_creature = None
                 for soldier in attacked_army.current_army:
-                    if soldier.base.name == self.map[int(com[1])][int(com[2])]:
+                    if soldier.base.name == self.map[int(com[1])][
+                        int(com[2])]:
                         attacked_creature = soldier
                 if attacked_creature is None:
                     print("Wrong target.")
@@ -404,25 +447,41 @@ class Battle:
                 else:
                     message = creature.range_attack(attacked_creature,
                                                     attacked_army)
-                    self.use_info_from_message(message, army, attacked_army)
+                    self.use_info_from_message(message, army,
+                                               attacked_army)
                     self.next_turn(creature,
                                    creature.base.position_on_battle_ground)
             elif com[0] == "attack":
-                if abs(int(com[1]) - tmp[0]) > 1 or \
-                        abs(int(com[2]) - tmp[1]) > 1:
-                    print("Can't attack so far")
-                    continue
+                if creature.base.length == 1:
+                    if abs(int(com[1]) - tmp[0]) > 1 or \
+                            abs(int(com[2]) - tmp[1]) > 1:
+                        print("Can't attack so far")
+                        continue
+                else:
+                    if not(abs(int(com[1]) - tmp[0]) <= 1 and
+                           abs(int(com[2]) - tmp[1]) <= 1 or
+                           abs(int(com[1]) - tmp[0] - 1) <= 1 and
+                           abs(int(com[2]) - tmp[1]) <= 1 or
+                           abs(int(com[1]) - tmp[0] - 1) <= 1 and
+                           abs(int(com[2]) - tmp[1] + 1) <= 1 or
+                           abs(int(com[1]) - tmp[0]) <= 1 and
+                           abs(int(com[2]) - tmp[1] + 1) <= 1):
+                        print("Can't attack so far")
+                        continue
                 attacked_creature = None
                 for soldier in attacked_army.current_army:
-                    if soldier.base.name == self.map[int(com[1])][int(com[2])]:
+                    if soldier.base.name == self.map[int(com[1])][
+                        int(com[2])]:
                         attacked_creature = soldier
                 if attacked_creature is None:
                     print("Wrong target.")
                     continue
                 else:
                     message = creature.melee_attack(attacked_creature,
+                                                    army,
                                                     attacked_army)
-                    self.use_info_from_message(message, army, attacked_army)
+                    self.use_info_from_message(message, army,
+                                               attacked_army)
                     self.next_turn(creature,
                                    creature.base.position_on_battle_ground)
             elif com[0] == "wait":

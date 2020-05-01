@@ -8,8 +8,8 @@ class LifeStealCreature(BattleUnit):
         self.can_conter_attack = base.can_conter_attack
         self.conter_attack = 0
 
-    def melee_attack(self, other_creature, other_army=None,
-                     first_attack=True):
+    def melee_attack(self, other_creature, this_creature_army=None,
+                     other_army=None, first_attack=True):
         deeling_damage = count_damage(self.base, other_creature.base)
         self.base.last_creature_hp += int(deeling_damage / 2)
         self.base.add_count(self.base,
@@ -22,7 +22,10 @@ class LifeStealCreature(BattleUnit):
         if other_creature.conter_attack != other_creature.can_conter_attack \
                 and "is dead" not in message_to_return[0] and first_attack:
             other_creature.conter_attack += 1
-            message_to_return += other_creature.melee_attack(self,
-                                                             None,
-                                                             False)
+            message_to_return += other_creature.melee_attack(
+                self,
+                other_army,
+                this_creature_army,
+                False
+            )
         return message_to_return
