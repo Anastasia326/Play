@@ -34,7 +34,8 @@ class RangeAttackCreature(BattleUnit):
                     other_creature.base.position_on_battle_ground[1]) > 8:
             deeling_damage /= 2
         message_to_return = [other_creature.get_damage(deeling_damage)]
-        if "Hunter" in self.base.name:
+        if "Hunter" in self.base.name and \
+                "is dead" not in message_to_return[0]:
             message_to_return += [other_creature.get_damage(deeling_damage)]
         if other_creature.conter_attack != other_creature.can_conter_attack \
                 and "is dead" not in message_to_return[0] and first_attack \

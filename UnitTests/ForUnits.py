@@ -1,5 +1,5 @@
 import unittest
-from Orden.FirstCreature import FirstNotUpgraded
+from Classes.Orden.FirstCreature import FirstNotUpgraded
 
 
 class TestVillager(unittest.TestCase):
@@ -23,7 +23,7 @@ class TestVillager(unittest.TestCase):
         self.assertEqual(self.unit.length, 1, "wrong length")
         self.assertEqual(self.unit.width, 1, "wrong width")
         self.assertEqual(self.unit.spells, None, "wrong spells")
-        self.unit.add_count(5)
+        self.unit.add_count(self.unit, 5)
         self.assertEqual(self.unit.count, 5, "wrong added")  # count
         self.assertEqual(self.unit.get_damaged(1), "0 Villager died. 1 was "
                                                    "taken")

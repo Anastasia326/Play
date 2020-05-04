@@ -11,6 +11,7 @@ from Heroes.HeroCatalog.Orden.Swerchok import Priest
 
 
 class orden(Creator):
+
     def create_first_type_creatures(self):
         self.first_creature = FirstNotUpgraded()
         self.first_creature_upgraded = FirstUpgraded()

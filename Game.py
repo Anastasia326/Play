@@ -24,9 +24,6 @@ pygame.init()
 
 window.value, buttons_list = create_window(window.value, fullscreen.value)
 run = True
-
-window.value, buttons_list = create_window(window.value, fullscreen.value)
-run = True
 page = "Main menu"
 i = 0
 
