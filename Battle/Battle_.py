@@ -277,8 +277,6 @@ class Battle:
                                                           mouse_x1, mouse_y1,
                                                           mouse_x2, mouse_y2,
                                                           names, self.window)
-                print(command)
-                print(command.split())
                 command = command.split()
                 if first_player:
                     next_player = self.work_with_command(
