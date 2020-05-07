@@ -17,9 +17,7 @@ class Hero(ABC):
 
     Методы:
         - Создание
-        - Изучение заклинания
         - Улучшение характеристик
-        - Использовать заклинание
         - Показать доступные заклинания
         - Показать Армию
         - Добавить в армию
@@ -27,21 +25,17 @@ class Hero(ABC):
         - Атаковать
 
     """
-    def __init__(self, name, spells, attack, protection , morale, luck, witchraft, knowledge):
+    def __init__(self, name, spells, attack, protection, morale, luck,
+                 witchcraft, knowledge):
         self.name = name
         self.spells = spells
         self.attack = attack
         self.protection = protection
         self.morale = morale
         self.luck = luck
-        self.witchcraft = witchraft
+        self.witchcraft = witchcraft
         self.knowledge = knowledge
         self.army = [None]*7
-       # self.skills = []
-
-    @abstractmethod
-    def learn_spell(self, spell):
-        pass
 
     def improve_skill(self, name_of_skill, points) -> str:
         """Улучшение характеристики"""
@@ -59,9 +53,6 @@ class Hero(ABC):
             self.knowledge += points
         return str(self.name) + "nas improved" + str(name_of_skill)  + "by" + str(points) + "points"
 
-    @abstractmethod
-    def cast_spell(self, spell):
-        pass
 
     def show_available_spells(self):
         """Я знаю заклинания: """

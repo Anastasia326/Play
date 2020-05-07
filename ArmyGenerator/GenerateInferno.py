@@ -1,11 +1,13 @@
+from Heroes.HeroCatalog.Inferno.Agrail import Demon
+from Heroes.HeroCatalog.Inferno.Shacherizada import Heretic
 from Units.Creator import Creator
-from Inferno.FirstCreature import FirstUpgraded, FirstNotUpgraded
-from Inferno.SecondCreature import SecondUpgraded, SecondNotUpgraded
-from Inferno.ThirdCreatures import ThirdUpgraded, ThirdNotUpgraded
-from Inferno.FourthCreature import FourthUpgraded, FourthNotUpgraded
-from Inferno.FifthCreature import FifthUpgraded, FifthNotUpgraded
-from Inferno.SixthCreature import SixthUpgraded, SixthNotUpgraded
-from Inferno.SeventhCreature import SeventhUpgraded, SeventhNotUpgraded
+from Classes.Inferno.FirstCreature import FirstUpgraded, FirstNotUpgraded
+from Classes.Inferno.SecondCreature import SecondUpgraded, SecondNotUpgraded
+from Classes.Inferno.ThirdCreature import ThirdUpgraded, ThirdNotUpgraded
+from Classes.Inferno.FourthCreature import FourthUpgraded, FourthNotUpgraded
+from Classes.Inferno.FifthCreature import FifthUpgraded, FifthNotUpgraded
+from Classes.Inferno.SixthCreature import SixthUpgraded, SixthNotUpgraded
+from Classes.Inferno.SeventhCreature import SeventhUpgraded, SeventhNotUpgraded
 
 
 class inferno(Creator):
@@ -37,5 +39,8 @@ class inferno(Creator):
         self.seventh_creature = SeventhNotUpgraded()
         self.seventh_creature_upgraded = SeventhUpgraded()
 
-    def create_hero(self, name):
-        pass
+    def create_hero_First(self):
+        self.first_hero = Demon()
+
+    def create_hero_Second(self):
+        self.second_hero = Heretic()

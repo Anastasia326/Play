@@ -1,11 +1,13 @@
+from Heroes.HeroCatalog.Nekro.Markel import Nekromant
+from Heroes.HeroCatalog.Nekro.Tiamovax import KnightOfDeath
 from Units.Creator import Creator
-from Necro.FirstCreature import FirstUpgraded, FirstNotUpgraded
-from Necro.SecondCreature import SecondUpgraded, SecondNotUpgraded
-from Necro.ThirdCreatures import ThirdUpgraded, ThirdNotUpgraded
-from Necro.FourthCreature import FourthUpgraded, FourthNotUpgraded
-from Necro.FifthCreature import FifthUpgraded, FifthNotUpgraded
-from Necro.SixthCreature import SixthUpgraded, SixthNotUpgraded
-from Necro.SeventhCreature import SeventhUpgraded, SeventhNotUpgraded
+from Classes.Necro.FirstCreature import FirstUpgraded, FirstNotUpgraded
+from Classes.Necro.SecondCreature import SecondUpgraded, SecondNotUpgraded
+from Classes.Necro.ThirdCreature import ThirdUpgraded, ThirdNotUpgraded
+from Classes.Necro.FourthCreature import FourthUpgraded, FourthNotUpgraded
+from Classes.Necro.FifthCreature import FifthUpgraded, FifthNotUpgraded
+from Classes.Necro.SixthCreature import SixthUpgraded, SixthNotUpgraded
+from Classes.Necro.SeventhCreature import SeventhUpgraded, SeventhNotUpgraded
 
 
 class necro(Creator):
@@ -37,5 +39,8 @@ class necro(Creator):
         self.seventh_creature = SeventhNotUpgraded()
         self.seventh_creature_upgraded = SeventhUpgraded()
 
-    def create_hero(self, name):
-        pass
+    def create_hero_First(self):
+        self.first_hero = Nekromant()
+
+    def create_hero_Second(self):
+        self.second_hero = KnightOfDeath()

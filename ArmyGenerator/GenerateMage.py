@@ -1,11 +1,13 @@
+from Heroes.HeroCatalog.Mage.Orra import Mage
+from Heroes.HeroCatalog.Mage.Zexir import Alchemist
 from Units.Creator import Creator
-from Mage.FirstCreature import FirstUpgraded, FirstNotUpgraded
-from Mage.SecondCreature import SecondUpgraded, SecondNotUpgraded
-from Mage.ThirdCreatures import ThirdUpgraded, ThirdNotUpgraded
-from Mage.FourthCreature import FourthUpgraded, FourthNotUpgraded
-from Mage.FifthCreature import FifthUpgraded, FifthNotUpgraded
-from Mage.SixthCreature import SixthUpgraded, SixthNotUpgraded
-from Mage.SeventhCreature import SeventhUpgraded, SeventhNotUpgraded
+from Classes.Mage.FirstCreature import FirstUpgraded, FirstNotUpgraded
+from Classes.Mage.SecondCreature import SecondUpgraded, SecondNotUpgraded
+from Classes.Mage.ThirdCreature import ThirdUpgraded, ThirdNotUpgraded
+from Classes.Mage.FourthCreature import FourthUpgraded, FourthNotUpgraded
+from Classes.Mage.FifthCreature import FifthUpgraded, FifthNotUpgraded
+from Classes.Mage.SixthCreature import SixthUpgraded, SixthNotUpgraded
+from Classes.Mage.SeventhCreature import SeventhUpgraded, SeventhNotUpgraded
 
 
 class mage(Creator):
@@ -37,5 +39,8 @@ class mage(Creator):
         self.seventh_creature = SeventhNotUpgraded()
         self.seventh_creature_upgraded = SeventhUpgraded()
 
-    def create_hero(self, name):
-        pass
+    def create_hero_First(self):
+        self.first_hero = Mage()
+
+    def create_hero_Second(self):
+        self.second_hero = Alchemist()
