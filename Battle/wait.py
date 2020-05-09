@@ -1,14 +1,8 @@
 import pygame
 
 pygame.init()
-import os
 
-from Working_with_textures.chose_with_whom_play import chose_with_whom_play
-from Working_with_textures.window_with_choise import create_window_choise
 from Working_with_textures.was_clicked import button_was_clicked
-from Working_with_textures.NewField import create_window_of_Field
-from Working_with_textures.choose_units_to_kill import choose_units_to_kill
-from Working_with_textures.placement_of_forces import placement_of_forces
 
 
 def wait(button_list):

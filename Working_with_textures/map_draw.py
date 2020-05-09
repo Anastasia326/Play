@@ -1,3 +1,5 @@
+import os
+
 import pygame
 
 
@@ -8,8 +10,13 @@ def map_draw(window, karta):
                     (i > 0 and karta[i - 1][j] != karta[i][j] or i == 0) \
                     and \
                     (j > 0 and karta[i][j - 1] != karta[i][j] or j == 0):
-                background_image_of_unit_face = pygame.image.load(
-                    "Battle/battle/" + karta[i][j] + ".png")
+                if os.name == "nt":
+                    background_image_of_unit_face = pygame.image.load(
+                        str(os.path.abspath(__file__)).split("Battle")[0] +
+                        "Battle/battle/" + karta[i][j] + ".png")
+                else:
+                    background_image_of_unit_face = pygame.image.load(
+                        "Battle/battle/" + karta[i][j] + ".png")
                 window.blit(background_image_of_unit_face,
                             [100 + j * 50, 2 + i * 50])
                 pygame.display.update()
