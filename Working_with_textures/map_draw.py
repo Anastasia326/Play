@@ -12,8 +12,9 @@ def map_draw(window, karta):
                     (j > 0 and karta[i][j - 1] != karta[i][j] or j == 0):
                 if os.name == "nt":
                     background_image_of_unit_face = pygame.image.load(
-                        str(os.path.abspath(__file__)).split("Battle")[0] +
-                        "Battle/battle/" + karta[i][j] + ".png")
+                        str(os.path.abspath(__file__)).split(
+                            "Working_with_textures")[0] +
+                        "Battle\\battle\\" + karta[i][j] + ".png")
                 else:
                     background_image_of_unit_face = pygame.image.load(
                         "Battle/battle/" + karta[i][j] + ".png")
