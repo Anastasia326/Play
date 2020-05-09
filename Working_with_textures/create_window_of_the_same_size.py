@@ -15,7 +15,7 @@ def create_window_of_the_same_size(window, fullscreen):
         window = pygame.display.set_mode((size[0], size[1]))
     if os.name == "nt":
         background_image = pygame.image.load(str(os.path.abspath(
-            __file__)).split("Game")[0] + "textures/" + str(size[0]) +
+            __file__)).split("Working_with_textures")[0] + "textures/" + str(size[0]) +
                                              "x" + str(size[1]) + ".jpg")
     else:
         background_image = pygame.image.load(

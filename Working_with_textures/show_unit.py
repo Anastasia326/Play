@@ -36,7 +36,7 @@ def show_unit(window, fullscreen, opened_catalog, array_of_Orden,
     if os.name == "nt":
         background_image_of_unit = pygame.image.load(
             str(os.path.abspath(__file__)).split(
-                "Game")[0] + "textures\\заготовка.png")
+                "Working_with_textures")[0] + "textures\\заготовка.png")
     else:
         background_image_of_unit = pygame.image.load("textures/заготовка.png")
     window.blit(background_image_of_unit, [0, 0])
@@ -46,7 +46,7 @@ def show_unit(window, fullscreen, opened_catalog, array_of_Orden,
     if os.name == "nt":
         background_image_of_unit_face = pygame.image.load(
             str(os.path.abspath(__file__)).split(
-                "Game")[0]+ "textures\\" + unit_name + ".png")
+                "Working_with_textures")[0]+ "textures\\" + unit_name + ".png")
     else:
         background_image_of_unit_face = pygame.image.load("textures/" +
                                                           unit_name + ".png")

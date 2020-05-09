@@ -26,7 +26,7 @@ def create_window(window, fullscreen, length: int = 800, width: int = 600,
         current_h = user32.GetSystemMetrics(1)
         background_image = pygame.image.load(
             str(os.path.abspath(__file__)).split(
-                "Game")[0] + "textures\\" +
+                "Working_with_textures")[0] + "textures\\" +
             str(length) + "x" + str(width) + ".jpg")
     else:
         info_object = str(get_monitors()).split("=")
@@ -42,7 +42,7 @@ def create_window(window, fullscreen, length: int = 800, width: int = 600,
         if os.name == "nt":
             background_image = pygame.image.load(
                 str(os.path.abspath(__file__)).split(
-                    "Game")[0] + "textures\\" +
+                    "Working_with_textures")[0] + "textures\\" +
             str(length) + "x" + str(width) + ".jpg")
         else:
             background_image = pygame.image.load(
