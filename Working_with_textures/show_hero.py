@@ -18,7 +18,7 @@ def show_hero(window, fullscreen, hero_name: str):
     if os.name == "nt":
         background_image_of_unit = pygame.image.load(
             str(os.path.abspath(__file__)).split(
-                "Game")[0] + "textures/заготовка.png")
+                "Game")[0] + "textures\\заготовка.png")
     else:
         background_image_of_unit = pygame.image.load("textures/заготовка.png")
     window.blit(background_image_of_unit, [0, 0])
@@ -28,7 +28,7 @@ def show_hero(window, fullscreen, hero_name: str):
     if os.name == "nt":
         background_image_of_unit_face = pygame.image.load(
             str(os.path.abspath(__file__)).split(
-                "Game")[0] + hero_name + ".png")
+                "Game")[0] + "textures\\" + hero_name + ".png")
     else:
         background_image_of_unit_face = pygame.image.load("textures/" +
                                                           hero_name + ".png")
