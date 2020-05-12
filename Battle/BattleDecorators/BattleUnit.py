@@ -1,3 +1,5 @@
+from random import randint
+
 from Battle.count_damage import count_damage
 from Units.unit import Unit
 

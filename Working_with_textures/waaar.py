@@ -14,16 +14,17 @@ def waaar(button_list, commands):
                 pos = pygame.mouse.get_pos()
                 if not new_click:
                     yes, names = button_was_clicked(button_list, commands, pos)
-                    if names == "Wait":
-                        return "wait"
-                    elif names == "Defend":
-                        return "defend"
-                    elif names == "Exit":
-                        return "exit"
-                    else:
-                        string += names
-                        string += " "
-                        new_click = True
+                    if yes:
+                        if names == "Wait":
+                            return "wait"
+                        elif names == "Defend":
+                            return "defend"
+                        elif names == "Exit":
+                            return "exit"
+                        else:
+                            string += names
+                            string += " "
+                            new_click = True
                 else:
                     x = (pos[0] - 100) // 50
                     y = (pos[1] - 2) // 50

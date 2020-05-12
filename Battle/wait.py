@@ -44,3 +44,4 @@ def wait(button_list):
                             mouse_x2, mouse_y2 = pos[0], pos[1]
                             click2 = 2
     return True, click1, click2, mouse_x1, mouse_y1, mouse_x2, mouse_y2
+

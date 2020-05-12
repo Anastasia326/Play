@@ -1,14 +1,14 @@
 from random import randint
-from Battle.borders import in_borders
-from BattleGround.BattleFields.ClearMap import ClearMap
-from ArmyGenerator.GenerateOrden import orden
-from ArmyGenerator.GenerateNature import Nature
-from Battle.army import Army
+
 from Battle.ArmyStatus import ArmyStatus
-from Working_with_textures.choose_units_to_kill import choose_units_to_kill
+from Battle.borders import in_borders
 from Battle.wait import wait
-from Battle.worker_after_wait_for_preparing import worker_after_wait_for_preparing
+from Battle.worker_after_wait_for_preparing import \
+    worker_after_wait_for_preparing
+from BattleGround.BattleFields.ClearMap import ClearMap
+from Working_with_textures.choose_units_to_kill import choose_units_to_kill
 from Working_with_textures.draw_commans import draw_commans
+from Working_with_textures.draw_green_cell import draw_green_cell
 from Working_with_textures.map_draw import map_draw
 from Working_with_textures.waaar import waaar
 
@@ -105,8 +105,6 @@ class Battle:
             else:
                 creature = army.stash[int(command[1])]
                 if creature.base.length == 2:
-                    print(first_army_turn)
-                    print(borders[0 if first_army_turn else 1][1][0])
                     if int(command[3]) != \
                             borders[0 if first_army_turn else 1][1][0] or \
                             int(command[2]) < 1 or int(command[2]) > 9:
@@ -237,58 +235,64 @@ class Battle:
         continuing = True
         first_player = True
         while continuing:
-            #try:
-            names = []
-            print("Your stash:", end=" ")
-            if first_player:
-                for creatures in self.first_army_status.current_army:
-                    names += [creatures.base.name]
-                for creature in self.first_army_status.stash:
-                    print(creature.base.name, end="|")
-                buttons_list = choose_units_to_kill(self.window, self.fullscreen, self.first_army_status.stash)
-            else:
-                for creatures in self.second_army_status.current_army:
-                    names += [creatures.base.name]
-                buttons_list = choose_units_to_kill(self.window, self.fullscreen, self.second_army_status.stash)
-                for creature in self.second_army_status.stash:
-                    print(creature.base.name, end="|")
-            print()
-            print("Your army on field:", end=" ")
-            if first_player:
-                if len(self.first_army_status.army_on_field) == 0:
-                    print("Empty")
-            else:
-                if len(self.second_army_status.army_on_field) == 0:
-                    print("Empty")
-            if first_player:
-                for creature in self.first_army_status.army_on_field:
-                    print(self.map[creature[0]][creature[1]] + " " +
-                          str(creature))
-            else:
-                for creature in self.second_army_status.army_on_field:
-                    print(self.map[creature[0]][creature[1]] + " " +
-                          str(creature))
-            map_draw(self.window, self.map)
-            wait_, click1, click2, mouse_x1, mouse_y1, mouse_x2, mouse_y2 = wait(buttons_list)
-            command = worker_after_wait_for_preparing(wait_, click1, click2, mouse_x1, mouse_y1, mouse_x2, mouse_y2,
-                                                      names, self.window)
-            command =command.split()
-            print(command)
-            if first_player:
-                next_player = self.work_with_command(
-                    self.first_army_status,
-                    command)
-                if next_player:
-                    first_player = False
-            else:
-                next_player = self.work_with_command(
-                    self.second_army_status,
-                    command, False)
-                if next_player:
-                    self.make_queue()
-                    return
-           # except Exception:
-            #    print("wrong command")
+            try:
+                names = []
+                print("Your stash:", end=" ")
+                if first_player:
+                    for creatures in self.first_army_status.current_army:
+                        names += [creatures.base.name]
+                    for creature in self.first_army_status.stash:
+                        print(creature.base.name, end="|")
+                    buttons_list = choose_units_to_kill(self.window,
+                                                        self.fullscreen,
+                                                        self.first_army_status.stash)
+                else:
+                    for creatures in self.second_army_status.current_army:
+                        names += [creatures.base.name]
+                    buttons_list = choose_units_to_kill(self.window,
+                                                        self.fullscreen,
+                                                        self.second_army_status.stash)
+                    for creature in self.second_army_status.stash:
+                        print(creature.base.name, end="|")
+                print()
+                print("Your army on field:", end=" ")
+                if first_player:
+                    if len(self.first_army_status.army_on_field) == 0:
+                        print("Empty")
+                else:
+                    if len(self.second_army_status.army_on_field) == 0:
+                        print("Empty")
+                if first_player:
+                    for creature in self.first_army_status.army_on_field:
+                        print(self.map[creature[0]][creature[1]] + " " +
+                              str(creature))
+                else:
+                    for creature in self.second_army_status.army_on_field:
+                        print(self.map[creature[0]][creature[1]] + " " +
+                              str(creature))
+                map_draw(self.window, self.map, self.fullscreen)
+                wait_, click1, click2, mouse_x1, mouse_y1, mouse_x2, mouse_y2 = wait(
+                    buttons_list)
+                command = worker_after_wait_for_preparing(wait_, click1, click2,
+                                                          mouse_x1, mouse_y1,
+                                                          mouse_x2, mouse_y2,
+                                                          names, self.window)
+                command = command.split()
+                if first_player:
+                    next_player = self.work_with_command(
+                        self.first_army_status,
+                        command)
+                    if next_player:
+                        first_player = False
+                else:
+                    next_player = self.work_with_command(
+                        self.second_army_status,
+                        command, False)
+                    if next_player:
+                        self.make_queue()
+                        return
+            except Exception:
+                print("wrong command")
 
     def make_queue(self):
         all_army = self.first_army_status.army_on_field + \
@@ -332,15 +336,18 @@ class Battle:
             self.map[coordinate_x_to - 1][coordinate_y_to] = creature.base.name
         return creature.move([coordinate_x_to, coordinate_y_to])
 
-    def next_turn(self, creature, coordinates):
+    def next_turn(self, creature):
         self.queue_of_creatures.pop(0)
         if int(len(
                 self.queue_of_creatures) * 10 / creature.base.initiative) == 0:
-            self.queue_of_creatures.insert(1, coordinates)
+            self.queue_of_creatures.insert(
+                1,
+                creature.base.position_on_battle_ground
+            )
         else:
             self.queue_of_creatures.insert(int(len(
                 self.queue_of_creatures) * 10 / creature.base.initiative),
-                                           coordinates)
+                                           creature.base.position_on_battle_ground)
         for key in creature.base.improvement_duration.keys():
             if creature.base.improvement_duration[key] > 0:
                 creature.base.improvement_duration[key] -= 1
@@ -384,7 +391,7 @@ class Battle:
                     creature.base.shots is not None:
                 print("\trange_attack attacked_creature_coordinate_x y")
             print(creature.base.position_on_battle_ground)
-            map_draw(self.window, self.map)
+            map_draw(self.window, self.map, self.fullscreen)
             for i in range(len(self.map)):
                 for j in range(len(self.map[i])):
                     if self.map[i][j] is None:
@@ -395,13 +402,15 @@ class Battle:
                                         1] - j) <= \
                                 creature.base.speed:
                             print("%s" % "|____++____|", end=" ")
+                            draw_green_cell(self.window, i, j)
                         else:
                             print("%s" % "|__________|", end=" ")
                     else:
                         print("%s" % self.map[i][j].center(12), end=" ")
                 print()
 
-            com = waaar(buttons, ["move", "attack", "move_attack", "Wait", "Defend", "Exit", "range_attack"])
+            com = waaar(buttons, ["move", "attack", "move_attack",
+                                  "Wait", "Defend", "Exit", "range_attack"])
             com = com.split()
             if com[0] == "move":
                 if (abs(int(com[1]) - int(tmp[0])) +
@@ -411,7 +420,7 @@ class Battle:
                 print(
                     self.move_creature(creature, int(tmp[0]), int(tmp[1]),
                                        int(com[1]), int(com[2])))
-                self.next_turn(creature, [int(com[1]), int(com[2])])
+                self.next_turn(creature)
             elif com[0] == "move_attack":
                 if (abs(int(com[1]) - int(tmp[0])) +
                     abs(int(com[2]) - int(tmp[1]))) > creature.base.speed:
@@ -438,7 +447,9 @@ class Battle:
                         self.map[tmp[0]][tmp[1] + 1] = None
                         self.map[int(com[1])][int(com[2]) + 1] = \
                             creature.base.name
-
+                    self.queue_of_creatures[
+                        self.queue_of_creatures.index(tmp)
+                    ] = [int(com[1]), int(com[2])]
                     army.army_on_field[army.army_on_field.index(tmp)] = [
                         int(com[1]), int(com[2])]
                     tmp2 = attacked_creature.base.position_on_battle_ground
@@ -454,7 +465,7 @@ class Battle:
                     print(message[0])
                     self.use_info_from_message(message[1::], army,
                                                attacked_army)
-                    self.next_turn(creature, [int(com[3]), int(com[4])])
+                    self.next_turn(creature)
             elif com[0] == "exit":
                 break
             elif com[0] == "range_attack":
@@ -474,8 +485,7 @@ class Battle:
                                                     attacked_army)
                     self.use_info_from_message(message, army,
                                                attacked_army)
-                    self.next_turn(creature,
-                                   creature.base.position_on_battle_ground)
+                    self.next_turn(creature)
             elif com[0] == "attack":
                 if creature.base.length == 1:
                     if abs(int(com[1]) - tmp[0]) > 1 or \
@@ -483,14 +493,14 @@ class Battle:
                         print("Can't attack so far")
                         continue
                 else:
-                    if not(abs(int(com[1]) - tmp[0]) <= 1 and
-                           abs(int(com[2]) - tmp[1]) <= 1 or
-                           abs(int(com[1]) - tmp[0] - 1) <= 1 and
-                           abs(int(com[2]) - tmp[1]) <= 1 or
-                           abs(int(com[1]) - tmp[0] - 1) <= 1 and
-                           abs(int(com[2]) - tmp[1] + 1) <= 1 or
-                           abs(int(com[1]) - tmp[0]) <= 1 and
-                           abs(int(com[2]) - tmp[1] + 1) <= 1):
+                    if not (abs(int(com[1]) - tmp[0]) <= 1 and
+                            abs(int(com[2]) - tmp[1]) <= 1 or
+                            abs(int(com[1]) - tmp[0] - 1) <= 1 and
+                            abs(int(com[2]) - tmp[1]) <= 1 or
+                            abs(int(com[1]) - tmp[0] - 1) <= 1 and
+                            abs(int(com[2]) - tmp[1] + 1) <= 1 or
+                            abs(int(com[1]) - tmp[0]) <= 1 and
+                            abs(int(com[2]) - tmp[1] + 1) <= 1):
                         print("Can't attack so far")
                         continue
                 attacked_creature = None
@@ -507,17 +517,13 @@ class Battle:
                                                     attacked_army)
                     self.use_info_from_message(message, army,
                                                attacked_army)
-                    self.next_turn(creature,
-                                   creature.base.position_on_battle_ground)
+                    self.next_turn(creature)
             elif com[0] == "wait":
                 print(creature.wait())
-                self.next_turn(creature,
-                               creature.base.position_on_battle_ground)
+                self.next_turn(creature)
             elif com[0] == "defend":
                 print(creature.defend())
-                self.next_turn(creature,
-                               creature.base.position_on_battle_ground)
+                self.next_turn(creature)
             else:
                 print("wrong command")
         print("The game was ended")
-

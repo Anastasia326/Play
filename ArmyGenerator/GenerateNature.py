@@ -1,11 +1,12 @@
 from Units.Creator import Creator
-from NatureProtection.FirstCreature import FirstUpgraded, FirstNotUpgraded
-from NatureProtection.SecondCreature import SecondUpgraded, SecondNotUpgraded
-from NatureProtection.ThirdCreature import ThirdUpgraded, ThirdNotUpgraded
-from NatureProtection.FourthCreature import FourthUpgraded, FourthNotUpgraded
-from NatureProtection.FifthCreature import FifthUpgraded, FifthNotUpgraded
-from NatureProtection.SixthCreature import SixthUpgraded, SixthNotUpgraded
-from NatureProtection.SeventhCreature import SeventhUpgraded, SeventhNotUpgraded
+from Classes.NatureProtection.FirstCreature import FirstUpgraded, \
+    FirstNotUpgraded
+from Classes.NatureProtection.SecondCreature import SecondUpgraded, SecondNotUpgraded
+from Classes.NatureProtection.ThirdCreature import ThirdUpgraded, ThirdNotUpgraded
+from Classes.NatureProtection.FourthCreature import FourthUpgraded, FourthNotUpgraded
+from Classes.NatureProtection.FifthCreature import FifthUpgraded, FifthNotUpgraded
+from Classes.NatureProtection.SixthCreature import SixthUpgraded, SixthNotUpgraded
+from Classes.NatureProtection.SeventhCreature import SeventhUpgraded, SeventhNotUpgraded
 from Heroes.HeroCatalog.NatureProtection.Faidaen import Druid
 from Heroes.HeroCatalog.NatureProtection.Legolas import Ranger
 
@@ -40,10 +41,7 @@ class Nature(Creator):
         self.seventh_creature = SeventhNotUpgraded()
         self.seventh_creature_upgraded = SeventhUpgraded()
 
-    def create_hero(self, name):
-        pass
-
-    def create_hero(self):
+    def create_hero_First(self):
         self.first_hero = Druid()
 
     def create_hero_Second(self):
