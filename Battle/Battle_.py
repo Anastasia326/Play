@@ -323,7 +323,7 @@ class Battle:
                 #self.message_ = ""
             except Exception:
                 print("wrong command")
-                self.message_ = "Wrong command"
+                self.message_ = "   Wrong command"
     def make_queue(self):
         all_army = self.first_army_status.army_on_field + \
                    self.second_army_status.army_on_field
