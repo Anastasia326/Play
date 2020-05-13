@@ -12,8 +12,6 @@ def choose_units_to_kill(window, fullscreen, units):
     window = create_window_of_Field(window, fullscreen, "Field")
     length = pygame.display.get_surface().get_width()
     width = pygame.display.get_surface().get_height()
-    draw_button(window, (255, 215, 0),
-                (100, 510, 600, 80), "Choose units", 85, 107, 47, 60)
     pygame.display.update()
     if len(units) > 4:
         buttons = draw_some_buttons(window, 4,

@@ -42,6 +42,8 @@ def worker_after_wait_for_preparing(wait, click1, click2, mouse_x1, mouse_y1, mo
         cell_x = (mouse_x1 - 50) // 12
         cell_y = (mouse_y1 - 2) // 10
         return "move " + str(cell_y) + " " + str(cell_x) + "stash"
+    if click1 == 1 and click2 == 1:
+        return "Nothing happened"
     if click1 == 2 and click2 == 2:
         cell_x1 = (mouse_x1 - 50) // 12
         cell_y1 = (mouse_y1 - 2) // 10

@@ -17,7 +17,7 @@ def wait(button_list):
     mouse_x2 = 0
     mouse_y2 = 0
     first_click = True
-    while click1 == None or click2 == None:
+    while click1 is None or click2 is None:
         pygame.time.delay(1)
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -30,7 +30,7 @@ def wait(button_list):
                     else:
                         mouse_x2, mouse_y2 = pos[0], pos[1]
                         click2 = 1
-                elif 800 >= pos[0] > 700 and 150 >= pos[1] >= 100:
+                elif 800 >= pos[0] > 700 and 150 <= pos[1] <= 225:
                     click1 = 3
                     click2 = 3
                 else:

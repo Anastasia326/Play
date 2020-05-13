@@ -29,7 +29,7 @@ class SeventhNotUpgraded(Unit):
                          2,  # width
                          None,  # spells
                          0)  # count)
-        special_resource = 1
+        self.special_resource = "Blue"
 
 
 class SeventhUpgraded(Unit):
@@ -58,3 +58,4 @@ class SeventhUpgraded(Unit):
                          2,  # width
                          None,  # spells
                          0)  # count)
+        self.special_resource = "Blue"

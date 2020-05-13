@@ -18,6 +18,7 @@ from ArmyForDuel.Shadia_army import Shadiia_army
 from ArmyForDuel.Sverchok_army import Swerchok_army
 from ArmyForDuel.Tiamovax_army import Tiamovax_army
 from ArmyForDuel.Zexir_army import Zexir_army
+from Working_with_textures.arrays import heroes_list, classes_list
 
 def Start_Battle(window, fullscreen):
     run = True
@@ -103,29 +104,14 @@ def Start_Battle(window, fullscreen):
                                                                 [mouse_x, mouse_y])
                     if next_page is not None:
                         What_happened = next_page
-                        if What_happened == "Orden":
-                            buttons_list = chose_with_whom_play(window, fullscreen,
-                                                                "Ivanhoe",
-                                                                "Swerchok")
-                        elif What_happened == "Necropolis":
-                            buttons_list = chose_with_whom_play(window, fullscreen,
-                                                                "Markel",
-                                                                "Tiamovax")
-                        elif What_happened == "Inferno":
-                            buttons_list = chose_with_whom_play(window, fullscreen,
-                                                                "Agrail",
-                                                                "Shacherizada")
-                        elif What_happened == "NatureProtection":
-                            buttons_list = chose_with_whom_play(window, fullscreen,
-                                                                "Faidaen",
-                                                                "Legolas")
-                        elif What_happened == "ShadowLeague":
-                            buttons_list = chose_with_whom_play(window, fullscreen,
-                                                                "Railag",
-                                                                "Shadiia")
-                        elif What_happened == "Mage":
-                            buttons_list = chose_with_whom_play(window, fullscreen,
-                                                                "Orra", "Zexir")
+                        index_ = classes_list.index(What_happened)
+                        buttons_list = chose_with_whom_play(
+                            window,
+                            fullscreen,
+                            heroes_list[index_][0],
+                            heroes_list[index_][1]
+                        )
+
                     print(next_page, What_happened)
             elif What_happened == "Orden":
                 if event.type == pygame.MOUSEBUTTONDOWN:

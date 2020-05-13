@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
 
+
 class Hero(ABC):
     """
     Инициализация класса героя (руководителя войск)
@@ -18,13 +19,13 @@ class Hero(ABC):
     Методы:
         - Создание
         - Улучшение характеристик
-        - Показать доступные заклинания
         - Показать Армию
         - Добавить в армию
         - Удалить из армии
         - Атаковать
 
     """
+
     def __init__(self, name, spells, attack, protection, morale, luck,
                  witchcraft, knowledge):
         self.name = name
@@ -62,4 +63,3 @@ class Hero(ABC):
         """Армия"""
         for i in range(len(self.army)):
             print(self.army[i])
-
