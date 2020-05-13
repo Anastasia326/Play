@@ -42,7 +42,7 @@ class RangeAttackCreature(BattleUnit):
                 and hasattr(other_creature, "range_attack") and \
                 other_creature.base.shots > 0:
             other_creature.conter_attack += 1
-            message_to_return += [other_creature.range_attack(self,
-                                                              None,
-                                                              False)]
+            message_to_return += other_creature.range_attack(self,
+                                                             None,
+                                                             False)
         return message_to_return

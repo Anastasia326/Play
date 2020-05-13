@@ -15,7 +15,7 @@ building_array = [
 
 improving_skills_list = [
     "attack",
-    "movement",
+    "knowledge",
     "protection",
     "witchcraft"
 ]

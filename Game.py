@@ -6,8 +6,7 @@ from Working_with_textures.Window_singleton import window, fullscreen
 from Working_with_textures.arrays import arrays_list, array_of_Forest, \
     array_of_Shadows, array_of_Mage, array_of_Inferno, array_of_Necro, \
     array_of_Orden, classes_list, opened_catalog, catalogs, hero_name, \
-    hero_of_Mage, hero_of_Shadows, hero_of_Inferno, hero_of_Necro, \
-    hero_of_Orden, heroes_list, hero_of_Forest
+    heroes_list, modes
 from Working_with_textures.choice_display import choose_class_display
 from Working_with_textures.choose_mod import choose_mod
 from Working_with_textures.information_menu import information_menu
@@ -120,22 +119,36 @@ while run:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
                 mouse_x, mouse_y = pos[0], pos[1]
-                if buttons_list[1][0] < mouse_x < buttons_list[1][0] + \
-                        buttons_list[1][2] and buttons_list[1][1] < mouse_y \
-                        < buttons_list[1][1] + buttons_list[1][3]:
+                was_clicked, next_page = button_was_clicked(
+                    buttons_list,
+                    modes,
+                    [mouse_x, mouse_y]
+                )
+                if next_page == "Return":
                     i = 0
                     page = "Main menu"
                     size = [pygame.display.get_surface().get_width(),
                             pygame.display.get_surface().get_height()]
-                    window.value, buttons_list = create_window(window.value,
-                                                               fullscreen.value,
-                                                               size[0],
-                                                               size[1])
-                elif buttons_list[0][0] < mouse_x < buttons_list[0][0] + \
-                        buttons_list[0][2] and buttons_list[0][1] < mouse_y \
-                        < buttons_list[0][1] + buttons_list[0][3]:
+                    window.value, buttons_list = create_window(
+                        window.value,
+                        fullscreen.value,
+                        size[0],
+                        size[1]
+                    )
+                elif next_page == "Duel":
                     Start_Battle(window.value, fullscreen.value)
                     run = False
+                else:
+                    i = 0
+                    page = "Main menu"
+                    size = [pygame.display.get_surface().get_width(),
+                            pygame.display.get_surface().get_height()]
+                    window.value, buttons_list = create_window(
+                        window.value,
+                        fullscreen.value,
+                        size[0],
+                        size[1]
+                    )
         elif page == "Units":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()

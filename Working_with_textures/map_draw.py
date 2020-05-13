@@ -3,9 +3,10 @@ import os
 import pygame
 
 from Working_with_textures.NewField import create_window_of_Field
+from Working_with_textures.write_what_happened import write_what_happened
 
 
-def map_draw(window, karta, fullscreen):
+def map_draw(window, karta, fullscreen, message = ""):
     for i in range(10):
         for j in range(12):
             if karta[i][j] is not None and \
@@ -23,3 +24,5 @@ def map_draw(window, karta, fullscreen):
                 window.blit(background_image_of_unit_face,
                             [100 + j * 50, 2 + i * 50])
                 pygame.display.update()
+                write_what_happened(message, window)
+

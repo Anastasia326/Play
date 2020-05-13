@@ -4,6 +4,7 @@ import pygame
 def draw_button(window, colour: tuple, coordinates: tuple, name: str = "",
                 text_1=218, text_2=165, text_3=32, size=25):
     """
+    :param window:
     :param size:
     :param text_1:
     :param text_2:

@@ -208,12 +208,6 @@ class Play:
             else:
                 print("Wrong command")
 
-    def show_all_map(self):
-        '''
-        Эта функция предназначена для твоей графики. В случае если игрок
-        захочет узнать информацию о том, что в принципе где находится
-        '''
-        pass
 
     def make_path(self, coordinates_from, coordinates_to):
         moves = 1

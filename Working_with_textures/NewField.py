@@ -45,52 +45,10 @@ def create_window_of_Field(window, fullscreen, Name, length: int = 800,
         window = pygame.display.set_mode((length, width))
     window.blit(background_image, [0, 0])
     size_of_cell = 50
-    pygame.draw.line(window, (143, 188, 143), (100, 1), (700, 1))
-    pygame.draw.line(window, (143, 188, 143), (100, 1 + size_of_cell),
-                     (700, 1 + size_of_cell))
-    pygame.draw.line(window, (143, 188, 143), (100, 1 + 2 * size_of_cell),
-                     (700, 1 + 2 * size_of_cell))
-    pygame.draw.line(window, (143, 188, 143), (100, 1 + 3 * size_of_cell),
-                     (700, 1 + 3 * size_of_cell))
-    pygame.draw.line(window, (143, 188, 143), (100, 1 + 4 * size_of_cell),
-                     (700, 1 + 4 * size_of_cell))
-    pygame.draw.line(window, (143, 188, 143), (100, 1 + 5 * size_of_cell),
-                     (700, 1 + 5 * size_of_cell))
-    pygame.draw.line(window, (143, 188, 143), (100, 1 + 6 * size_of_cell),
-                     (700, 1 + 6 * size_of_cell))
-    pygame.draw.line(window, (143, 188, 143), (100, 1 + 7 * size_of_cell),
-                     (700, 1 + 7 * size_of_cell))
-    pygame.draw.line(window, (143, 188, 143), (100, 1 + 8 * size_of_cell),
-                     (700, 1 + 8 * size_of_cell))
-    pygame.draw.line(window, (143, 188, 143), (100, 1 + 9 * size_of_cell),
-                     (700, 1 + 9 * size_of_cell))
-    pygame.draw.line(window, (143, 188, 143), (100, 1 + 10 * size_of_cell),
-                     (700, 1 + 10 * size_of_cell))
-    pygame.draw.line(window, (143, 188, 143), (100, 1), (100, 501))
-    pygame.draw.line(window, (143, 188, 143), (100 + size_of_cell, 1),
-                     (100 + size_of_cell, 501))
-    pygame.draw.line(window, (143, 188, 143), (100 + 2 * size_of_cell, 1),
-                     (100 + 2 * size_of_cell, 501))
-    pygame.draw.line(window, (143, 188, 143), (100 + 3 * size_of_cell, 1),
-                     (100 + 3 * size_of_cell, 501))
-    pygame.draw.line(window, (143, 188, 143), (100 + 4 * size_of_cell, 1),
-                     (100 + 4 * size_of_cell, 501))
-    pygame.draw.line(window, (143, 188, 143), (100 + 5 * size_of_cell, 1),
-                     (100 + 5 * size_of_cell, 501))
-    pygame.draw.line(window, (143, 188, 143), (100 + 6 * size_of_cell, 1),
-                     (100 + 6 * size_of_cell, 501))
-    pygame.draw.line(window, (143, 188, 143), (100 + 7 * size_of_cell, 1),
-                     (100 + 7 * size_of_cell, 501))
-    pygame.draw.line(window, (143, 188, 143), (100 + 8 * size_of_cell, 1),
-                     (100 + 8 * size_of_cell, 501))
-    pygame.draw.line(window, (143, 188, 143), (100 + 9 * size_of_cell, 1),
-                     (100 + 9 * size_of_cell, 501))
-    pygame.draw.line(window, (143, 188, 143), (100 + 10 * size_of_cell, 1),
-                     (100 + 10 * size_of_cell, 501))
-    pygame.draw.line(window, (143, 188, 143), (100 + 11 * size_of_cell, 1),
-                     (100 + 11 * size_of_cell, 501))
-    pygame.draw.line(window, (143, 188, 143), (100 + 12 * size_of_cell, 1),
-                     (100 + 12 * size_of_cell, 501))
+    for i in range(11):
+        pygame.draw.line(window, (143, 188, 143), (100, 1 + size_of_cell * i), (700, 1 + size_of_cell * i))
+    for i in range(13):
+        pygame.draw.line(window, (143, 188, 143), (100 + size_of_cell * i, 1), (100 + size_of_cell * i, 501))
 
     pygame.display.set_caption("Герои меча и магии(Arthur's and Anastasia's "
                                "remake)")
