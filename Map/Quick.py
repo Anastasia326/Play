@@ -5,11 +5,11 @@ from .imports import building_array, Buildings_for_class, ways, find_class
 
 class QuickMap(MapBuilder):
     def __init__(self, class_first: Army, class_second: Army):
-        super().__init__(50, 11, class_first, class_second)
         self.neutral_first = Buildings_for_class(find_class(
             class_first.hero.name))
         self.neutral_second = Buildings_for_class(find_class(
             class_second.hero.name))
+        super().__init__(50, 11, class_first, class_second)
 
     def add_cities(self, class_first, class_second):
         return None
@@ -41,7 +41,7 @@ class QuickMap(MapBuilder):
                 elif (j == 6 or j == 4) and (i < 5 or i > 44):
                     self.Map[i][j] = "NoWay"
 
-    def add_units(self, class_first: Army, class_second: Army):
+    def add_units(self):
         for i in range(len(building_array) - 1):
             self.Map[44 - ways[i][0] * 2][5 - ways[i][1] * 2] = \
                 self.neutral_first.place(i % (len(self.neutral_first.creatures)))

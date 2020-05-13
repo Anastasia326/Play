@@ -14,7 +14,7 @@ class MapBuilder(ABC):
         self.add_cities(class_first, class_second)
         self.add_miners()
         self.add_resources()
-        self.add_units(class_first, class_second)
+        self.add_units()
         self.place_heroes(class_first.hero, class_second.hero)
         self.add_barriers()
 
@@ -31,7 +31,7 @@ class MapBuilder(ABC):
         pass
 
     @abstractmethod
-    def add_units(self, class_first, class_second):
+    def add_units(self):
         pass
 
     @abstractmethod

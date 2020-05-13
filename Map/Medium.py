@@ -6,9 +6,9 @@ from .imports import building_array, Buildings_for_class, ways, classes, \
 
 class MediumMap(MapBuilder):
     def __init__(self, class_first: Army, class_second: Army):
-        super().__init__(100, 20, class_first, class_second)
         self.neutral_second = Buildings_for_class(find_class(class_second.hero.name))
         self.neutral_first = Buildings_for_class(find_class(class_first.hero.name))
+        super().__init__(100, 20, class_first, class_second)
 
     def add_cities(self, class_first, class_second):
         self.Map[1][1] = "CityFirst"
@@ -51,7 +51,7 @@ class MediumMap(MapBuilder):
                         if self.Map[i + ways[k][0]][j + ways[k][1]] == "Road":
                             self.Map[i + ways[k][0]][j + ways[k][1]] = "NoWay"
 
-    def add_units(self, class_first: Army, class_second: Army):
+    def add_units(self):
         for i in range(len(building_array)):
             self.Map[5 - ways[i][0] * 3][5 - ways[i][1] * 3] = \
                 self.neutral_first.place(i % (len(self.neutral_first.creatures)))

@@ -19,8 +19,8 @@ def information_menu(window, fullscreen):
                       width // 3,
                       length // 3,
                       width // 3))
-    buttons = draw_some_buttons(window, 4,
-                                ["Heroes", "Spells", "Units", "Return"],
+    buttons = draw_some_buttons(window, 3,
+                                ["Heroes", "Units", "Return"],
                                 (length // 3,
                                  width // 3,
                                  length // 3,

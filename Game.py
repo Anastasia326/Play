@@ -1,12 +1,13 @@
 import pygame
 
 from Battle.Field import Start_Battle
+from Working_with_textures.Main_menu import create_window
+from Working_with_textures.Window_singleton import window, fullscreen
 from Working_with_textures.arrays import arrays_list, array_of_Forest, \
     array_of_Shadows, array_of_Mage, array_of_Inferno, array_of_Necro, \
-    array_of_Orden, classes_list, opened_catalog, catalogs, creatures_name, \
-    hero_name, hero_of_Mage, hero_of_Shadows, hero_of_Forest, \
-    hero_of_Inferno, hero_of_Necro, hero_of_Orden
-from Working_with_textures.Main_menu import create_window
+    array_of_Orden, classes_list, opened_catalog, catalogs, hero_name, \
+    hero_of_Mage, hero_of_Shadows, hero_of_Inferno, hero_of_Necro, \
+    hero_of_Orden
 from Working_with_textures.choice_display import choose_class_display
 from Working_with_textures.choose_mod import choose_mod
 from Working_with_textures.information_menu import information_menu
@@ -15,10 +16,7 @@ from Working_with_textures.show_hero import show_hero
 from Working_with_textures.show_heroes import show_heroes
 from Working_with_textures.show_unit import show_unit
 from Working_with_textures.show_units import show_units
-from Working_with_textures.spell_menu import spell_menu
-from Working_with_textures.start_menu import start_menu
 from Working_with_textures.was_clicked import button_was_clicked
-from Working_with_textures.Window_singleton import window, fullscreen
 
 pygame.init()
 
@@ -97,7 +95,7 @@ while run:
                 mouse_x, mouse_y = pos[0], pos[1]
                 was_clicked, next_page = button_was_clicked(
                     buttons_list,
-                    ["Heroes", "Spells", "Units", "Main menu"],
+                    ["Heroes", "Units", "Main menu"],
                     [mouse_x, mouse_y]
                 )
                 if was_clicked:
@@ -110,8 +108,6 @@ while run:
                             window.value,
                             fullscreen.value,
                             size[0], size[1])
-                    elif page == "Spells":
-                        buttons_list = spell_menu(window.value, fullscreen.value)
                     elif page == "Heroes" or page == "Units":
                         buttons_list = choose_class_display(window.value,
                                                             fullscreen.value)
@@ -239,37 +235,6 @@ while run:
                     buttons_list = information_menu(window.value,
                                                     fullscreen.value)
                     i = 0
-        elif page == "Spells":
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                pos = pygame.mouse.get_pos()
-                mouse_x, mouse_y = pos[0], pos[1]
-                was_clicked, next_page = button_was_clicked(
-                    buttons_list,
-                    ["Dark", "Destructive", "Light", "Summoning",
-                     "Information"],
-                    [mouse_x, mouse_y]
-                )
-                if was_clicked:
-                    page = next_page
-                    i = 0
-                    if next_page == "Dark":
-                        buttons_list = start_menu(window.value,
-                                                  fullscreen.value)
-                    elif next_page == "Destructive":
-                        buttons_list = start_menu(window.value,
-                                                  fullscreen.value)
-                    elif next_page == "Light":
-                        buttons_list = start_menu(window.value,
-                                                  fullscreen.value)
-                    elif next_page == "Summoning":
-                        buttons_list = start_menu(window.value,
-                                                  fullscreen.value)
-                    elif next_page == "Information":
-                        buttons_list = information_menu(window.value,
-                                                        fullscreen.value)
-                    else:
-                        run = False
-                        print("look Spells page")
         elif page.split()[0] in classes_list and page.split()[1] == "Units":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()

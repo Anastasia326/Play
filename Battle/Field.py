@@ -19,6 +19,7 @@ from ArmyForDuel.Tiamovax_army import Tiamovax_army
 from ArmyForDuel.Zexir_army import Zexir_army
 from Working_with_textures.arrays import heroes_list, classes_list
 
+
 def Start_Battle(window, fullscreen):
     run = True
     buttons_list = []
@@ -100,7 +101,8 @@ def Start_Battle(window, fullscreen):
                                                                  "NatureProtection",
                                                                  "ShadowLeague",
                                                                  "Mage"],
-                                                                [mouse_x, mouse_y])
+                                                                [mouse_x,
+                                                                 mouse_y])
                     if next_page is not None:
                         What_happened = next_page
                         index_ = classes_list.index(What_happened)
@@ -250,4 +252,13 @@ def Start_Battle(window, fullscreen):
                 battle.battle()
                 What_happened = "End"
             elif What_happened == "End":
+                buttons_list = end_of_game(window, fullscreen)
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pos = pygame.mouse.get_pos()
+                    mouse_x, mouse_y = pos[0], pos[1]
+                    was_clicked, next_page = button_was_clicked(
+                        buttons_list, ["Exit"], [mouse_x, mouse_y])
+                    if was_clicked:
+                        What_happened = next_page
+            elif What_happened == "Exit":
                 run = False

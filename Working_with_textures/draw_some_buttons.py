@@ -3,7 +3,7 @@ from Working_with_textures.draw_button import draw_button
 
 def draw_some_buttons(window, count: int, names: list, paper_size: tuple,
                       color1=128, color2=0, color3=0, text_1=218, text_2=165,
-                      text_3=32, size=35):
+                      text_3=32, size=25):
     """
     :param window: window on what to put
     :param count: Count of buttons that should be drawn

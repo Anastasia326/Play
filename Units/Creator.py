@@ -30,7 +30,7 @@ class Creator(ABC):
         self.create_sixth_type_creatures()
         self.create_seventh_type_creatures()
         self.create_hero_First()
-        self.reate_hero_Second()
+        self.create_hero_Second()
 
     @abstractmethod
     def create_first_type_creatures(self):

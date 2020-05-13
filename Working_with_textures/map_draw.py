@@ -2,8 +2,10 @@ import os
 
 import pygame
 
+from Working_with_textures.NewField import create_window_of_Field
 
-def map_draw(window, karta):
+
+def map_draw(window, karta, fullscreen):
     for i in range(10):
         for j in range(12):
             if karta[i][j] is not None and \

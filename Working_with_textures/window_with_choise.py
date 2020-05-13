@@ -23,20 +23,20 @@ def create_window_choise(window, fullscreen, length: int = 800,
                                                                      # длина надписи
                                                                      1 * width // 6),
                                 255, 215, 0, 85, 107, 47,
-                                28)  # отступ между ними
+                                20)  # отступ между ними
     buttons += draw_some_buttons(window, 2, ["Inferno", "Nature Protection"],
                                  (300,
                                   500,
                                   200,  # длина надписи
                                   1 * width // 6), 255, 215, 0, 85, 107, 47,
-                                 28)  # отступ между ними
+                                 20)  # отступ между ними
     buttons += draw_some_buttons(window, 2, ["Shadow League", "Mage"], (500,
                                                                         500,
                                                                         200,
                                                                         # длина надписи
                                                                         1 * width // 6),
                                  255, 215, 0, 85, 107, 47,
-                                 28)  # отступ между ними
+                                 20)  # отступ между ними
     pygame.display.update()
     if update:
         pygame.display.update()
