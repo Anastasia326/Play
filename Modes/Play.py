@@ -1,5 +1,9 @@
 from collections import deque
 
+import pygame
+
+from ArmyForDuel.Sverchok_army import Swerchok_army
+from ArmyForDuel.Zexir_army import Zexir_army
 from Battle.Battle_ import Battle
 from Battle.army import Army
 from Map.Medium import MediumMap
@@ -9,6 +13,8 @@ from Map.Work_with_resources.Hero_resouces import Resources
 from Map.Work_with_resources.Miner import Miner
 from Map.imports import ways, resources, building_array, improving_skills_list, \
     miner_array, building_in_city_types, building_in_city_cost
+from Working_with_textures.drow_map import drow_map
+from Working_with_textures.wait_klick import wait_klick
 
 
 class Play:
@@ -45,16 +51,29 @@ class Play:
         self.playing()
 
     def playing(self):
+        button_list = []
+        hero_coordinads = []
         """ Отрисовывать надо только определенное число клеток, предлагаю 15
         на 15. Фон(примерно монотонный. Если нет пути - деревья,
         для остального соответствующие текстуры)"""
+        for i in range(len(self.Map)):
+            for j in range(len(self.Map[0])):
+                if self.first_player_turn:
+                    if self.Map[i][j] == self.first_army.hero.name:
+                        button_list = drow_map(window, False, "grass", "Quick", i, j, self.Map)
+                        hero_coordinads = [i, j]
+                else:
+                    if self.Map[i][j] == self.second_army.hero.name:
+                        button_list = drow_map(window, False, "grass", "Quick", i, j, self.Map)
+                        hero_coordinads = [i, j]
         command = ""
         while command != "end":
-            command = input()
+            command = wait_klick(button_list, 800, 600)
+            print(command)
             command = command.split()
             if command[0] == "move":
-                path = self.make_path([int(command[1]), int(command[2])],
-                                      [int(command[3]), int(command[4])])
+                path = self.make_path([hero_coordinads[0], hero_coordinads[1]],
+                                      [int(command[1]), int(command[2])])
                 if self.first_player_turn:
                     self.move(path, self.first_army.hero.name)
                 else:
@@ -207,14 +226,6 @@ class Play:
                 pass
             else:
                 print("Wrong command")
-
-    def show_all_map(self):
-        '''
-        Эта функция предназначена для твоей графики. В случае если игрок
-        захочет узнать информацию о том, что в принципе где находится
-        '''
-        pass
-
     def make_path(self, coordinates_from, coordinates_to):
         moves = 1
         curr_coord = coordinates_from
@@ -262,3 +273,9 @@ class Play:
                 curr_coord = parent_map[curr_coord[0]][curr_coord[1]]
             path += [coordinates_from]
             return path
+first_army = Swerchok_army
+second_army = Zexir_army
+pygame.init()
+window = pygame.display.set_mode((800, 600))
+Play(first_army, second_army,"Quick", window,  False)
+

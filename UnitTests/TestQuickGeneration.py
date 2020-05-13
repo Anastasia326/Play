@@ -1,9 +1,14 @@
 import unittest
+
+import pygame
+
 from ArmyGenerator.GenerateOrden import orden
 from ArmyGenerator.GenerateInferno import inferno
 from Battle.army import Army
 from Map.Quick import QuickMap
 from Map.Medium import MediumMap
+from Working_with_textures.drow_map import drow_map
+from Working_with_textures.Main_menu import create_window
 
 
 class TestQuick(unittest.TestCase):
@@ -31,7 +36,6 @@ class TestQuick(unittest.TestCase):
             if i < 5 or i > 43:
                 self.assertNotEqual(self.QuickMap.Map[i],
                                     self.QuickMap.Map[i + 1])
-
 
 class TestMedium(unittest.TestCase):
     def setUp(self) -> None:
