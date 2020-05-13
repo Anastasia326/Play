@@ -1,5 +1,6 @@
 import pygame
 
+from Working_with_textures.arrays import simple_buttons
 from Working_with_textures.was_clicked import button_was_clicked
 
 
@@ -15,12 +16,8 @@ def waaar(button_list, commands):
                 if not new_click:
                     yes, names = button_was_clicked(button_list, commands, pos)
                     if yes:
-                        if names == "Wait":
-                            return "wait"
-                        elif names == "Defend":
-                            return "defend"
-                        elif names == "Exit":
-                            return "exit"
+                        if names in simple_buttons:
+                            return names.lower()
                         else:
                             string += names
                             string += " "

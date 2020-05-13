@@ -178,10 +178,6 @@ class Battle:
                 if [int(command[1]), int(command[2])] in army.army_on_field:
                     if command[3] == "stash":
                         for creature in army.current_army:
-                            army.army_on_field.pop(
-                                army.army_on_field.index([int(command[1]),
-                                                          int(command[2])])
-                            )
                             if creature.base.name == \
                                     self.map[int(command[1])][int(command[2])]:
                                 army.stash += [creature]
@@ -299,14 +295,14 @@ class Battle:
                 map_draw(self.window, self.map, self.fullscreen, self.message_)
                 wait_, click1, click2, mouse_x1, mouse_y1, mouse_x2, mouse_y2 = wait(
                     buttons_list)
-                command = worker_after_wait_for_preparing(wait_, click1, click2,
+                command, self.message_ = worker_after_wait_for_preparing(wait_, click1, click2,
                                                           mouse_x1, mouse_y1,
                                                           mouse_x2, mouse_y2,
                                                           names, self.window)
                 while command == "Nothing happened":
                     wait_, click1, click2, mouse_x1, mouse_y1, mouse_x2, mouse_y2 = wait(
                     buttons_list)
-                    command = worker_after_wait_for_preparing(wait_, click1, click2,
+                    command, self.message_ = worker_after_wait_for_preparing(wait_, click1, click2,
                                                           mouse_x1, mouse_y1,
                                                           mouse_x2, mouse_y2,
                                                           names, self.window)

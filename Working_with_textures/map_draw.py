@@ -26,3 +26,5 @@ def map_draw(window, karta, fullscreen, message = ""):
                 pygame.display.update()
                 write_what_happened(message, window)
 
+                write_what_happened(message, window)
+

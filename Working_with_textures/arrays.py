@@ -51,3 +51,8 @@ hero_of_Shadows = ["Railag", "Shadiia"]
 hero_of_Mage = ["Orra", "Zexir"]
 heroes_list = [hero_of_Orden, hero_of_Necro, hero_of_Inferno,
                hero_of_Forest, hero_of_Shadows, hero_of_Mage]
+
+simple_buttons = ["Wait", "Defend", "Exit"]
+
+modes = ["Duel", "Quick", "Medium", "Return"]
+
