@@ -36,7 +36,7 @@ class Hero(ABC):
         self.witchcraft = witchcraft
         self.knowledge = knowledge
         self.army = [None]*7
-        self.movement = 15
+        self.movement = 10
 
     def improve_skill(self, name_of_skill, points) -> str:
         """Улучшение характеристики"""
