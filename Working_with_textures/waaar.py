@@ -13,6 +13,8 @@ def waaar(button_list, commands):
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()
+                if 800 >= pos[0] >= 700 and 600 >= pos[1] >= 550:
+                    return "EXIT"
                 if not new_click:
                     yes, names = button_was_clicked(button_list, commands, pos)
                     if yes:

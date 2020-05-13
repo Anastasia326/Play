@@ -299,6 +299,8 @@ class Battle:
                                                           mouse_x1, mouse_y1,
                                                           mouse_x2, mouse_y2,
                                                           names, self.window)
+                if command == "EXIT":
+                    return 0
                 while command == "Nothing happened":
                     wait_, click1, click2, mouse_x1, mouse_y1, mouse_x2, mouse_y2 = wait(
                     buttons_list)
@@ -306,6 +308,8 @@ class Battle:
                                                           mouse_x1, mouse_y1,
                                                           mouse_x2, mouse_y2,
                                                           names, self.window)
+
+
                 command = command.split()
                 if first_player:
                     next_player = self.work_with_command(
@@ -320,7 +324,6 @@ class Battle:
                     if next_player:
                         self.make_queue()
                         return
-                #self.message_ = ""
             except Exception:
                 print("wrong command")
                 self.message_ = "   Wrong command"
@@ -337,7 +340,7 @@ class Battle:
         if not in_borders([coordinate_x, coordinate_y]) or \
                 not in_borders([coordinate_x_to, coordinate_y_to]):
             print("Wrong to coordinates")
-            self.message_ = "Wrong o coordinates"
+            self.message_ = "Wrong to coordinates"
             return
         if creature.base.length == 2:
             if coordinate_y_to >= 11 or coordinate_y_to < 0 or \
@@ -402,6 +405,7 @@ class Battle:
             tmp = self.queue_of_creatures[0]
             print(tmp)
             print(self.map[tmp[0]][tmp[1]] + " turn")
+            self.message_ = self.map[tmp[0]][tmp[1]] + " turn"
             print('''Use commands:
             move x_to y_to
             attack x_attacked y_attacked
@@ -444,7 +448,10 @@ class Battle:
                 print()
 
             com = waaar(buttons, ["move", "attack", "move_attack",
-                                  "Wait", "Defend", "Exit", "range_attack"])
+                                  "Wait", "Defend", "Exit", "range_attack" "EXIT"])
+            if com == "EXIT":
+                self.end_battle()
+                return 0
             com = com.split()
             if com[0] == "move":
                 if (abs(int(com[1]) - int(tmp[0])) +
@@ -466,6 +473,7 @@ class Battle:
                     if abs(int(com[3]) - int(com[1])) > 1 or \
                             abs(int(com[4]) - int(com[2])) > 1:
                         print("Can't attack so far", creature.base.length)
+                        self.message_ = "Can't move so far"
                         continue
                 else:
                     if not (abs(int(com[3]) - int(com[1])) <= 1 and
@@ -477,6 +485,7 @@ class Battle:
                             abs(int(com[3]) - int(com[1])) <= 1 and
                             abs(int(com[4]) - int(com[2]) + 1) <= 1):
                         print("Can't attack so far", creature.base.length)
+                        self.message_ = "Can't move so far"
                         continue
                 attacked_creature = None
                 for soldier in attacked_army.current_army:
@@ -516,6 +525,7 @@ class Battle:
                     )
                     attacked_creature.base.position_on_battle_ground = tmp2
                     print(message[0])
+                    self.message_ = message[0]
                     self.use_info_from_message(message[1::], army,
                                                attacked_army)
                     self.next_turn(creature)

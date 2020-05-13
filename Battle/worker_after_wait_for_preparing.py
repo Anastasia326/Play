@@ -1,5 +1,5 @@
 def worker_after_wait_for_preparing(wait, click1, click2, mouse_x1, mouse_y1,
-                                    mouse_x2, mouse_y2, units, window):
+                                    mouse_x2, mouse_y2, units, window, length = 800, higth = 600):
     if click1 == 2 and click2 == 1:
         first_unit = mouse_y1//50 + (mouse_y1 % 50 > 0) - 1 + \
                      4 * (800 >= mouse_x1 >= 650)
@@ -22,3 +22,10 @@ def worker_after_wait_for_preparing(wait, click1, click2, mouse_x1, mouse_y1,
             cell_y2) + " " + str(cell_x2), ""
     if click1 == 3 and click2 == 3:
         return "end", ""
+    if (higth >= mouse_y1 >= higth * 11 // 12
+        and length >= mouse_x1 >= length * 7 // 8) or (
+            higth >= mouse_y2 >= higth * 11 // 12
+            and length >= mouse_x2 >= length * 7 // 8):
+        return "EXIT", ""
+    if click1 == 4:
+        return "EXIT", ""
