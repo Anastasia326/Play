@@ -1,16 +1,22 @@
 from abc import ABC, abstractmethod
 
+from Battle.army import Army
+
 
 class MapBuilder(ABC):
-    def __init__(self, wight, length, class_first, class_second):
-        self.Map = [["0"] * wight] * length
-        self.add_barriers()
+    def __init__(self, wight, length, class_first: Army, class_second: Army):
+        self.Map = [[]]
+        for i in range(length):
+            self.Map[0] += ["Road"]
+        for j in range(wight - 1):
+            self.Map += [self.Map[0][::]]
         self.add_buildings()
         self.add_cities(class_first, class_second)
         self.add_miners()
         self.add_resources()
         self.add_units(class_first, class_second)
-        self.place_heroes()
+        self.place_heroes(class_first.hero, class_second.hero)
+        self.add_barriers()
 
     @abstractmethod
     def add_cities(self, class_first, class_second):

@@ -17,12 +17,13 @@ class ArmyStatus:
     def __init__(self, hero_: Hero,
                  army_: list):
         self.hero = hero_
-        self.starting_army = army_[::]
-        self.current_army = army_
+        self.starting_army = army_
+        self.current_army = army_[::]
         for i in range(len(self.current_army)):
-            self.current_army[i].attack += self.hero.attack
-            self.current_army[i].protection += self.hero.protection
-            self.current_army[i].initiative += self.hero.morale
+            if self.hero is not None:
+                self.current_army[i].attack += self.hero.attack
+                self.current_army[i].protection += self.hero.protection
+                self.current_army[i].initiative += self.hero.morale
             self.current_army[i] = BattleUnit(self.current_army[i])
             if self.current_army[i].base.shots is not None and \
                     self.current_army[i].base.shots > 0:

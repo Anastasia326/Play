@@ -10,8 +10,7 @@ from Working_with_textures.choose_units_to_kill import choose_units_to_kill
 from Working_with_textures.draw_commans import draw_commans
 from Working_with_textures.map_draw import map_draw
 from Working_with_textures.waaar import waaar
-
-borders = [[[0, 9], [0, 1]], [[0, 9], [10, 11]]]
+from .borders import borders
 
 
 class Battle:
@@ -24,6 +23,8 @@ class Battle:
                                              second_army.soldiers)
         self.map = ClearMap.field
         self.queue_of_creatures = []
+        self.deleted_from_first = []
+        self.deleted_from_second = []
 
     def use_info_from_message(self, message, army, attacked_army):
         for lines in message:
@@ -33,6 +34,10 @@ class Battle:
                     for soldier in attacked_army.current_army:
                         if soldier.base.name == lines.split()[0]:
                             creatures = soldier
+                    if attacked_army == self.first_army_status:
+                        self.deleted_from_first += [creatures.base.name]
+                    else:
+                        self.deleted_from_second += [creatures.base.name]
                     attacked_army.current_army.pop(
                         attacked_army.current_army.index(
                             creatures
@@ -242,15 +247,19 @@ class Battle:
                         names += [creatures.base.name]
                     for creature in self.first_army_status.stash:
                         print(creature.base.name, end="|")
-                    buttons_list = choose_units_to_kill(self.window,
-                                                        self.fullscreen,
-                                                        self.first_army_status.stash)
+                    buttons_list = choose_units_to_kill(
+                        self.window,
+                        self.fullscreen,
+                        self.first_army_status.stash
+                    )
                 else:
                     for creatures in self.second_army_status.current_army:
                         names += [creatures.base.name]
-                    buttons_list = choose_units_to_kill(self.window,
-                                                        self.fullscreen,
-                                                        self.second_army_status.stash)
+                    buttons_list = choose_units_to_kill(
+                        self.window,
+                        self.fullscreen,
+                        self.second_army_status.stash
+                    )
                     for creature in self.second_army_status.stash:
                         print(creature.base.name, end="|")
                 print()
@@ -277,6 +286,7 @@ class Battle:
                                                           mouse_x1, mouse_y1,
                                                           mouse_x2, mouse_y2,
                                                           names, self.window)
+                print(command)
                 command = command.split()
                 if first_player:
                     next_player = self.work_with_command(
@@ -345,9 +355,10 @@ class Battle:
                 creature.base.position_on_battle_ground
             )
         else:
-            self.queue_of_creatures.insert(int(len(
-                self.queue_of_creatures) * 10 / creature.base.initiative),
-                                           creature.base.position_on_battle_ground)
+            self.queue_of_creatures.insert(
+                int(len(self.queue_of_creatures) * 10 /
+                    creature.base.initiative),
+                creature.base.position_on_battle_ground)
         for key in creature.base.improvement_duration.keys():
             if creature.base.improvement_duration[key] > 0:
                 creature.base.improvement_duration[key] -= 1
@@ -361,6 +372,7 @@ class Battle:
 
     def battle(self):
         self.preparing()
+        first_win = True
         print("Battle was begun")
         while len(self.first_army_status.army_on_field) != 0 and len(
                 self.second_army_status.army_on_field) != 0:
@@ -425,6 +437,22 @@ class Battle:
                     abs(int(com[2]) - int(tmp[1]))) > creature.base.speed:
                     print("Can't move so far")
                     continue
+                if creature.base.length == 1:
+                    if abs(int(com[3]) - int(com[1])) > 1 or \
+                            abs(int(com[4]) - int(com[2])) > 1:
+                        print("Can't attack so far", creature.base.length)
+                        continue
+                else:
+                    if not (abs(int(com[3]) - int(com[1])) <= 1 and
+                            abs(int(com[4]) - int(com[2])) <= 1 or
+                            abs(int(com[3]) - int(com[1]) - 1) <= 1 and
+                            abs(int(com[4]) - int(com[2])) <= 1 or
+                            abs(int(com[3]) - int(com[1]) - 1) <= 1 and
+                            abs(int(com[4]) - int(com[2]) + 1) <= 1 or
+                            abs(int(com[3]) - int(com[1])) <= 1 and
+                            abs(int(com[4]) - int(com[2]) + 1) <= 1):
+                        print("Can't attack so far", creature.base.length)
+                        continue
                 attacked_creature = None
                 for soldier in attacked_army.current_army:
                     if soldier.base.name == self.map[int(com[3])][
@@ -466,6 +494,10 @@ class Battle:
                                                attacked_army)
                     self.next_turn(creature)
             elif com[0] == "exit":
+                if army == self.first_army_status:
+                    first_win = False
+                else:
+                    first_win = True
                 break
             elif com[0] == "range_attack":
                 if creature.base.shots == 0 or creature.base.shots is None:
@@ -489,7 +521,7 @@ class Battle:
                 if creature.base.length == 1:
                     if abs(int(com[1]) - tmp[0]) > 1 or \
                             abs(int(com[2]) - tmp[1]) > 1:
-                        print("Can't attack so far")
+                        print("Can't attack so far", creature.base.length)
                         continue
                 else:
                     if not (abs(int(com[1]) - tmp[0]) <= 1 and
@@ -500,7 +532,7 @@ class Battle:
                             abs(int(com[2]) - tmp[1] + 1) <= 1 or
                             abs(int(com[1]) - tmp[0]) <= 1 and
                             abs(int(com[2]) - tmp[1] + 1) <= 1):
-                        print("Can't attack so far")
+                        print("Can't attack so far", creature.base.length)
                         continue
                 attacked_creature = None
                 for soldier in attacked_army.current_army:
@@ -525,4 +557,31 @@ class Battle:
                 self.next_turn(creature)
             else:
                 print("wrong command")
+        if len(self.first_army_status.army_on_field) == 0:
+            first_win = False
+        if len(self.second_army_status.army_on_field) == 0:
+            first_win = True
+        self.end_battle()
         print("The game was ended")
+        return first_win
+
+    def end_battle(self):
+        if self.first_army_status.hero is not None:
+            first_names = []
+            for creature in self.first_army_status.starting_army:
+                first_names += [creature.name]
+            for name in self.deleted_from_first:
+                self.first_army_status.starting_army.pop(
+                    first_names.index(name)
+                )
+                first_names.pop(first_names.index(name))
+
+        if self.second_army_status.hero is not None:
+            second_names = []
+            for creature in self.first_army_status.starting_army:
+                second_names += [creature.name]
+            for name in self.deleted_from_second:
+                self.second_army_status.starting_army.pop(
+                    second_names.index(name)
+                )
+                second_names.pop(second_names.index(name))

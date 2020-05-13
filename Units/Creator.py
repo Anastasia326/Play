@@ -22,7 +22,6 @@ class Creator(ABC):
         self.fifth_creature_upgraded = None
         self.sixth_creature_upgraded = None
         self.seventh_creature_upgraded = None
-        self.Hero = None
         self.create_first_type_creatures()
         self.create_second_type_creatures()
         self.create_third_type_creatures()
@@ -30,8 +29,8 @@ class Creator(ABC):
         self.create_fifth_type_creatures()
         self.create_sixth_type_creatures()
         self.create_seventh_type_creatures()
-        self.first_hero = None
-        self.second_hero = None
+        self.create_hero_First()
+        self.reate_hero_Second()
 
     @abstractmethod
     def create_first_type_creatures(self):
