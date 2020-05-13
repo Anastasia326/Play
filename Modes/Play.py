@@ -208,7 +208,6 @@ class Play:
             else:
                 print("Wrong command")
 
-
     def make_path(self, coordinates_from, coordinates_to):
         moves = 1
         curr_coord = coordinates_from
