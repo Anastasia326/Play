@@ -20,6 +20,17 @@ def create_window(window, fullscreen, length: int = 800, width: int = 600,
     Creating window of game(depends on format)
     Make main buttons
     """
+    k = 1
+    if length == 800:
+        k = 1
+    elif length == 1178:
+        k = 1.25
+    elif length == 1280:
+        k = 1.45
+    elif length == 1920:
+        k = 2
+    elif length == 1600:
+        k = 1.5
     if os.name == "nt":
         user32 = ctypes.windll.user32
         current_w = user32.GetSystemMetrics(0)
@@ -63,7 +74,7 @@ def create_window(window, fullscreen, length: int = 800, width: int = 600,
                                             "Information",
                                             "Exit"],
                                 (length // 3, width // 3, length // 3,
-                                 width // 3))
+                                 width // 3), 128, 0, 0, 218, 165, 32, int(25 * k))
     if update:
         pygame.display.update()
     return window, buttons

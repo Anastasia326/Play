@@ -14,11 +14,14 @@ from Working_with_textures.wait_klick import wait_klick
 
 class Play:
     def __init__(self, first: Army, second: Army, Mode: str, window,
-                 fullscreen):
+                 fullscreen, width, height, k):
         self.walked_points = 0
         self.window = window
         self.fullscreen = fullscreen
+        self.width = width
+        self.height = height
         self.first_army = first
+        self.k = k
         self.first_resources = Resources(first.hero.name)
         self.second_resources = Resources(second.hero.name)
         self.second_army = second
@@ -52,18 +55,18 @@ class Play:
                 if self.first_player_turn:
                     if self.Map[i][j] == self.first_army.hero.name:
                         button_list = drow_map(self.window, False, "grass", "Quick",
-                                               i, j, self.Map)
+                                               i, j, self.Map, self.width, self.height, self.k)
                         hero_coordinads = [i, j]
                         break
                 else:
                     if self.Map[i][j] == self.second_army.hero.name:
                         button_list = drow_map(self.window, False, "grass", "Quick",
-                                               i, j, self.Map)
+                                               i, j, self.Map, self.width, self.height, self.k)
                         hero_coordinads = [i, j]
                         break
         command = [""]
         while command[0] != "end" and command[0] != "Exit":
-            command = wait_klick(button_list, 800, 600)
+            command = wait_klick(button_list, self.width, self.height)
             command = command.split()
             if command[0] == "move":
                 path = self.make_path([hero_coordinads[0], hero_coordinads[1]],
@@ -85,14 +88,14 @@ class Play:
                                                            False,
                                                            "grass",
                                                            "Quick",
-                                                           i, j, self.Map)
+                                                           i, j, self.Map, self.width, self.height)
                                     hero_coordinads = [i, j]
                                     break
                             else:
                                 if self.Map[i][j] == self.second_army.hero.name:
                                     button_list = drow_map(self.window, False,
                                                            "grass", "Quick",
-                                                           i, j, self.Map)
+                                                           i, j, self.Map, self.width, self.height)
                                     hero_coordinads = [i, j]
                                     break
                 except:
@@ -135,7 +138,7 @@ class Play:
                         1]] = "Road"
                 self.Map[cur_pos[0]][cur_pos[1]] = hero_name
                 drow_map(self.window, False, "grass", "Quick", cur_pos[0], cur_pos[
-                    1], self.Map)
+                    1], self.Map, self.width, self.height, self.k)
             if self.walked_points < self.first_army.hero.movement:
                 self.walked_points += 1
                 if self.Map[path[0][0]][path[0][1]] == "Road":
@@ -185,7 +188,7 @@ class Play:
                             path[0][1]] == self.second_army.hero.name:
                     print("hero_fight")
                     battle = Battle(self.first_army, self.second_army, self.window,
-                                    self.fullscreen)
+                                    self.fullscreen, self.width, self.height, self.k)
                     if battle.win:
                         print("First Win")
                         self.end(self.first_player_turn)
@@ -207,7 +210,7 @@ class Play:
                     if neutral_army is not None:
                         if self.first_player_turn:
                             if Battle(self.first_army, neutral_army,
-                                      self.window, self.fullscreen).win:
+                                      self.window, self.fullscreen, self.width, self.height, self.k).win:
                                 print("Win")
                                 self.Map[path[0][0]][path[0][1]] = \
                                     self.first_army.hero.name
@@ -218,7 +221,7 @@ class Play:
                                 return "Exit"
                         else:
                             if Battle(self.second_army, neutral_army,
-                                      self.window, self.fullscreen).win:
+                                      self.window, self.fullscreen, self.width, self.height, self.k).win:
                                 print("Win")
                                 self.Map[path[0][0]][path[0][1]] = \
                                     self.second_army.hero.name

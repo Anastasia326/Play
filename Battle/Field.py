@@ -107,7 +107,7 @@ def Start_Battle(window, fullscreen, mode:str):
                 if mode == "Duel":
                     Battle(first_army, second_army, window, fullscreen, width, height, k)
                 else:
-                    Play(first_army, second_army, mode, window, fullscreen)
+                    Play(first_army, second_army, mode, window, fullscreen, width, height, k)
                 what_happened = "End"
             elif what_happened == "End":
                 buttons_list = end_of_game(window, fullscreen,width, height, k)
