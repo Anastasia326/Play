@@ -135,20 +135,10 @@ while run:
                         size[0],
                         size[1]
                     )
-                elif next_page == "Duel":
-                    Start_Battle(window.value, fullscreen.value)
-                    run = False
                 else:
-                    i = 0
-                    page = "Main menu"
-                    size = [pygame.display.get_surface().get_width(),
-                            pygame.display.get_surface().get_height()]
-                    window.value, buttons_list = create_window(
-                        window.value,
-                        fullscreen.value,
-                        size[0],
-                        size[1]
-                    )
+                    Start_Battle(window.value, fullscreen.value, next_page)
+                    run = False
+
         elif page == "Units":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = pygame.mouse.get_pos()

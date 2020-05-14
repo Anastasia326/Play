@@ -55,13 +55,13 @@ class Play:
             for j in range(len(self.Map[0])):
                 if self.first_player_turn:
                     if self.Map[i][j] == self.first_army.hero.name:
-                        button_list = drow_map(window, False, "grass", "Quick",
+                        button_list = drow_map(self.window, False, "grass", "Quick",
                                                i, j, self.Map)
                         hero_coordinads = [i, j]
                         break
                 else:
                     if self.Map[i][j] == self.second_army.hero.name:
-                        button_list = drow_map(window, False, "grass", "Quick",
+                        button_list = drow_map(self.window, False, "grass", "Quick",
                                                i, j, self.Map)
                         hero_coordinads = [i, j]
                         break
@@ -91,7 +91,7 @@ class Play:
                         for j in range(len(self.Map[0])):
                             if self.first_player_turn:
                                 if self.Map[i][j] == self.first_army.hero.name:
-                                    button_list = drow_map(window,
+                                    button_list = drow_map(self.window,
                                                            False,
                                                            "grass",
                                                            "Quick",
@@ -100,7 +100,7 @@ class Play:
                                     break
                             else:
                                 if self.Map[i][j] == self.second_army.hero.name:
-                                    button_list = drow_map(window, False,
+                                    button_list = drow_map(self.window, False,
                                                            "grass", "Quick",
                                                            i, j, self.Map)
                                     hero_coordinads = [i, j]
@@ -144,7 +144,7 @@ class Play:
                     ][0]][path[-self.walked_points + 1 + already_moved][
                         1]] = "Road"
                 self.Map[cur_pos[0]][cur_pos[1]] = hero_name
-                drow_map(window, False, "grass", "Quick", cur_pos[0], cur_pos[
+                drow_map(self.window, False, "grass", "Quick", cur_pos[0], cur_pos[
                     1], self.Map)
             if self.walked_points < self.first_army.hero.movement:
                 self.walked_points += 1
@@ -295,11 +295,5 @@ class Play:
             return path
 
     def end(self):
-        pygame.quit()
+        pass
 
-
-first_army = Swerchok_army
-second_army = Zexir_army
-pygame.init()
-window = pygame.display.set_mode((800, 600))
-Play(first_army, second_army, "Medium", window, False)

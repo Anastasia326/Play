@@ -2,6 +2,7 @@ import pygame
 
 from Battle.Battle_ import Battle
 from Battle.borders import army_list
+from Modes.Play import Play
 from Working_with_textures.NewField import create_window_of_Field
 from Working_with_textures.arrays import heroes_list, classes_list
 from Working_with_textures.chose_with_whom_play import chose_with_whom_play
@@ -10,7 +11,7 @@ from Working_with_textures.was_clicked import button_was_clicked
 from Working_with_textures.window_with_choise import create_window_choise
 
 
-def Start_Battle(window, fullscreen):
+def Start_Battle(window, fullscreen, mode:str):
     run = True
     buttons_list = []
     what_happened = "Choise"
@@ -90,8 +91,11 @@ def Start_Battle(window, fullscreen):
                             ]
                             what_happened = "Set up the army"
             elif what_happened == "Set up the army":
-                battle = Battle(first_army, second_army, window, fullscreen)
-                battle.battle()
+                if mode == "Duel":
+                    battle = Battle(first_army, second_army, window, fullscreen)
+                    battle.battle()
+                else:
+                    Play(first_army, second_army, mode, window, fullscreen)
                 what_happened = "End"
             elif what_happened == "End":
                 buttons_list = end_of_game(window, fullscreen)
