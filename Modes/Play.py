@@ -79,29 +79,32 @@ class Play:
                     self.move(path, self.first_army.hero.name)
                 else:
                     self.move(path, self.second_army.hero.name)
-                for i in range(len(self.Map)):
-                    for j in range(len(self.Map[0])):
-                        print(self.Map[i][j].center(15), end=" ")
-                    print()
-                print("___________________")
-                for i in range(len(self.Map)):
-                    for j in range(len(self.Map[0])):
-                        if self.first_player_turn:
-                            if self.Map[i][j] == self.first_army.hero.name:
-                                button_list = drow_map(window,
-                                                       False,
-                                                       "grass",
-                                                       "Quick",
-                                                       i, j, self.Map)
-                                hero_coordinads = [i, j]
-                                break
-                        else:
-                            if self.Map[i][j] == self.second_army.hero.name:
-                                button_list = drow_map(window, False,
-                                                       "grass", "Quick",
-                                                       i, j, self.Map)
-                                hero_coordinads = [i, j]
-                                break
+                try:
+                    for i in range(len(self.Map)):
+                        for j in range(len(self.Map[0])):
+                            print(self.Map[i][j].center(15), end=" ")
+                        print()
+                    print("___________________")
+                    for i in range(len(self.Map)):
+                        for j in range(len(self.Map[0])):
+                            if self.first_player_turn:
+                                if self.Map[i][j] == self.first_army.hero.name:
+                                    button_list = drow_map(window,
+                                                           False,
+                                                           "grass",
+                                                           "Quick",
+                                                           i, j, self.Map)
+                                    hero_coordinads = [i, j]
+                                    break
+                            else:
+                                if self.Map[i][j] == self.second_army.hero.name:
+                                    button_list = drow_map(window, False,
+                                                           "grass", "Quick",
+                                                           i, j, self.Map)
+                                    hero_coordinads = [i, j]
+                                    break
+                except:
+                    command[0] = "Exit"
             else:
                 print("command is not move in playing")
         print("left")
@@ -252,39 +255,22 @@ class Play:
             if command[0] == "exit":
                 return
             elif command[0] == "upgrade":
-                if command[1] not in building_in_city_types:
-                    for creature in army.soldiers:
-                        if creature.name == command[1]:
-                            if creature.upgrade_cost is not None:
-                                required = [
-                                    creature.upgrade_cost * creature.count
-                                ]
-                                required += [0, 0, 0, 0, 0]
-                                if hasattr(creature, "special_resource"):
-                                    required[
-                                        resources.index(
-                                            creature.special_resource
-                                        )
-                                    ] = creature.count
-                                if city.able_resources.can_do(required):
-                                    city.upgrade_units(creature)
-                else:
+                if command[1] in building_in_city_types:
                     city.able_resources.can_do(
                         building_in_city_cost[
                             building_in_city_types.index(command[1])
                         ]
                     )
-            elif command[0] == "buy":
-                pass
             else:
                 print("Wrong command")
 
     def make_path(self, coordinates_from, coordinates_to):
         print("make path")
-        if 10 <= coordinates_from[0] <= 39:
+        print(coordinates_to)
+        if 10 <= coordinates_from[0] <= len(self.Map) - 22:
             coordinates_to[0] += coordinates_from[0] - 10
-        elif coordinates_from[0] > 39:
-            coordinates_to[0] += 28
+        elif coordinates_from[0] > len(self.Map) - 22:
+            coordinates_to[0] += len(self.Map) - 22
         print(coordinates_from)
         print(coordinates_to)
         curr_coord = coordinates_from

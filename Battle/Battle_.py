@@ -634,8 +634,9 @@ class Battle:
 
         if self.second_army_status.hero is not None:
             second_names = []
-            for creature in self.first_army_status.starting_army:
+            for creature in self.second_army_status.starting_army:
                 second_names += [creature.name]
+            print(second_names)
             for name in self.deleted_from_second:
                 self.second_army_status.starting_army.pop(
                     second_names.index(name)

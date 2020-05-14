@@ -52,7 +52,7 @@ def drow_map(window, fullscreen, Name, Name_of_map, x, y, map,
         size_down = 11
     else:
         size_down = 20
-    if 39 >= x >= 10:
+    if len(map)-22 >= x >= 10:
         for i in range(x - 10, x + 11):
             for j in range(size_down):
                 try:
@@ -81,7 +81,7 @@ def drow_map(window, fullscreen, Name, Name_of_map, x, y, map,
                 except:
                     pass
     else:
-        for i in range(28, 50):
+        for i in range(len(map)-22, len(map)-1):
             for j in range(size_down):
                 try:
                     background_image = pygame.image.load(
