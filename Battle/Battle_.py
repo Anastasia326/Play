@@ -17,16 +17,18 @@ from .borders import borders
 class Battle:
     message_ = ""
 
-    def __init__(self, first_army, second_army, window, fullscreen,  width, height, k):
+    def __init__(self, first_army, second_army, window, fullscreen,
+                 width, height, k):
         self.fullscreen = fullscreen
         self.window = window
-        self.window = create_window_of_Field(window, fullscreen, "Field")
+        self.width = width
+        self.height = height
+        self.window = create_window_of_Field(window, fullscreen, "Field",
+                                             self.width, self.height)
         self.first_army_status = ArmyStatus(first_army.hero,
                                             first_army.soldiers)
         self.second_army_status = ArmyStatus(second_army.hero,
                                              second_army.soldiers)
-        self.width = width
-        self.height = height
         self.k = k
         self.map = ClearMap.field
         self.queue_of_creatures = []

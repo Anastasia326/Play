@@ -9,6 +9,7 @@ from Map.Work_with_resources.Miner import Miner
 from Map.imports import ways, resources, building_array, improving_skills_list, \
     miner_array
 from Working_with_textures.drow_map import drow_map
+from Working_with_textures.show_info_in_modes import show_resources, show_moves
 from Working_with_textures.wait_klick import wait_klick
 
 
@@ -47,27 +48,49 @@ class Play:
         self.day = 0
         self.playing()
 
-    def playing(self):
-        button_list = []
-        hero_coordinads = []
+    def draw_all_info(self):
         for i in range(len(self.Map)):
             for j in range(len(self.Map[0])):
                 if self.first_player_turn:
                     if self.Map[i][j] == self.first_army.hero.name:
-                        button_list = drow_map(self.window, self.fullscreen,
+                        button_list_ = drow_map(self.window, self.fullscreen,
                                                "grass",
                                                i, j, self.Map, self.width,
                                                self.height, self.k)
-                        hero_coordinads = [i, j]
+                        hero_coordinads_ = [i, j]
+                        show_resources(self.window,
+                                       self.first_resources.reserve,
+                                       self.width,
+                                       self.height)
+                        show_moves(self.window,
+                                   self.first_army.hero.movement -
+                                   self.walked_points,
+                                   self.width,
+                                   self.height,
+                                   self.k)
                         break
                 else:
                     if self.Map[i][j] == self.second_army.hero.name:
-                        button_list = drow_map(self.window, self.fullscreen,
+                        button_list_ = drow_map(self.window, self.fullscreen,
                                                "grass",
                                                i, j, self.Map, self.width,
                                                self.height, self.k)
-                        hero_coordinads = [i, j]
+                        hero_coordinads_ = [i, j]
+                        show_resources(self.window,
+                                       self.second_resources.reserve,
+                                       self.width,
+                                       self.height)
+                        show_moves(self.window,
+                                   self.first_army.hero.movement -
+                                   self.walked_points,
+                                   self.width,
+                                   self.height,
+                                   self.k)
                         break
+        return hero_coordinads_, button_list_
+
+    def playing(self):
+        hero_coordinads, button_list = self.draw_all_info()
         command = [""]
         while command[0] != "end" and command[0] != "Exit":
             command = wait_klick(button_list, self.width, self.height)
@@ -84,29 +107,7 @@ class Play:
                         print(items[0], items[1])
                     for items in self.first_resources.increasing.items():
                         print(items[0], items[1])
-                    for i in range(len(self.Map)):
-                        for j in range(len(self.Map[0])):
-                            if self.first_player_turn:
-                                if self.Map[i][j] == self.first_army.hero.name:
-                                    button_list = drow_map(self.window,
-                                                           self.fullscreen,
-                                                           "grass",
-                                                           i, j, self.Map,
-                                                           self.width,
-                                                           self.height)
-                                    hero_coordinads = [i, j]
-                                    break
-                            else:
-                                if self.Map[i][
-                                    j] == self.second_army.hero.name:
-                                    button_list = drow_map(self.window,
-                                                           self.fullscreen,
-                                                           "grass",
-                                                           i, j, self.Map,
-                                                           self.width,
-                                                           self.height)
-                                    hero_coordinads = [i, j]
-                                    break
+                    hero_coordinads, button_list = self.draw_all_info()
                 except:
                     command[0] = "Exit"
             else:
@@ -135,9 +136,8 @@ class Play:
         cur_pos = [0, 0]
         print(path)
         if len(path) > 1:
-            while self.walked_points < self.first_army.hero.movement and cur_pos \
-                    != \
-                    path[1]:
+            while self.walked_points < self.first_army.hero.movement and  \
+                    cur_pos != path[1]:
                 self.walked_points += 1
                 cur_pos = path[- self.walked_points + already_moved]
                 if self.walked_points - already_moved != 1:
@@ -146,9 +146,7 @@ class Play:
                         ][0]][path[-self.walked_points + 1 + already_moved][
                         1]] = "Road"
                 self.Map[cur_pos[0]][cur_pos[1]] = hero_name
-                drow_map(self.window, self.fullscreen, "grass", cur_pos[0],
-                         cur_pos[
-                             1], self.Map, self.width, self.height, self.k)
+                self.draw_all_info()
             if self.walked_points < self.first_army.hero.movement:
                 self.walked_points += 1
                 if self.Map[path[0][0]][path[0][1]] == "Road":

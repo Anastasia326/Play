@@ -19,6 +19,6 @@ def wait_klick(button_list, length, width):
                 elif button_list[0][0] + button_list[0][2] >= mouse_x1 >= button_list[0][0] and button_list[0][
                     1] + button_list[0][3] >= mouse_y1 >= button_list[0][1]:
                     return "end"
-                elif mouse_y1 <= width * 33 // 4 + 1:
+                elif mouse_y1 <= width * 3 // 4:
                     return "move " + str(mouse_x1 // (length // 21)) + " " + \
                            str(mouse_y1 // (length // 21))
