@@ -6,6 +6,7 @@ from Battle.wait import wait
 from Battle.worker_after_wait_for_preparing import \
     worker_after_wait_for_preparing
 from BattleGround.BattleFields.ClearMap import ClearMap
+from Working_with_textures.NewField import create_window_of_Field
 from Working_with_textures.choose_units_to_kill import choose_units_to_kill
 from Working_with_textures.draw_commans import draw_commans
 from Working_with_textures.draw_green_cell import draw_green_cell
@@ -15,9 +16,12 @@ from .borders import borders
 
 
 class Battle:
+    message_ = ""
+
     def __init__(self, first_army, second_army, window, fullscreen):
         self.fullscreen = fullscreen
         self.window = window
+        self.window = create_window_of_Field(window, fullscreen, "Field")
         self.first_army_status = ArmyStatus(first_army.hero,
                                             first_army.soldiers)
         self.second_army_status = ArmyStatus(second_army.hero,
@@ -30,10 +34,11 @@ class Battle:
     def use_info_from_message(self, message, army, attacked_army):
         for lines in message:
             if "is dead" in lines:
+                print(lines)
                 creatures = None
                 if message.index(lines) % 2 == 0:
                     for soldier in attacked_army.current_army:
-                        if soldier.base.name == lines.split()[0]:
+                        if soldier.base.name == lines.split(" is dead")[0]:
                             creatures = soldier
                     if attacked_army == self.first_army_status:
                         self.deleted_from_first += [creatures.base.name]
@@ -100,7 +105,7 @@ class Battle:
                         self.map[creatures.base.position_on_battle_ground[0]][
                             creatures.base.position_on_battle_ground[1] + 1] \
                             = None
-            print(lines)
+
 
     def work_with_command(self, army, command, first_army_turn=True):
         next_player = False
@@ -294,23 +299,26 @@ class Battle:
                 map_draw(self.window, self.map, self.fullscreen, self.message_)
                 wait_, click1, click2, mouse_x1, mouse_y1, mouse_x2, mouse_y2 = wait(
                     buttons_list)
-                command = worker_after_wait_for_preparing(wait_, click1,
-                                                          click2,
-                                                          mouse_x1, mouse_y1,
-                                                          mouse_x2, mouse_y2,
-                                                          names, self.window)
+                command, self.message_ = worker_after_wait_for_preparing(wait_,
+                                                                         click1,
+                                                                         click2,
+                                                                         mouse_x1,
+                                                                         mouse_y1,
+                                                                         mouse_x2,
+                                                                         mouse_y2,
+                                                                         names,
+                                                                         self.window)
+                if command == "EXIT":
+                    return 0
                 while command == "Nothing happened":
                     wait_, click1, click2, mouse_x1, mouse_y1, mouse_x2, mouse_y2 = wait(
                         buttons_list)
-                    command = worker_after_wait_for_preparing(wait_, click1,
-                                                              click2,
-                                                              mouse_x1,
-                                                              mouse_y1,
-                                                              mouse_x2,
-                                                              mouse_y2,
-                                                              names,
-                                                              self.window)
-                print(command)
+                    command, self.message_ = worker_after_wait_for_preparing(
+                        wait_, click1, click2,
+                        mouse_x1, mouse_y1,
+                        mouse_x2, mouse_y2,
+                        names, self.window)
+
                 command = command.split()
                 if first_player:
                     next_player = self.work_with_command(
@@ -327,7 +335,7 @@ class Battle:
                         return
             except Exception:
                 print("wrong command")
-                self.message_ = "Wrong command"
+                self.message_ = "   Wrong command"
 
     def make_queue(self):
         all_army = self.first_army_status.army_on_field + \
@@ -342,7 +350,7 @@ class Battle:
         if not in_borders([coordinate_x, coordinate_y]) or \
                 not in_borders([coordinate_x_to, coordinate_y_to]):
             print("Wrong to coordinates")
-            self.message_ = "Wrong o coordinates"
+            self.message_ = "Wrong to coordinates"
             return
         if creature.base.length == 2:
             if coordinate_y_to >= 11 or coordinate_y_to < 0 or \
@@ -382,10 +390,9 @@ class Battle:
                 creature.base.position_on_battle_ground
             )
         else:
-            self.queue_of_creatures.insert(
-                int(len(self.queue_of_creatures) * 10 /
-                    creature.base.initiative),
-                creature.base.position_on_battle_ground)
+            self.queue_of_creatures.insert(int(len(
+                self.queue_of_creatures) * 10 / creature.base.initiative),
+                                           creature.base.position_on_battle_ground)
         for key in creature.base.improvement_duration.keys():
             if creature.base.improvement_duration[key] > 0:
                 creature.base.improvement_duration[key] -= 1
@@ -408,6 +415,7 @@ class Battle:
             tmp = self.queue_of_creatures[0]
             print(tmp)
             print(self.map[tmp[0]][tmp[1]] + " turn")
+            self.message_ = self.map[tmp[0]][tmp[1]] + " turn"
             print('''Use commands:
             move x_to y_to
             attack x_attacked y_attacked
@@ -450,7 +458,11 @@ class Battle:
                 print()
 
             com = waaar(buttons, ["move", "attack", "move_attack",
-                                  "Wait", "Defend", "Exit", "range_attack"])
+                                  "Wait", "Defend", "Exit",
+                                  "range_attack", "EXIT"])
+            if com == "EXIT":
+                self.end_battle()
+                return 0
             com = com.split()
             if com[0] == "move":
                 if (abs(int(com[1]) - int(tmp[0])) +
@@ -472,6 +484,7 @@ class Battle:
                     if abs(int(com[3]) - int(com[1])) > 1 or \
                             abs(int(com[4]) - int(com[2])) > 1:
                         print("Can't attack so far", creature.base.length)
+                        self.message_ = "Can't move so far"
                         continue
                 else:
                     if not (abs(int(com[3]) - int(com[1])) <= 1 and
@@ -483,6 +496,7 @@ class Battle:
                             abs(int(com[3]) - int(com[1])) <= 1 and
                             abs(int(com[4]) - int(com[2]) + 1) <= 1):
                         print("Can't attack so far", creature.base.length)
+                        self.message_ = "Can't move so far"
                         continue
                 attacked_creature = None
                 for soldier in attacked_army.current_army:
@@ -522,6 +536,7 @@ class Battle:
                     )
                     attacked_creature.base.position_on_battle_ground = tmp2
                     print(message[0])
+                    self.message_ = message[0]
                     self.use_info_from_message(message[1::], army,
                                                attacked_army)
                     self.next_turn(creature)
@@ -604,6 +619,9 @@ class Battle:
         return first_win
 
     def end_battle(self):
+        for i in range(len(self.map)):
+            for j in range(len(self.map[0])):
+                self.map[i][j] = None
         if self.first_army_status.hero is not None:
             first_names = []
             for creature in self.first_army_status.starting_army:

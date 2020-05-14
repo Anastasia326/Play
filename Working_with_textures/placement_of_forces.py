@@ -14,8 +14,9 @@ def placement_of_forces(window, fullscreen, mouse_x, mouse_y, picture):
             str(os.path.abspath(__file__)).split(
                 "Working_with_textures")[0] + picture + ".png")
     else:
-        background_image_of_unit_face = pygame.image.load("textures/" +
-                                                          picture + ".png")
+        background_image_of_unit_face = pygame.image.load(
+            str(os.path.abspath(__file__)).split(
+                "Working_with_textures")[0] + "textures/" + picture + ".png")
     window.blit(background_image_of_unit_face, [mouse_x, mouse_y])
     pygame.display.update()
     return [(length - 200, width - width // 10, 170, 100)]

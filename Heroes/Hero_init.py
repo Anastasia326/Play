@@ -49,8 +49,8 @@ class Hero(ABC):
                              self.__getattribute__(
                                  name_of_skill
                              ) + points)
-        return str(self.name) + "nas improved" + str(
-            name_of_skill) + "by" + str(points) + "points"
+        return str(self.name) + " has improved " + str(
+            name_of_skill) + " by " + str(points) + " points"
 
     def show_army(self):
         """Армия"""

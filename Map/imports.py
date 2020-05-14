@@ -41,15 +41,15 @@ class Buildings_for_class:
     def __init__(self, army: Creator):
         self.creatures = []
         army.first_creature.count = 40
-        self.creatures += [army.first_creature.name]
+        self.creatures += [army.first_creature]
         army.second_creature.count = 20
-        self.creatures += [army.second_creature.name]
+        self.creatures += [army.second_creature]
         army.third_creature.count = 10
-        self.creatures += [army.third_creature.name]
+        self.creatures += [army.third_creature]
 
     def place(self, index):
         if index < 3:
-            return self.creatures[index]
+            return self.creatures[index].name
         else:
             return "Wrong"
 

@@ -29,6 +29,9 @@ def wait(button_list):
                 elif 800 >= pos[0] > 700 and 150 <= pos[1] <= 225:
                     click1 = 3
                     click2 = 3
+                elif 800 >= pos[0] >= 700 and 600 >= pos[1] >= 550:
+                    click1 = 4
+                    click2 = 4
                 else:
                     click, n = button_was_clicked(button_list,
                                                   [""]*7,
