@@ -28,11 +28,13 @@ def wait(button_list, width, height, k):
                     else:
                         mouse_x2, mouse_y2 = pos[0], pos[1]
                         click2 = 1
-                elif width >= pos[0] > width - size and size_of_cell * 4 + 10 <= pos[1] <= size_of_cell * 4 + 10 + int(
+                elif width >= pos[0] > width - size and size_of_cell * 4 + \
+                        10 <= pos[1] <= size_of_cell * 4 + 10 + int(
                         75 * k):
                     click1 = 3
                     click2 = 3
-                elif width >= pos[0] >= width - size and height >= pos[1] >= height - int(75 * k):
+                elif width >= pos[0] >= width - size and height >= pos[1] \
+                        >= height - int(75 * k):
                     click1 = 4
                     click2 = 4
                 else:

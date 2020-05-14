@@ -14,6 +14,7 @@ from Working_with_textures.map_draw import map_draw
 from Working_with_textures.waaar import waaar
 from .borders import borders
 
+
 class Battle:
     message_ = ""
 
@@ -276,7 +277,8 @@ class Battle:
                     buttons_list = choose_units_to_kill(
                         self.window,
                         self.fullscreen,
-                        self.first_army_status.stash, self.width, self.height, self.k
+                        self.first_army_status.stash, self.width, self.height,
+                        self.k
                     )
                 else:
                     for creatures in self.second_army_status.current_army:
@@ -284,7 +286,8 @@ class Battle:
                     buttons_list = choose_units_to_kill(
                         self.window,
                         self.fullscreen,
-                        self.second_army_status.stash, self.width, self.height, self.k
+                        self.second_army_status.stash, self.width, self.height,
+                        self.k
                     )
                     for creature in self.second_army_status.stash:
                         print(creature.base.name, end="|")
@@ -304,28 +307,28 @@ class Battle:
                     for creature in self.second_army_status.army_on_field:
                         print(self.map[creature[0]][creature[1]] + " " +
                               str(creature))
-                map_draw(self.window, self.map, self.fullscreen, self.width, self.height, self.k, self.message_)
-                wait_, click1, click2, mouse_x1, mouse_y1, mouse_x2, mouse_y2 = wait(
-                    buttons_list, self.width, self.height, self.k)
-                command, self.message_ = worker_after_wait_for_preparing(wait_,
-                                                                         click1,
-                                                                         click2,
-                                                                         mouse_x1,
-                                                                         mouse_y1,
-                                                                         mouse_x2,
-                                                                         mouse_y2,
-                                                                         names,
-                                                                         self.window, self.width, self.height)
+                map_draw(self.window, self.map, self.width,
+                         self.height, self.k, self.message_)
+                wait_, click1, click2, mouse_x1, mouse_y1, mouse_x2, mouse_y2 = \
+                    wait(buttons_list, self.width, self.height, self.k)
+                command, self.message_ = worker_after_wait_for_preparing(
+                    click1,
+                    click2,
+                    mouse_x1,
+                    mouse_y1,
+                    mouse_x2,
+                    mouse_y2,
+                    self.width, self.height)
                 if command == "EXIT":
                     return 0
                 while command == "Nothing happened":
                     wait_, click1, click2, mouse_x1, mouse_y1, mouse_x2, mouse_y2 = wait(
                         buttons_list, self.width, self.height, self.k)
                     command, self.message_ = worker_after_wait_for_preparing(
-                        wait_, click1, click2,
+                        click1, click2,
                         mouse_x1, mouse_y1,
                         mouse_x2, mouse_y2,
-                        names, self.window, self.width, self.height)
+                        self.width, self.height)
 
                 command = command.split()
                 if first_player:
@@ -436,7 +439,8 @@ class Battle:
             defend
             exit''')
             creature = None
-            buttons = draw_commans(self.window, self.fullscreen, self.width, self.height, self.k)
+            buttons = draw_commans(self.window, self.fullscreen, self.width,
+                                   self.height, self.k)
             if tmp in self.first_army_status.army_on_field:
                 army = self.first_army_status
                 attacked_army = self.second_army_status
@@ -452,18 +456,19 @@ class Battle:
                 print("\trange_attack attacked_creature_coordinate_x y")
             print(creature.base.position_on_battle_ground)
             creature.conter_attack = 0
-            map_draw(self.window, self.map, self.fullscreen, self.width, self.height, self.k, self.message_)
+            map_draw(self.window, self.map, self.width,
+                     self.height, self.k, self.message_)
             for i in range(len(self.map)):
                 for j in range(len(self.map[i])):
                     if self.map[i][j] is None:
                         if abs(creature.base.position_on_battle_ground[0] -
                                i) + \
-                                abs(
-                                    creature.base.position_on_battle_ground[
+                                abs(creature.base.position_on_battle_ground[
                                         1] - j) <= \
                                 creature.base.speed:
                             print("%s" % "|____++____|", end=" ")
-                            draw_green_cell(self.window, i, j, self.width, self.height)
+                            draw_green_cell(self.window, i, j, self.width,
+                                            self.height)
                         else:
                             print("%s" % "|__________|", end=" ")
                     else:
@@ -472,7 +477,8 @@ class Battle:
 
             com = waaar(buttons, ["move", "attack", "move_attack",
                                   "Wait", "Defend", "Exit",
-                                  "range_attack", "EXIT"], self.width, self.height)
+                                  "range_attack", "EXIT"], self.width,
+                        self.height)
             if com == "EXIT":
                 self.end_battle()
                 return 0

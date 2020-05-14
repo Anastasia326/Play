@@ -219,11 +219,7 @@ while run:
                         buttons_list = show_unit(window.value,
                                                  fullscreen.value,
                                                  opened_catalog,
-                                                 array_of_Orden,
-                                                 array_of_Necro, array_of_Mage,
-                                                 array_of_Forest,
-                                                 array_of_Inferno,
-                                                 array_of_Shadows, catalogs,
+                                                 catalogs,
                                                  arrays_list, creatures_types,
                                                  next_page)
                     elif next_page == "Units":

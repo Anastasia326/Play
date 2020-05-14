@@ -1,9 +1,6 @@
-import ctypes
-
-import pygame
 import os
 
-from screeninfo import get_monitors
+import pygame
 
 
 def create_window_of_Field(window, fullscreen, Name, length: int = 800,
