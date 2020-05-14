@@ -1,23 +1,25 @@
 def worker_after_wait_for_preparing(wait, click1, click2, mouse_x1, mouse_y1,
                                     mouse_x2, mouse_y2, units, window, length = 800, higth = 600):
+    size_of_cell = (higth * 5 // 6) // 10
+    size = (length - size_of_cell * 12) // 2
     if click1 == 2 and click2 == 1:
-        first_unit = mouse_y1//50 + (mouse_y1 % 50 > 0) - 1 + \
-                     4 * (800 >= mouse_x1 >= 650)
-        cell_x = (mouse_x2 - 100) // 50
-        cell_y = (mouse_y2 - 2) // 50
+        first_unit = mouse_y1//size_of_cell + (mouse_y1 % size_of_cell > 0) - 1 + \
+                     4 * (length >= mouse_x1 >= length - size)
+        cell_x = (mouse_x2 - size) // size_of_cell
+        cell_y = (mouse_y2) // size_of_cell
         return "stash " + str(first_unit) + " " + str(cell_y) + " " + str(
             cell_x), ""
     if click1 == 1 and click2 == 2:
-        cell_x = (mouse_x1 - 100) // 50
-        cell_y = (mouse_y1 - 2) // 50
+        cell_x = (mouse_x1 - size) // size_of_cell
+        cell_y = (mouse_y1) // size_of_cell
         return "move " + str(cell_y) + " " + str(cell_x) + " stash", ""
     if click1 == 2 and click2 == 2:
         return "Nothing happened", "Nothing happened"
     if click1 == 1 and click2 == 1:
-        cell_x1 = (mouse_x1 - 100) // 50
-        cell_y1 = (mouse_y1 - 2) // 50
-        cell_x2 = (mouse_x2 - 100) // 50
-        cell_y2 = (mouse_y2 - 2) // 50
+        cell_x1 = (mouse_x1 - size) // size_of_cell
+        cell_y1 = (mouse_y1) // size_of_cell
+        cell_x2 = (mouse_x2 - size) // size_of_cell
+        cell_y2 = (mouse_y2) // size_of_cell
         return "move " + str(cell_y1) + " " + str(cell_x1) + " to " + str(
             cell_y2) + " " + str(cell_x2), ""
     if click1 == 3 and click2 == 3:

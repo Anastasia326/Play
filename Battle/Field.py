@@ -15,7 +15,20 @@ def Start_Battle(window, fullscreen, mode:str):
     run = True
     buttons_list = []
     what_happened = "Choise"
-    window = create_window_of_Field(window, fullscreen, "Field")
+    width = pygame.display.get_surface().get_width()
+    height = pygame.display.get_surface().get_height()
+    k = 1
+    if width == 800:
+        k = 1
+    elif width == 1178:
+        k = 1.25
+    elif width == 1280:
+        k = 1.45
+    elif width == 1920:
+        k = 2
+    elif width == 1600:
+        k = 1.5
+    window = create_window_of_Field(window, fullscreen, "Field", width, height)
     pygame.draw.line(window, (90, 90, 255), (10, 100), (20, 50))
     i = 0
     pygame.time.set_timer(pygame.USEREVENT, 1000)
@@ -30,13 +43,13 @@ def Start_Battle(window, fullscreen, mode:str):
             run = False
         x = 10
         clock = pygame.time.Clock()
-        while x <= 840 and a:
-            font = pygame.font.SysFont('dejavuserif', 60)
+        while x <= width + 30  and a:
+            font = pygame.font.SysFont('dejavuserif', int(60 * k))
             text = font.render("Let the battle begin!", True, (255, 215, 0))
             clock.tick(60)
-            window = create_window_of_Field(window, fullscreen, "Field")
+            window = create_window_of_Field(window, fullscreen, "Field", width, height)
             window.blit(text, (x, 250))
-            x += 30
+            x += int(30 * k)
             pygame.display.update()
         a = False
         for event in pygame.event.get():
@@ -45,7 +58,7 @@ def Start_Battle(window, fullscreen, mode:str):
             if what_happened == "Choise":
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     was_clicked, buttons_list = create_window_choise(window,
-                                                                     fullscreen)
+                                                                     fullscreen, k, width, height)
                     pos = pygame.mouse.get_pos()
                     mouse_x, mouse_y = pos[0], pos[1]
                     was_clicked, next_page = button_was_clicked(buttons_list,
@@ -59,7 +72,7 @@ def Start_Battle(window, fullscreen, mode:str):
                             window,
                             fullscreen,
                             heroes_list[index_][0],
-                            heroes_list[index_][1]
+                            heroes_list[index_][1], width, height, k
                         )
 
                     print(next_page, what_happened)
@@ -92,15 +105,16 @@ def Start_Battle(window, fullscreen, mode:str):
                             what_happened = "Set up the army"
             elif what_happened == "Set up the army":
                 if mode == "Duel":
-                    Battle(first_army, second_army, window, fullscreen)
+                    Battle(first_army, second_army, window, fullscreen, width, height, k)
                 else:
                     Play(first_army, second_army, mode, window, fullscreen)
                 what_happened = "End"
             elif what_happened == "End":
-                buttons_list = end_of_game(window, fullscreen)
+                buttons_list = end_of_game(window, fullscreen,width, height, k)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
-                    mouse_x, mouse_y = pos[0], pos[1]
+                    mouse_x = pos[0]
+                    mouse_y = pos[1]
                     was_clicked, next_page = button_was_clicked(
                         buttons_list, ["Exit"], [mouse_x, mouse_y])
                     if was_clicked:
