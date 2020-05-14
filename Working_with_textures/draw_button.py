@@ -21,7 +21,7 @@ def draw_button(window, colour: tuple, coordinates: tuple, name: str = "",
                       coordinates[1],
                       coordinates[2],
                       coordinates[3]))
-    fond = pygame.font.SysFont('dejavuserif', size)
+    fond = pygame.font.SysFont('dejavuserif', int(size))
     text = fond.render(name, True, [text_1, text_2, text_3])
     window.blit(text, [coordinates[0] + coordinates[2] // 100 + 1, coordinates[
         1] + coordinates[3] // 100 + 1])
