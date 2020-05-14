@@ -92,7 +92,7 @@ def Start_Battle(window, fullscreen, mode:str):
                             what_happened = "Set up the army"
             elif what_happened == "Set up the army":
                 if mode == "Duel":
-                    battle = Battle(first_army, second_army, window, fullscreen)
+                    Battle(first_army, second_army, window, fullscreen)
                 else:
                     Play(first_army, second_army, mode, window, fullscreen)
                 what_happened = "End"

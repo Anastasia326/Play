@@ -12,7 +12,7 @@ def placement_of_forces(window, fullscreen, mouse_x, mouse_y, picture):
     if os.name == "nt":
         background_image_of_unit_face = pygame.image.load(
             str(os.path.abspath(__file__)).split(
-                "Working_with_textures")[0] + picture + ".png")
+                "Working_with_textures")[0]+ "textures\\" + picture + ".png")
     else:
         background_image_of_unit_face = pygame.image.load(
             str(os.path.abspath(__file__)).split(

@@ -15,8 +15,8 @@ def create_window_of_Field(window, fullscreen, Name, length: int = 800,
         current_h = user32.GetSystemMetrics(1)
         background_image = pygame.image.load(
             str(os.path.abspath(__file__)).split(
-                "Working_with_textures")[0] + "Battle/" + Name + str(length) + "x" + str(width) \
-            + ".jpg")
+                "Working_with_textures")[0] + "Battle\\" + Name + str(length) +
+                "x" + str(width)+ ".jpg")
     else:
         info_object = str(get_monitors()).split("=")
         current_w = int(info_object[3].split(",")[0])
@@ -33,7 +33,8 @@ def create_window_of_Field(window, fullscreen, Name, length: int = 800,
         if os.name == "nt":
             background_image = pygame.image.load(
                 str(os.path.abspath(__file__)).split(
-                    "Working_with_textures")[0] + "Battle/" + Name + str(length) + "x" + str(
+                    "Working_with_textures")[0] + "Battle\\" + Name +
+                str(length) + "x" + str(
                     width) + ".jpg")
         else:
             background_image = pygame.image.load(
