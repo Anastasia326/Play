@@ -30,6 +30,7 @@ class Battle:
         self.queue_of_creatures = []
         self.deleted_from_first = []
         self.deleted_from_second = []
+        self.win = self.battle()
 
     def use_info_from_message(self, message, army, attacked_army):
         for lines in message:

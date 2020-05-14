@@ -1,9 +1,5 @@
 from collections import deque
 
-import pygame
-
-from ArmyForDuel.Sverchok_army import Swerchok_army
-from ArmyForDuel.Zexir_army import Zexir_army
 from Battle.Battle_ import Battle
 from Battle.army import Army
 from Map.Medium import MediumMap
@@ -68,21 +64,15 @@ class Play:
         command = [""]
         while command[0] != "end" and command[0] != "Exit":
             command = wait_klick(button_list, 800, 600)
-            print(command)
             command = command.split()
             if command[0] == "move":
                 path = self.make_path([hero_coordinads[0], hero_coordinads[1]],
                                       [int(command[1]), int(command[2])])
                 if self.first_player_turn:
-                    self.move(path, self.first_army.hero.name)
+                    command[0] = self.move(path, self.first_army.hero.name)
                 else:
-                    self.move(path, self.second_army.hero.name)
+                    command[0] = self.move(path, self.second_army.hero.name)
                 try:
-                    for i in range(len(self.Map)):
-                        for j in range(len(self.Map[0])):
-                            print(self.Map[i][j].center(15), end=" ")
-                        print()
-                    print("___________________")
                     for items in self.first_resources.reserve.items():
                         print(items[0], items[1])
                     for items in self.first_resources.increasing.items():
@@ -113,7 +103,7 @@ class Play:
         if command[0] != "Exit":
             self.next_turn()
         else:
-            self.end()
+            self.end(self.first_player_turn)
 
     def next_turn(self):
         self.walked_points = 0
@@ -196,12 +186,13 @@ class Play:
                     print("hero_fight")
                     battle = Battle(self.first_army, self.second_army, self.window,
                                     self.fullscreen)
-                    if battle.battle():
+                    if battle.win:
                         print("First Win")
-                        self.end()
+                        self.end(self.first_player_turn)
                     else:
                         print("Second Win")
-                        self.end()
+                        self.end(self.first_player_turn)
+                    return "Exit"
                 else:
                     neutral_army = None
                     print("fight")
@@ -216,24 +207,26 @@ class Play:
                     if neutral_army is not None:
                         if self.first_player_turn:
                             if Battle(self.first_army, neutral_army,
-                                      self.window, self.fullscreen).battle():
+                                      self.window, self.fullscreen).win:
                                 print("Win")
                                 self.Map[path[0][0]][path[0][1]] = \
                                     self.first_army.hero.name
                                 self.Map[path[1][0]][path[1][1]] = "Road"
                             else:
                                 print("Loose")
-                                self.end()
+                                self.end(not self.first_player_turn)
+                                return "Exit"
                         else:
                             if Battle(self.second_army, neutral_army,
-                                      self.window, self.fullscreen).battle():
+                                      self.window, self.fullscreen).win:
                                 print("Win")
                                 self.Map[path[0][0]][path[0][1]] = \
                                     self.second_army.hero.name
                                 self.Map[path[1][0]][path[1][1]] = "Road"
                             else:
                                 print("Loose")
-                                self.end()
+                                self.end(self.first_player_turn)
+                                return "Exit"
 
     def make_path(self, coordinates_from, coordinates_to):
         print("make path")
@@ -294,6 +287,10 @@ class Play:
             path += [coordinates_from]
             return path
 
-    def end(self):
-        pass
+    def end(self, turn):
+        if turn:
+            print(self.first_army.hero.name)
+        else:
+            print(self.second_army.hero.name)
+
 
