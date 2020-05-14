@@ -106,7 +106,6 @@ class Battle:
                             creatures.base.position_on_battle_ground[1] + 1] \
                             = None
 
-
     def work_with_command(self, army, command, first_army_turn=True):
         next_player = False
         if command[0] == "stash":
