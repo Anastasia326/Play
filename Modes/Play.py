@@ -51,14 +51,12 @@ class Play:
             for j in range(len(self.Map[0])):
                 if self.first_player_turn:
                     if self.Map[i][j] == self.first_army.hero.name:
-                        button_list = drow_map(self.window, False, "grass", "Quick",
-                                               i, j, self.Map)
+                        button_list = drow_map(self.window, False, "grass", i, j, self.Map)
                         hero_coordinads = [i, j]
                         break
                 else:
                     if self.Map[i][j] == self.second_army.hero.name:
-                        button_list = drow_map(self.window, False, "grass", "Quick",
-                                               i, j, self.Map)
+                        button_list = drow_map(self.window, False, "grass", i, j, self.Map)
                         hero_coordinads = [i, j]
                         break
         command = [""]
@@ -84,15 +82,13 @@ class Play:
                                     button_list = drow_map(self.window,
                                                            False,
                                                            "grass",
-                                                           "Quick",
                                                            i, j, self.Map)
                                     hero_coordinads = [i, j]
                                     break
                             else:
                                 if self.Map[i][j] == self.second_army.hero.name:
                                     button_list = drow_map(self.window, False,
-                                                           "grass", "Quick",
-                                                           i, j, self.Map)
+                                                           "grass", i, j, self.Map)
                                     hero_coordinads = [i, j]
                                     break
                 except:
@@ -134,17 +130,15 @@ class Play:
                     ][0]][path[-self.walked_points + 1 + already_moved][
                         1]] = "Road"
                 self.Map[cur_pos[0]][cur_pos[1]] = hero_name
-                drow_map(self.window, False, "grass", "Quick", cur_pos[0], cur_pos[
+                drow_map(self.window, False, "grass", cur_pos[0], cur_pos[
                     1], self.Map)
             if self.walked_points < self.first_army.hero.movement:
                 self.walked_points += 1
                 if self.Map[path[0][0]][path[0][1]] == "Road":
-                    print("Road_")
                     self.Map[path[1][0]][path[1][1]] = "Road"
                     self.Map[path[0][0]][path[0][1]] = hero_name
                 elif self.Map[path[0][0]][path[0][1]].split("Count")[0] in \
                         resources:
-                    print("res")
                     string = self.Map[path[0][0]][path[0][1]].split("Count")
                     if self.first_player_turn:
                         self.first_resources.add_resource(string[0], string[1])
@@ -152,7 +146,6 @@ class Play:
                         self.second_resources.add_resource(string[0], string[1])
                     self.Map[path[0][0]][path[0][1]] = "Road"
                 elif self.Map[path[0][0]][path[0][1]] in building_array:
-                    print("in buildings")
                     if self.first_player_turn:
                         print(self.first_army.hero.improve_skill(
                             improving_skills_list[
@@ -171,7 +164,6 @@ class Play:
                         ))
                     self.Map[path[0][0]][path[0][1]] = "Road"
                 elif self.Map[path[0][0]][path[0][1]] in miner_array:
-                    print("miner")
                     for miner in self.miners:
                         if miner.position_on_map == [path[0][0], path[0][1]]:
                             if self.first_player_turn:
@@ -183,7 +175,6 @@ class Play:
                         self.second_army.hero.name or \
                         self.Map[path[0][0]][
                             path[0][1]] == self.second_army.hero.name:
-                    print("hero_fight")
                     battle = Battle(self.first_army, self.second_army, self.window,
                                     self.fullscreen)
                     if battle.win:
@@ -195,7 +186,6 @@ class Play:
                     return "Exit"
                 else:
                     neutral_army = None
-                    print("fight")
                     for creature in self.first_neutral_army.creatures:
                         if creature.name == self.Map[path[0][0]][path[0][1]]:
                             neutral_army = Army(None, [creature])
@@ -230,7 +220,6 @@ class Play:
 
     def make_path(self, coordinates_from, coordinates_to):
         print("make path")
-        print(coordinates_to)
         if 10 <= coordinates_from[0] < len(self.Map) - 12:
             coordinates_to[0] += coordinates_from[0] - 10
         elif coordinates_from[0] > len(self.Map) - 22:

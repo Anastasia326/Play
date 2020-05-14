@@ -8,8 +8,8 @@ Faiidaen_army.second_creature_upgraded.add_count(
     Faiidaen_army.second_creature_upgraded, 100)
 Faiidaen_army.third_creature_upgraded.add_count(
     Faiidaen_army.third_creature_upgraded, 64)
-Faiidaen_army.fourth_creature_upgraded.add_count(
-    Faiidaen_army.fourth_creature_upgraded, 32)
+Faiidaen_army.fourth_creature.add_count(
+    Faiidaen_army.fourth_creature, 32)
 Faiidaen_army.fifth_creature_upgraded.add_count(
     Faiidaen_army.fifth_creature_upgraded, 16)
 Faiidaen_army.sixth_creature.add_count(Faiidaen_army.sixth_creature, 4)

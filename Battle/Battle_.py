@@ -301,17 +301,19 @@ class Battle:
                         print(self.map[creature[0]][creature[1]] + " " +
                               str(creature))
                 map_draw(self.window, self.map, self.fullscreen, self.message_)
-                wait_, click1, click2, mouse_x1, mouse_y1, mouse_x2, mouse_y2 = wait(
-                    buttons_list)
-                command, self.message_ = worker_after_wait_for_preparing(wait_,
-                                                                         click1,
-                                                                         click2,
-                                                                         mouse_x1,
-                                                                         mouse_y1,
-                                                                         mouse_x2,
-                                                                         mouse_y2,
-                                                                         names,
-                                                                         self.window)
+                wait_, click1, click2, mouse_x1, mouse_y1, mouse_x2, mouse_y2 = \
+                    wait(buttons_list)
+                command, self.message_ = worker_after_wait_for_preparing(
+                    wait_,
+                    click1,
+                    click2,
+                    mouse_x1,
+                    mouse_y1,
+                    mouse_x2,
+                    mouse_y2,
+                    names,
+                    self.window
+                )
                 if command == "EXIT":
                     return 0
                 while command == "Nothing happened":
@@ -360,7 +362,7 @@ class Battle:
             if coordinate_y_to >= 11 or coordinate_y_to < 0 or \
                     coordinate_x_to < 1 or coordinate_x_to > 9:
                 print("Wrong to coordinates")
-                self.message_ = "Wrong o coordinates"
+                self.message_ = "Wrong to coordinates"
                 return
         self.map[coordinate_x][coordinate_y] = None
         self.map[coordinate_x_to][coordinate_y_to] = creature.base.name

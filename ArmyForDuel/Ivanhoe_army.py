@@ -3,13 +3,13 @@ from Battle.army import Army
 from Heroes.HeroCatalog.Orden.Ivanhoe import Knight
 
 Ivanhoe_army = orden()
-Ivanhoe_army.first_creature.add_count(Ivanhoe_army.first_creature, 100)
+Ivanhoe_army.first_creature.add_count(Ivanhoe_army.first_creature, 130)
 Ivanhoe_army.second_creature_upgraded.add_count(
-    Ivanhoe_army.second_creature_upgraded, 100)
+    Ivanhoe_army.second_creature_upgraded, 111)
 Ivanhoe_army.third_creature_upgraded.add_count(
-    Ivanhoe_army.third_creature_upgraded, 64)
+    Ivanhoe_army.third_creature_upgraded, 65)
 Ivanhoe_army.fourth_creature_upgraded.add_count(
-    Ivanhoe_army.fourth_creature_upgraded, 32)
+    Ivanhoe_army.fourth_creature_upgraded, 33)
 Ivanhoe_army.fifth_creature_upgraded.add_count(
     Ivanhoe_army.fifth_creature_upgraded, 16)
 Ivanhoe_army.sixth_creature.add_count(Ivanhoe_army.sixth_creature, 4)

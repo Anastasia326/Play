@@ -32,7 +32,7 @@ def cycle(x, y, length, width, window, size_of_cell, map_,
                 pass
 
 
-def drow_map(window, fullscreen, Name, Name_of_map, x, y, map_,
+def drow_map(window, fullscreen, Name, x, y, map_,
              length: int = 800,
              width: int = 600,
              update=True):

@@ -6,7 +6,6 @@ pygame.init()
 
 from Working_with_textures.draw_some_buttons import draw_some_buttons
 from Working_with_textures.NewField import create_window_of_Field
-from Working_with_textures.draw_button import draw_button
 
 
 def draw_commans(window, fullscreen):
