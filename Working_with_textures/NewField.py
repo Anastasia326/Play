@@ -47,11 +47,12 @@ def create_window_of_Field(window, fullscreen, Name, length: int = 800,
     else:
         window = pygame.display.set_mode((length, width))
     window.blit(background_image, [0, 0])
-    size_of_cell = 50
+    size_of_cell = (width * 5 // 6) // 10
+    size = (length - size_of_cell * 12) // 2
     for i in range(11):
-        pygame.draw.line(window, (143, 188, 143), (100, 1 + size_of_cell * i), (700, 1 + size_of_cell * i))
+        pygame.draw.line(window, (143, 188, 143), (size,  size_of_cell * i), (size + size_of_cell * 12, size_of_cell * i))
     for i in range(13):
-        pygame.draw.line(window, (143, 188, 143), (100 + size_of_cell * i, 1), (100 + size_of_cell * i, 501))
+        pygame.draw.line(window, (143, 188, 143), (size + size_of_cell * i, 0), (size + size_of_cell * i, width * 5 // 6))
 
     pygame.display.set_caption("Герои меча и магии(Arthur's and Anastasia's "
                                "remake)")
