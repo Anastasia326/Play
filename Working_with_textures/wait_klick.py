@@ -12,12 +12,12 @@ def wait_klick(button_list, length, width):
                 pos = pygame.mouse.get_pos()
                 mouse_x1 = pos[0]
                 mouse_y1 = pos[1]
-                if length - 2 * (
-                        length // 10) >= mouse_x1 - length // 10 >= 0 and width // 10 * 3 + width // 6 * 4 + 10 >= mouse_y1 >= width // 6 * 4 + 10 + width // 20 * 3:
+                if button_list[1][0] + button_list[1][2] >= mouse_x1 >= [1][0] and button_list[1][1] + button_list[1][
+                    3] >= mouse_y1 >= button_list[1][1]:
                     return "end"
-                elif length - 2 * (
-                        length // 10) >= mouse_x1 - length // 10 >= 0 and width // 20 * 3 >= mouse_y1 - width // 6 * 4 + 10 >= 0:
+                elif button_list[0][0] + button_list[0][2] >= mouse_x1 >= button_list[0][0] and button_list[0][
+                    1] + button_list[0][3] >= mouse_y1 >= button_list[0][1]:
                     return "Exit"
                 elif mouse_y1 <= width - (width // 3 + 10):
-                    return "move " + str(mouse_x1 // (length // 21)) + " "+ \
+                    return "move " + str(mouse_x1 // (length // 21)) + " " + \
                            str(mouse_y1 // (length // 21))

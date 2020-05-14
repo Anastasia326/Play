@@ -8,8 +8,8 @@ from screeninfo import get_monitors
 from Working_with_textures.draw_some_buttons import draw_some_buttons
 
 def cycle (x, y, number1, number_2, number_3, number_4, length, width, window, size_of_cell, map_):
-    for i in range(x - number1, x + number_2):
-            for j in range(y - number_3, y + number_4):
+    for i in range(x - number1, x + number_2 + 1):
+            for j in range(y - number_3, y + number_4 + 1):
                 try:
                     background_image = pygame.image.load(
                         str(os.path.abspath(__file__)).split(
@@ -65,25 +65,25 @@ def drow_map(window, fullscreen, Name, Name_of_map, x, y, map_,
 
     if len(map_)-22 >= x >= 10:
         if len(map_[0]) - 12 >= y >= 10:
-            cycle(x, y, 10, 11, 5, 5, length, width, window, size_of_cell, map_)
+            cycle(x, y, 10, 10, 5, 5, length, width, window, size_of_cell, map_)
         elif y < 10:
-            cycle(x, 0, 10, 11, 0, 11, length, width, window, size_of_cell, map_)
+            cycle(x, 5, 10, 10, 5, 5, length, width, window, size_of_cell, map_)
         else:
-            cycle(x, len(map_[0]) - 7, 10, 11, 5, 5, length, width, window, size_of_cell, map_)
+            cycle(x, len(map_[0]) - 6, 10, 10, 5, 5, length, width, window, size_of_cell, map_)
     elif x < 10:
         if len(map_[0]) - 12 >= y >= 10:
-            cycle(x, y, 0, 21, 5, 5, length, width, window, size_of_cell, map_)
+            cycle(10, y, 10, 10, 5, 5, length, width, window, size_of_cell, map_)
         elif y < 10:
-            cycle(x, 0, 0, 21, 0, 11, length, width, window, size_of_cell, map_)
+            cycle(10, 5, 10, 10, 5, 5, length, width, window, size_of_cell, map_)
         else:
-            cycle(x, len(map_[0]) - 7, 0, 21, 5, 5, length, width, window, size_of_cell, map_)
+            cycle(10, len(map_[0]) - 6, 10, 10, 5, 5, length, width, window, size_of_cell, map_)
     else:
         if len(map_[0]) - 12 >= y >= 10:
-            cycle(0, y, len(map_)-22, len(map_)-1, 5, 5, length, width, window, size_of_cell, map_)
+            cycle(len(map_) - 11, y, 10, 10, 5, 5, length, width, window, size_of_cell, map_)
         elif y < 10:
-            cycle(0, 0, len(map_)-22, len(map_)-1, 0, 11, length, width, window, size_of_cell, map_)
+            cycle(len(map_) - 11, 5, 10, 10, 5, 5, length, width, window, size_of_cell, map_)
         else:
-            cycle(0, len(map_[0]) - 7, len(map_)-22, len(map_)-1, 5, 5, length, width, window, size_of_cell, map_)
+            cycle(len(map_) - 11, len(map_[0]) - 6, 10, 10, 5, 5, length, width, window, size_of_cell, map_)
 
     pygame.display.set_caption("Герои меча и магии(Arthur's and Anastasia's "
                                "remake)")

@@ -20,6 +20,7 @@ from Working_with_textures.wait_klick import wait_klick
 class Play:
     def __init__(self, first: Army, second: Army, Mode: str, window,
                  fullscreen):
+        self.walked_points = 0
         self.window = window
         self.fullscreen = fullscreen
         self.first_army = first
@@ -114,6 +115,7 @@ class Play:
             self.end()
 
     def next_turn(self):
+        self.walked_points = 0
         if self.first_player_turn:
             self.first_resources.next_turn()
             self.first_player_turn = False
@@ -128,115 +130,119 @@ class Play:
         self.playing()
 
     def move(self, path, hero_name):
-        walked_points = 0
+        already_moved = self.walked_points
         cur_pos = [0, 0]
         print(path)
         if len(path) > 1:
-            while walked_points < self.first_army.hero.movement and cur_pos != \
+            while self.walked_points < self.first_army.hero.movement and cur_pos\
+                   != \
                     path[1]:
-                walked_points += 1
-                cur_pos = path[- walked_points]
-                if walked_points != 1:
-                    self.Map[path[-walked_points + 1][0]][path[-walked_points + 1][
+                self.walked_points += 1
+                cur_pos = path[- self.walked_points + already_moved]
+                if self.walked_points != 1:
+                    self.Map[path[
+                        -self.walked_points + 1 + already_moved
+                    ][0]][path[-self.walked_points + 1 + already_moved][
                         1]] = "Road"
                 self.Map[cur_pos[0]][cur_pos[1]] = hero_name
                 drow_map(window, False, "grass", "Quick", cur_pos[0], cur_pos[
                     1], self.Map)
-            print(self.Map[path[0][0]][path[0][1]])
-            if self.Map[path[0][0]][path[0][1]] == "Road":
-                self.Map[path[1][0]][path[1][1]] = "Road"
-                self.Map[path[0][0]][path[0][1]] = hero_name
-            elif self.Map[path[0][0]][path[0][1]] in resources:
-                string = self.Map[path[0][0]][path[0][1]].split("Count")
-                if self.first_player_turn:
-                    self.first_resources.add_resource(string[0], string[1])
-                else:
-                    self.second_resources.add_resource(string[0], string[1])
-            elif self.Map[path[0][0]][path[0][1]] in building_array:
-                print("in buildings")
-                if self.first_player_turn:
-                    print(self.first_army.hero.improve_skill(
-                        improving_skills_list[
-                            building_array.index(
-                                self.Map[path[0][0]][path[0][1]])
-                        ],
-                        2
-                    ))
-                else:
-                    print(self.second_army.hero.improve_skill(
-                        improving_skills_list[
-                            building_array.index(
-                                self.Map[path[0][0]][path[0][1]])
-                        ],
-                        2
-                    ))
-                self.Map[path[0][0]][path[0][1]] = "Road"
-            elif self.Map[path[0][0]][path[0][1]] in miner_array:
-                for miner in self.miners:
-                    if miner.position_on_map == [path[0][0], path[0][1]]:
-                        if self.first_player_turn:
-                            miner.get_under_control(self.first_army.hero.name)
-                        else:
-                            miner.get_under_control(self.second_army.hero.name)
-                        break
-            elif "City" in self.Map[path[0][0]][path[0][1]]:
-                if self.first_player_turn:
-                    if "Second" in self.Map[path[0][0]][path[0][1]]:
-                        self.Map[path[0][0]][path[0][1]] = "Road"
-                        self.first_resources.add_resource("Gold", 10000)
-                    else:
-                        self.enter_city(self.first_city, self.first_army)
-                else:
-                    if "First" in self.Map[path[0][0]][path[0][1]]:
-                        self.Map[path[0][0]][path[0][1]] = "Road"
-                        self.first_resources.add_resource("Gold", 10000)
-                    else:
-                        self.enter_city(self.first_city, self.second_army)
-            elif self.Map[path[0][0]][path[0][1]] == self.second_army.hero.name \
-                    and self.first_player_turn or \
-                    self.Map[path[0][0]][
-                        path[0][1]] == self.second_army.hero.name \
-                    and not self.first_player_turn:
-                battle = Battle(self.first_army, self.second_army, self.window,
-                                self.fullscreen)
-                if battle.battle():
-                    print("First Win")
-                    self.end()
-                else:
-                    print("Second Win")
-                    self.end()
-            else:
-                neutral_army = None
-                print("fight")
-                for creature in self.first_neutral_army.creatures:
-                    if creature.name == self.Map[path[0][0]][path[0][1]]:
-                        neutral_army = Army(None, [creature])
-                        break
-                for creature in self.second_neutral_army.creatures:
-                    if creature.name == self.Map[path[0][0]][path[0][1]]:
-                        neutral_army = Army(None, [creature])
-                        break
-                if neutral_army is not None:
+            if self.walked_points < self.first_army.hero.movement:
+                self.walked_points += 1
+                if self.Map[path[0][0]][path[0][1]] == "Road":
+                    self.Map[path[1][0]][path[1][1]] = "Road"
+                    self.Map[path[0][0]][path[0][1]] = hero_name
+                elif self.Map[path[0][0]][path[0][1]] in resources:
+                    string = self.Map[path[0][0]][path[0][1]].split("Count")
                     if self.first_player_turn:
-                        if Battle(self.first_army, neutral_army,
-                                  self.window, self.fullscreen).battle():
-                            print("Win")
-                            self.Map[path[0][0]][path[0][1]] = \
-                                self.first_army.hero.name
-                            self.Map[path[1][0]][path[1][1]] = "Road"
-                        else:
-                            print("Loose")
-                            self.end()
+                        self.first_resources.add_resource(string[0], string[1])
                     else:
-                        if Battle(self.second_army, neutral_army,
-                                  self.window, self.fullscreen).battle():
-                            print("Win")
-                            self.Map[path[0][0]][path[0][1]] = \
-                                self.second_army.hero.name
-                            self.Map[path[1][0]][path[1][1]] = "Road"
+                        self.second_resources.add_resource(string[0], string[1])
+                elif self.Map[path[0][0]][path[0][1]] in building_array:
+                    print("in buildings")
+                    if self.first_player_turn:
+                        print(self.first_army.hero.improve_skill(
+                            improving_skills_list[
+                                building_array.index(
+                                    self.Map[path[0][0]][path[0][1]])
+                            ],
+                            2
+                        ))
+                    else:
+                        print(self.second_army.hero.improve_skill(
+                            improving_skills_list[
+                                building_array.index(
+                                    self.Map[path[0][0]][path[0][1]])
+                            ],
+                            2
+                        ))
+                    self.Map[path[0][0]][path[0][1]] = "Road"
+                elif self.Map[path[0][0]][path[0][1]] in miner_array:
+                    for miner in self.miners:
+                        if miner.position_on_map == [path[0][0], path[0][1]]:
+                            if self.first_player_turn:
+                                miner.get_under_control(self.first_army.hero.name)
+                            else:
+                                miner.get_under_control(self.second_army.hero.name)
+                            break
+                elif "City" in self.Map[path[0][0]][path[0][1]]:
+                    if self.first_player_turn:
+                        if "Second" in self.Map[path[0][0]][path[0][1]]:
+                            self.Map[path[0][0]][path[0][1]] = "Road"
+                            self.first_resources.add_resource("Gold", 10000)
                         else:
-                            print("Loose")
-                            self.end()
+                            self.enter_city(self.first_city, self.first_army)
+                    else:
+                        if "First" in self.Map[path[0][0]][path[0][1]]:
+                            self.Map[path[0][0]][path[0][1]] = "Road"
+                            self.first_resources.add_resource("Gold", 10000)
+                        else:
+                            self.enter_city(self.first_city, self.second_army)
+                elif self.Map[path[0][0]][path[0][1]] == self.second_army.hero.name \
+                        and self.first_player_turn or \
+                        self.Map[path[0][0]][
+                            path[0][1]] == self.second_army.hero.name \
+                        and not self.first_player_turn:
+                    battle = Battle(self.first_army, self.second_army, self.window,
+                                    self.fullscreen)
+                    if battle.battle():
+                        print("First Win")
+                        self.end()
+                    else:
+                        print("Second Win")
+                        self.end()
+                else:
+                    neutral_army = None
+                    print("fight")
+                    for creature in self.first_neutral_army.creatures:
+                        if creature.name == self.Map[path[0][0]][path[0][1]]:
+                            neutral_army = Army(None, [creature])
+                            break
+                    for creature in self.second_neutral_army.creatures:
+                        if creature.name == self.Map[path[0][0]][path[0][1]]:
+                            neutral_army = Army(None, [creature])
+                            break
+                    if neutral_army is not None:
+                        if self.first_player_turn:
+                            if Battle(self.first_army, neutral_army,
+                                      self.window, self.fullscreen).battle():
+                                print("Win")
+                                self.Map[path[0][0]][path[0][1]] = \
+                                    self.first_army.hero.name
+                                self.Map[path[1][0]][path[1][1]] = "Road"
+                            else:
+                                print("Loose")
+                                self.end()
+                        else:
+                            if Battle(self.second_army, neutral_army,
+                                      self.window, self.fullscreen).battle():
+                                print("Win")
+                                self.Map[path[0][0]][path[0][1]] = \
+                                    self.second_army.hero.name
+                                self.Map[path[1][0]][path[1][1]] = "Road"
+                            else:
+                                print("Loose")
+                                self.end()
 
     def enter_city(self, city: City, army: Army):
         '''
@@ -271,6 +277,10 @@ class Play:
             coordinates_to[0] += coordinates_from[0] - 10
         elif coordinates_from[0] > len(self.Map) - 22:
             coordinates_to[0] += len(self.Map) - 22
+        if 10 <= coordinates_from[1] <= len(self.Map[0]) - 12:
+            coordinates_to[1] += coordinates_from[1] - 10
+        elif coordinates_from[1] > len(self.Map[0]) - 12:
+            coordinates_to[1] += len(self.Map[1]) - 12
         print(coordinates_from)
         print(coordinates_to)
         curr_coord = coordinates_from
@@ -329,4 +339,4 @@ first_army = Swerchok_army
 second_army = Zexir_army
 pygame.init()
 window = pygame.display.set_mode((800, 600))
-Play(first_army, second_army, "Quick", window, False)
+Play(first_army, second_army, "Medium", window, False)
