@@ -30,7 +30,7 @@ class BattleUnit(Unit):
                      other_army=None, first_attack=True):
         deeling_damage = count_damage(self.base, other_creature.base)
         message_to_return = [other_creature.get_damage(deeling_damage)]
-        if other_creature.conter_attack != other_creature.can_conter_attack \
+        if other_creature.conter_attack < other_creature.can_conter_attack \
                 and "is dead" not in message_to_return[0] and first_attack:
             other_creature.conter_attack += 1
             message_to_return += other_creature.melee_attack(

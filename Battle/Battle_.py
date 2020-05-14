@@ -33,8 +33,8 @@ class Battle:
 
     def use_info_from_message(self, message, army, attacked_army):
         for lines in message:
+            print(lines, message.index(lines))
             if "is dead" in lines:
-                print(lines)
                 creatures = None
                 if message.index(lines) % 2 == 0:
                     for soldier in attacked_army.current_army:
@@ -77,6 +77,10 @@ class Battle:
                     for soldier in army.current_army:
                         if soldier.base.name == lines.split()[0]:
                             creatures = soldier
+                    if army == self.first_army_status:
+                        self.deleted_from_first += [creatures.base.name]
+                    else:
+                        self.deleted_from_second += [creatures.base.name]
                     army.current_army.pop(
                         army.current_army.index(
                             creatures
@@ -381,27 +385,32 @@ class Battle:
         return creature.move([coordinate_x_to, coordinate_y_to])
 
     def next_turn(self, creature):
-        self.queue_of_creatures.pop(0)
-        if int(len(
-                self.queue_of_creatures) * 10 / creature.base.initiative) == 0:
-            self.queue_of_creatures.insert(
-                1,
-                creature.base.position_on_battle_ground
-            )
-        else:
-            self.queue_of_creatures.insert(int(len(
-                self.queue_of_creatures) * 10 / creature.base.initiative),
-                                           creature.base.position_on_battle_ground)
-        for key in creature.base.improvement_duration.keys():
-            if creature.base.improvement_duration[key] > 0:
-                creature.base.improvement_duration[key] -= 1
-                if creature.base.improvement_duration[key] == 0:
-                    creature.base.__setattr__(
-                        creature.base.improvement_characteristics[key][0],
-                        creature.base.__getattribute__(
-                            creature.base.improvement_characteristics[key][0]
-                        ) - creature.base.improvement_characteristics[key][1]
-                    )
+        if creature.base.name not in self.deleted_from_first and \
+                creature.base.name not in self.deleted_from_second:
+            self.queue_of_creatures.pop(0)
+            if int(len(
+                    self.queue_of_creatures) * 10 / creature.base.initiative) == 0:
+                self.queue_of_creatures.insert(
+                    1,
+                    creature.base.position_on_battle_ground
+                )
+            else:
+                self.queue_of_creatures.insert(int(len(
+                    self.queue_of_creatures) * 10 / creature.base.initiative),
+                                               creature.base.position_on_battle_ground)
+            for key in creature.base.improvement_duration.keys():
+                if creature.base.improvement_duration[key] > 0:
+                    creature.base.improvement_duration[key] -= 1
+                    if creature.base.improvement_duration[key] == 0:
+                        creature.base.__setattr__(
+                            creature.base.improvement_characteristics[key][0],
+                            creature.base.__getattribute__(
+                                creature.base.improvement_characteristics[key][
+                                    0]
+                            ) - creature.base.improvement_characteristics[key][
+                                1]
+                        )
+
 
     def battle(self):
         self.preparing()
@@ -438,6 +447,7 @@ class Battle:
                     creature.base.shots is not None:
                 print("\trange_attack attacked_creature_coordinate_x y")
             print(creature.base.position_on_battle_ground)
+            creature.conter_attack = 0
             map_draw(self.window, self.map, self.fullscreen, self.message_)
             for i in range(len(self.map)):
                 for j in range(len(self.map[i])):
