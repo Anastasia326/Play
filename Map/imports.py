@@ -87,27 +87,6 @@ def find_class(hero_name):
             return class_
 
 
-building_in_city_types = [
-    "First Creature",
-    "Second Creature",
-    "Third Creature",
-    "Fourth Creature",
-    "Fifth Creature",
-    "Sixth Creature",
-    "Seventh Creature"
-]
-
-produce_count = [22, 16, 12, 8, 6, 4, 2]
-
-building_in_city_cost = [
-    [1000, 2, 2, 0, 0, 0],
-    [2000, 4, 4, 2, 0, 0],
-    [2500, 3, 2, 0, 2, 0],
-    [1000, 2, 5, 2, 0, 2],
-    [4000, 1, 1, 1, 1, 1],
-    [5000, 2, 2, 2, 2, 2]
-]
-
 hero_characteristics = [
     "morale",
     "luck",

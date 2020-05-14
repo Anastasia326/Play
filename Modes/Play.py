@@ -8,11 +8,10 @@ from Battle.Battle_ import Battle
 from Battle.army import Army
 from Map.Medium import MediumMap
 from Map.Quick import QuickMap
-from Map.Work_with_resources.City import City
 from Map.Work_with_resources.Hero_resouces import Resources
 from Map.Work_with_resources.Miner import Miner
 from Map.imports import ways, resources, building_array, improving_skills_list, \
-    miner_array, building_in_city_types, building_in_city_cost
+    miner_array
 from Working_with_textures.drow_map import drow_map
 from Working_with_textures.wait_klick import wait_klick
 
@@ -26,8 +25,6 @@ class Play:
         self.first_army = first
         self.first_resources = Resources(first.hero.name)
         self.second_resources = Resources(second.hero.name)
-        self.first_city = City(first.hero.name, self.first_resources)
-        self.second_city = City(second.hero.name, self.second_resources)
         self.second_army = second
         if Mode == "Quick":
             M = QuickMap(self.first_army, self.second_army)
@@ -43,7 +40,7 @@ class Play:
         for i in range(len(self.Map)):
             for j in range(len(self.Map[0])):
                 if self.Map[i][j] in miner_array:
-                    miner = Miner(self.Map[i][j], [i, j])
+                    miner = Miner(self.Map[i][j].split("_")[0], [i, j])
                     miner.add_hero_resources(self.first_resources)
                     miner.add_hero_resources(self.second_resources)
                     self.miners += [miner]
@@ -86,6 +83,10 @@ class Play:
                             print(self.Map[i][j].center(15), end=" ")
                         print()
                     print("___________________")
+                    for items in self.first_resources.reserve.items():
+                        print(items[0], items[1])
+                    for items in self.first_resources.increasing.items():
+                        print(items[0], items[1])
                     for i in range(len(self.Map)):
                         for j in range(len(self.Map[0])):
                             if self.first_player_turn:
@@ -125,8 +126,6 @@ class Play:
             self.first_player_turn = True
             if self.day == 7:
                 self.day = 0
-                self.first_city.next_week()
-                self.second_city.next_week()
         self.playing()
 
     def move(self, path, hero_name):
@@ -139,7 +138,7 @@ class Play:
                     path[1]:
                 self.walked_points += 1
                 cur_pos = path[- self.walked_points + already_moved]
-                if self.walked_points != 1:
+                if self.walked_points - already_moved != 1:
                     self.Map[path[
                         -self.walked_points + 1 + already_moved
                     ][0]][path[-self.walked_points + 1 + already_moved][
@@ -150,14 +149,18 @@ class Play:
             if self.walked_points < self.first_army.hero.movement:
                 self.walked_points += 1
                 if self.Map[path[0][0]][path[0][1]] == "Road":
+                    print("Road_")
                     self.Map[path[1][0]][path[1][1]] = "Road"
                     self.Map[path[0][0]][path[0][1]] = hero_name
-                elif self.Map[path[0][0]][path[0][1]] in resources:
+                elif self.Map[path[0][0]][path[0][1]].split("Count")[0] in \
+                        resources:
+                    print("res")
                     string = self.Map[path[0][0]][path[0][1]].split("Count")
                     if self.first_player_turn:
                         self.first_resources.add_resource(string[0], string[1])
                     else:
                         self.second_resources.add_resource(string[0], string[1])
+                    self.Map[path[0][0]][path[0][1]] = "Road"
                 elif self.Map[path[0][0]][path[0][1]] in building_array:
                     print("in buildings")
                     if self.first_player_turn:
@@ -178,6 +181,7 @@ class Play:
                         ))
                     self.Map[path[0][0]][path[0][1]] = "Road"
                 elif self.Map[path[0][0]][path[0][1]] in miner_array:
+                    print("miner")
                     for miner in self.miners:
                         if miner.position_on_map == [path[0][0], path[0][1]]:
                             if self.first_player_turn:
@@ -185,24 +189,11 @@ class Play:
                             else:
                                 miner.get_under_control(self.second_army.hero.name)
                             break
-                elif "City" in self.Map[path[0][0]][path[0][1]]:
-                    if self.first_player_turn:
-                        if "Second" in self.Map[path[0][0]][path[0][1]]:
-                            self.Map[path[0][0]][path[0][1]] = "Road"
-                            self.first_resources.add_resource("Gold", 10000)
-                        else:
-                            self.enter_city(self.first_city, self.first_army)
-                    else:
-                        if "First" in self.Map[path[0][0]][path[0][1]]:
-                            self.Map[path[0][0]][path[0][1]] = "Road"
-                            self.first_resources.add_resource("Gold", 10000)
-                        else:
-                            self.enter_city(self.first_city, self.second_army)
-                elif self.Map[path[0][0]][path[0][1]] == self.second_army.hero.name \
-                        and self.first_player_turn or \
+                elif self.Map[path[0][0]][path[0][1]] == \
+                        self.second_army.hero.name or \
                         self.Map[path[0][0]][
-                            path[0][1]] == self.second_army.hero.name \
-                        and not self.first_player_turn:
+                            path[0][1]] == self.second_army.hero.name:
+                    print("hero_fight")
                     battle = Battle(self.first_army, self.second_army, self.window,
                                     self.fullscreen)
                     if battle.battle():
@@ -244,39 +235,15 @@ class Play:
                                 print("Loose")
                                 self.end()
 
-    def enter_city(self, city: City, army: Army):
-        '''
-        show_city_menu() - nado меню города(в самом простом варианте - меню
-        есть возможность улучшить здание или нанять солдат,
-        предлагаю слева 7 вариантов построек. Справа перечислины бойцы и число
-        сколько можно нанять, при этом можно располагать бойцов напротив
-        соответствующих зданий. Если уровень строения 0 - бойцов нельзя нанять
-        если 1 - только не улучшенных, если 2 - можно и улучшенных
-        есть еще возможность улучшать существо, если хватает денег и есть
-        здание 2 уровня соответствующие)
-        '''
-        while True:
-            command = input()  # here must be click
-            command = command.split()
-            if command[0] == "exit":
-                return
-            elif command[0] == "upgrade":
-                if command[1] in building_in_city_types:
-                    city.able_resources.can_do(
-                        building_in_city_cost[
-                            building_in_city_types.index(command[1])
-                        ]
-                    )
-            else:
-                print("Wrong command")
-
     def make_path(self, coordinates_from, coordinates_to):
         print("make path")
         print(coordinates_to)
-        if 10 <= coordinates_from[0] <= len(self.Map) - 22:
+        if 10 <= coordinates_from[0] < len(self.Map) - 12:
             coordinates_to[0] += coordinates_from[0] - 10
         elif coordinates_from[0] > len(self.Map) - 22:
-            coordinates_to[0] += len(self.Map) - 22
+            coordinates_to[0] += len(self.Map) - 21
+        if coordinates_from[1] >= 10:
+            coordinates_to[1] += len(self.Map[0]) - 11
         print(coordinates_from)
         print(coordinates_to)
         curr_coord = coordinates_from
@@ -335,4 +302,4 @@ first_army = Swerchok_army
 second_army = Zexir_army
 pygame.init()
 window = pygame.display.set_mode((800, 600))
-Play(first_army, second_army, "Quick", window, False)
+Play(first_army, second_army, "Medium", window, False)

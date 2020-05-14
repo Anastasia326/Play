@@ -10,10 +10,6 @@ class MediumMap(MapBuilder):
         self.neutral_first = Buildings_for_class(find_class(class_first.hero.name))
         super().__init__(100, 20, class_first, class_second)
 
-    def add_cities(self, class_first, class_second):
-        self.Map[1][1] = "CityFirst"
-        self.Map[98][18] = "CitySecond"
-
     def add_miners(self):
         for i in range(len(miner_array)):
             self.Map[20 - ways[i][0] * 4][10 - ways[i][1] * 4] = \

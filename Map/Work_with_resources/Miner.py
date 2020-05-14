@@ -15,11 +15,11 @@ class Miner:
         if hero_name != self.belongs_to:
             for i in self.receiver:
                 if self.belongs_to is None:
-                    if i.belong_to == hero_name:
-                        i.update(self.increase[0] + hero_name + str(
-                            self.increase[1]))
+                    if i.belongs_to == hero_name:
+                        i.update(self.increase[0] + " " + hero_name + " " +
+                                 str(self.increase[1]))
                 else:
-                    i.update(self.increase[0] + hero_name + str(
+                    i.update(self.increase[0] + " " + hero_name + " " + str(
                         self.increase[1]))
             self.belongs_to = hero_name
 

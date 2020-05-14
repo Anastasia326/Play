@@ -8,7 +8,24 @@ from screeninfo import get_monitors
 from Working_with_textures.draw_some_buttons import draw_some_buttons
 
 
-def drow_map(window, fullscreen, Name, Name_of_map, x, y, map,
+def cycle(x, y, length, width, window, size_of_cell, map_,
+          number1=10, number_2=10, number_3=5, number_4=5, ):
+    for i in range(x - number1, x + number_2 + 1):
+        for j in range(y - number_3, y + number_4 + 1):
+            try:
+                background_image = pygame.image.load(
+                    str(os.path.abspath(__file__)).split(
+                        "Working_with_textures")[0] + "Modes/Textures/" +
+                    map_[i][j].split("Count")[0] + str(length) + "x" + str(
+                        width) + ".png")
+                window.blit(background_image,
+                            [(i - x + number1) * size_of_cell,
+                             (j - y + number_3) * size_of_cell])
+            except:
+                pass
+
+
+def drow_map(window, fullscreen, Name, Name_of_map, x, y, map_,
              length: int = 800,
              width: int = 600,
              update=True):
@@ -48,54 +65,17 @@ def drow_map(window, fullscreen, Name, Name_of_map, x, y, map,
         window = pygame.display.set_mode((length, width))
     window.blit(background_image, [0, 0])
     size_of_cell = length // 21
-    if Name_of_map == "Quick":
-        size_down = 11
+    if x < 10:
+        first_coord = 10
+    elif len(map_) - 12 > x >= 10:
+        first_coord = x
     else:
-        size_down = 20
-    if len(map)-22 >= x >= 10:
-        for i in range(x - 10, x + 11):
-            for j in range(size_down):
-                try:
-                    background_image = pygame.image.load(
-                        str(os.path.abspath(__file__)).split(
-                            "Working_with_textures")[0] + "Modes/Textures/" +
-                        map[i][j].split("Count")[0] + str(length) + "x" + str(
-                            width) + ".png")
-                    window.blit(background_image, [(i - x + 10) * size_of_cell,
-                                                   j * size_of_cell])
-                except:
-                    pass
-    elif x < 10:
-        for i in range(0, 21):
-            for j in range(size_down):
-                try:
-                    background_image = pygame.image.load(
-                        str(os.path.abspath(__file__)).split(
-                            "Working_with_textures")[0] + "Modes/Textures/" +
-                                                         map[i][j].split(
-                                                             "Count")[0] + str(
-                        length) + "x" + str(
-                        width) + ".png")
-                    window.blit(background_image,
-                                [i * size_of_cell, j * size_of_cell])
-                except:
-                    pass
+        first_coord = len(map_) - 11
+    if y < 10:
+        second_coord = 5
     else:
-        for i in range(len(map)-22, len(map)-1):
-            for j in range(size_down):
-                try:
-                    background_image = pygame.image.load(
-                        str(os.path.abspath(__file__)).split(
-                            "Working_with_textures")[0] + "Modes/Textures/" +
-                                                         map[i][j].split(
-                                                             "Count")[0] + str(
-                        length) + "x" + str(
-                        width) + ".png")
-                    window.blit(background_image,
-                                [(i - 28) * size_of_cell, j * size_of_cell])
-                except:
-                    pass
-
+        second_coord = len(map_[0]) - 6
+    cycle(first_coord, second_coord, length, width, window, size_of_cell, map_)
     pygame.display.set_caption("Герои меча и магии(Arthur's and Anastasia's "
                                "remake)")
     buttons = draw_some_buttons(window, 2, ["Exit from the game",

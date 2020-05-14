@@ -11,8 +11,6 @@ class QuickMap(MapBuilder):
             class_second.hero.name))
         super().__init__(50, 11, class_first, class_second)
 
-    def add_cities(self, class_first, class_second):
-        return None
 
     def add_miners(self):
         return None

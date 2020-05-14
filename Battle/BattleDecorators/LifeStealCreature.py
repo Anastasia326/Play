@@ -17,9 +17,9 @@ class LifeStealCreature(BattleUnit):
                             self.base.health_points)
         self.base.last_creature_hp %= self.base.health_points
         message_to_return = [other_creature.get_damage(deeling_damage)]
-        message_to_return += ["Restoring " + str(int(deeling_damage / 2)) +
+        message_to_return[0] += "Restoring " + str(int(deeling_damage / 2)) + \
                               " health points. Adding " + str(
-            self.base.last_creature_hp // self.base.health_points) + " creatures"]
+            self.base.last_creature_hp // self.base.health_points) + " creatures"
         if other_creature.conter_attack != other_creature.can_conter_attack \
                 and "is dead" not in message_to_return[0] and first_attack:
             other_creature.conter_attack += 1

@@ -23,10 +23,11 @@ class Resources:
 
     def update(self, message: str):
         information = message.split()
+        print(information)
         if information[1] == self.belongs_to:
-            self.increasing[information[0]] += int(message[2])
+            self.increasing[information[0]] += int(information[2])
         else:
-            self.increasing[information[0]] -= int(message[2])
+            self.increasing[information[0]] -= int(information[2])
 
     def next_turn(self):
         for item in self.increasing.items():
@@ -40,8 +41,9 @@ class Resources:
         for i in range(len(count)):
             self.reserve[resources[i]] += count[i]
 
-    def add_resource(self, resource_name: str, resource_count: int):
-        self.reserve[resources.index(resource_name)] += resource_count
+    def add_resource(self, resource_name: str, resource_count: str):
+        print(resource_name)
+        self.reserve[resource_name] += int(resource_count)
 
     def can_do(self, required_resources: list):
         for i in range(len(required_resources)):

@@ -411,7 +411,6 @@ class Battle:
                                 1]
                         )
 
-
     def battle(self):
         self.preparing()
         first_win = True
@@ -496,14 +495,10 @@ class Battle:
                         self.message_ = "Can't move so far"
                         continue
                 else:
-                    if not (abs(int(com[3]) - int(com[1])) <= 1 and
-                            abs(int(com[4]) - int(com[2])) <= 1 or
-                            abs(int(com[3]) - int(com[1]) - 1) <= 1 and
-                            abs(int(com[4]) - int(com[2])) <= 1 or
-                            abs(int(com[3]) - int(com[1]) - 1) <= 1 and
-                            abs(int(com[4]) - int(com[2]) + 1) <= 1 or
-                            abs(int(com[3]) - int(com[1])) <= 1 and
-                            abs(int(com[4]) - int(com[2]) + 1) <= 1):
+                    print(com)
+                    if not (int(com[1]) - 2 <= int(com[3]) <= int(com[1]) +
+                            1 and
+                            int(com[2]) - 1 <= int(com[4]) <= int(com[2]) + 2):
                         print("Can't attack so far", creature.base.length)
                         self.message_ = "Can't move so far"
                         continue
@@ -583,14 +578,8 @@ class Battle:
                         self.message_ = "Can't attack so far"
                         continue
                 else:
-                    if not (abs(int(com[1]) - tmp[0]) <= 1 and
-                            abs(int(com[2]) - tmp[1]) <= 1 or
-                            abs(int(com[1]) - tmp[0] - 1) <= 1 and
-                            abs(int(com[2]) - tmp[1]) <= 1 or
-                            abs(int(com[1]) - tmp[0] - 1) <= 1 and
-                            abs(int(com[2]) - tmp[1] + 1) <= 1 or
-                            abs(int(com[1]) - tmp[0]) <= 1 and
-                            abs(int(com[2]) - tmp[1] + 1) <= 1):
+                    if not (tmp[0] - 2 <= int(com[1]) <= tmp[0] + 1 and
+                            tmp[1] - 1 <= int(com[2]) <= tmp[1] + 2):
                         print("Can't attack so far")
                         self.message_ = "Can't attack so far"
                         continue
