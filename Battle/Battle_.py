@@ -116,6 +116,7 @@ class Battle:
                             = None
 
     def work_with_command(self, army, command, first_army_turn=True):
+
         next_player = False
         if command[0] == "stash":
             if int(command[1]) >= len(army.stash):
