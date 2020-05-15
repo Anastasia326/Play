@@ -516,7 +516,7 @@ class Battle:
                     if abs(int(com[3]) - int(com[1])) > 1 or \
                             abs(int(com[4]) - int(com[2])) > 1:
                         print("Can't attack so far", creature.base.length)
-                        self.message_ += "Can't move so far"
+                        self.message_ += "Can't move so far" + "/"
                         continue
                 if creature.base.length == 2 and (self.map[int(com[1]) - 1][int(com[2])] is not None or
                         self.map[int(com[1])][int(com[2]) + 1] is not None or self.map[int(com[1]) - 1][
