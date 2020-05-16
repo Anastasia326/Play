@@ -42,18 +42,18 @@ class TripleAttackCreature(BattleUnit):
                                      1]]
 
         else:
-            list_of_around_creatures = [[2, 2],
-                                        [2, 1],
-                                        [2, 0],
-                                        [2, -1],
-                                        [1, -1],
-                                        [0, -1],
-                                        [-1, -1],
-                                        [-1, 0],
-                                        [-1, 1],
+            list_of_around_creatures = [[-2, 2],
                                         [-1, 2],
                                         [0, 2],
                                         [1, 2],
+                                        [1, 1],
+                                        [1, 0],
+                                        [1, -1],
+                                        [0, -1],
+                                        [-1, -1],
+                                        [-2, -1],
+                                        [-2, 0],
+                                        [-2, 1],
                                         ]
             attack_coordinates = [
                 other_creature.base.position_on_battle_ground[0] -

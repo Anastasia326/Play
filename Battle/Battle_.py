@@ -312,7 +312,7 @@ class Battle:
                               str(creature))
                 map_draw(self.window, self.map, self.width,
                          self.height, self.k, self.message_)
-                self.message_=""
+                self.message_ = ""
                 wait_, click1, click2, mouse_x1, mouse_y1, mouse_x2, mouse_y2 = \
                     wait(buttons_list, self.width, self.height, self.k)
                 command, self.message_ = worker_after_wait_for_preparing(
@@ -464,7 +464,7 @@ class Battle:
             creature.conter_attack = 0
             map_draw(self.window, self.map, self.width,
                      self.height, self.k, self.message_)
-            self.message_=""
+            self.message_ = ""
             for i in range(len(self.map)):
                 for j in range(len(self.map[i])):
                     if self.map[i][j] is None:
@@ -496,9 +496,17 @@ class Battle:
                     print("Can't move so far")
                     self.message_ += "Can't move so far" + "/"
                     continue
-                if creature.base.length == 2 and (self.map[int(com[1]) - 1][int(com[2])] is not None or
-                        self.map[int(com[1])][int(com[2]) + 1] is not None or self.map[int(com[1]) - 1][
-                    int(com[2]) + 1] is not None):
+                if creature.base.length == 2 and (
+                        self.map[int(com[1]) - 1][int(com[2])] is not
+                        None and self.map[int(com[1]) - 1][
+                            int(com[2])] !=
+                        creature.base.name or
+                        self.map[int(com[1])][int(com[2]) + 1] is not None
+                        and self.map[int(com[1])][int(com[2]) + 1] !=
+                        creature.base.name
+                        or self.map[int(com[1]) - 1][
+                            int(com[2]) + 1] is not None and self.map[int(com[1]) - 1][
+                            int(com[2]) + 1] != creature.base.name):
                     print("Can't move on another unit")
                     self.message_ += "Can't move on another unit" + "/"
                     continue
@@ -518,9 +526,17 @@ class Battle:
                         print("Can't attack so far", creature.base.length)
                         self.message_ += "Can't move so far" + "/"
                         continue
-                if creature.base.length == 2 and (self.map[int(com[1]) - 1][int(com[2])] is not None or
-                        self.map[int(com[1])][int(com[2]) + 1] is not None or self.map[int(com[1]) - 1][
-                    int(com[2]) + 1] is not None):
+                if creature.base.length == 2 and (
+                        self.map[int(com[1]) - 1][int(com[2])] is not
+                        None and self.map[int(com[1]) - 1][
+                            int(com[2])] !=
+                        creature.base.name or
+                        self.map[int(com[1])][int(com[2]) + 1] is not None
+                        and self.map[int(com[1])][int(com[2]) + 1] !=
+                        creature.base.name
+                        or self.map[int(com[1]) - 1][
+                            int(com[2]) + 1] is not None and self.map[int(com[1]) - 1][
+                            int(com[2]) + 1] != creature.base.name):
                     print("Can't move on another unit")
                     self.message_ += "Can't move on another unit" + "/"
                     continue
