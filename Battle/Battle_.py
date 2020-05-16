@@ -39,7 +39,9 @@ class Battle:
 
     def use_info_from_message(self, message, army, attacked_army):
         for lines in message:
-            print(lines, message.index(lines))
+            print(lines)
+            if "is dead" in lines or "died" in lines:
+                self.message_ += lines + "/"
             if "is dead" in lines:
                 creatures = None
                 if message.index(lines) % 2 == 0:
@@ -121,7 +123,7 @@ class Battle:
         if command[0] == "stash":
             if int(command[1]) >= len(army.stash):
                 print("Wrong stash number")
-                self.message_ = "Wrong stash number"
+                self.message_ += "Wrong stash number" + "/"
             else:
                 creature = army.stash[int(command[1])]
                 if creature.base.length == 2:
@@ -129,7 +131,7 @@ class Battle:
                             borders[0 if first_army_turn else 1][1][0] or \
                             int(command[2]) < 1 or int(command[2]) > 9:
                         print("Wrong place")
-                        self.message_ = "Wrong place"
+                        self.message_ += "Wrong place" + "/"
                     elif self.map[int(command[2])][int(command[3])] is not \
                             None or \
                             self.map[int(command[2]) - 1][int(command[3])] is \
@@ -139,7 +141,7 @@ class Battle:
                             self.map[int(command[2]) - 1][int(command[3]) + 1] \
                             is not None:
                         print("Wrong place to put")
-                        self.message_ = "Wrong place to put"
+                        self.message_ += "Wrong place to put" + "/"
                         return next_player
                     else:
                         army.stash.pop(int(command[1]))
@@ -167,11 +169,11 @@ class Battle:
                     else 1][1][0] or \
                             int(command[2]) < 0 or int(command[2]) > 9:
                         print("Wrong place")
-                        self.message_ = "Wrong place"
+                        self.message_ += "Wrong place" + "/"
                     elif self.map[int(command[2])][int(command[3])] is not \
                             None:
                         print("Wrong place to put")
-                        self.message_ = "Wrong place to put"
+                        self.message_ = "Wrong place to put" + "/"
                         return next_player
                     else:
                         army.stash.pop(int(command[1]))
@@ -186,7 +188,7 @@ class Battle:
         elif command[0] == "move":
             if self.map[int(command[1])][int(command[2])] is None:
                 print("Wrong from coordinates")
-                self.message_ = "Wrong from coordinates"
+                self.message_ += "Wrong from coordinates" + "/"
             else:
                 if [int(command[1]), int(command[2])] in army.army_on_field:
                     if command[3] == "stash":
@@ -211,7 +213,7 @@ class Battle:
                                 )
                                 return next_player
                         print("Wrong creature")
-                        self.message_ = "Wrong creature"
+                        self.message_ += "Wrong creature" + "/"
                     elif command[3] == "to":
                         if self.map[int(command[4])][int(command[5])] is not \
                                 None or \
@@ -224,7 +226,7 @@ class Battle:
                                 int(command[5]) < borders[0 if first_army_turn
                         else 1][1][0]:
                             print("Wrong place to put")
-                            self.message_ = "Wrong place to put"
+                            self.message_ += "Wrong place to put" + "/"
                             return next_player
                         for creature in army.current_army:
                             if creature.base.name == \
@@ -236,18 +238,18 @@ class Battle:
                                                    int(command[5]))
                                 return next_player
                         print("Wrong creature")
-                        self.message_ = "Wrong creature"
+                        self.message_ += "Wrong creature" + "/"
                     else:
                         print("Wrong command")
-                        self.message_ = "Wrong command"
+                        self.message_ += "Wrong command" + "/"
                 else:
                     print("Wrong creature")
-                    self.message_ = "Wrong creature"
+                    self.message_ += "Wrong creature" + "/"
         elif command[0] == "end":
             next_player = True
         else:
             print("Wrong command")
-            self.message_ = "Wrong command"
+            self.message_ += "Wrong command" + "/"
         return next_player
 
     def preparing(self):
@@ -259,6 +261,7 @@ class Battle:
          move x_from y_from stash
          end
          ''')
+        exit = True
         for creature in self.first_army_status.current_army:
             self.first_army_status.stash += [creature]
         for creature in self.second_army_status.current_army:
@@ -309,6 +312,7 @@ class Battle:
                               str(creature))
                 map_draw(self.window, self.map, self.width,
                          self.height, self.k, self.message_)
+                self.message_=""
                 wait_, click1, click2, mouse_x1, mouse_y1, mouse_x2, mouse_y2 = \
                     wait(buttons_list, self.width, self.height, self.k)
                 command, self.message_ = worker_after_wait_for_preparing(
@@ -320,7 +324,7 @@ class Battle:
                     mouse_y2,
                     self.width, self.height)
                 if command == "EXIT":
-                    return 0
+                    return True
                 while command == "Nothing happened":
                     wait_, click1, click2, mouse_x1, mouse_y1, mouse_x2, mouse_y2 = wait(
                         buttons_list, self.width, self.height, self.k)
@@ -346,7 +350,7 @@ class Battle:
                         return
             except Exception:
                 print("wrong command")
-                self.message_ = "   Wrong command"
+                self.message_ += "Wrong command" + "/"
 
     def make_queue(self):
         all_army = self.first_army_status.army_on_field + \
@@ -361,13 +365,13 @@ class Battle:
         if not in_borders([coordinate_x, coordinate_y]) or \
                 not in_borders([coordinate_x_to, coordinate_y_to]):
             print("Wrong to coordinates")
-            self.message_ = "Wrong to coordinates"
+            self.message_ += "Wrong to coordinates" + "/"
             return
         if creature.base.length == 2:
             if coordinate_y_to >= 11 or coordinate_y_to < 0 or \
                     coordinate_x_to < 1 or coordinate_x_to > 9:
                 print("Wrong to coordinates")
-                self.message_ = "Wrong to coordinates"
+                self.message_ += "Wrong to coordinates" + "/"
                 return
         self.map[coordinate_x][coordinate_y] = None
         self.map[coordinate_x_to][coordinate_y_to] = creature.base.name
@@ -420,17 +424,19 @@ class Battle:
                         )
 
     def battle(self):
-        self.preparing()
+        exit_ = self.preparing()
+        if exit_:
+            return 0
         first_win = True
         print("Battle was begun")
-        self.message_ = "Battle was begun"
+        self.message_ += "Battle was begun" + "/"
         while len(self.first_army_status.army_on_field) != 0 and len(
                 self.second_army_status.army_on_field) != 0:
             '''try:'''
             tmp = self.queue_of_creatures[0]
             print(tmp)
             print(self.map[tmp[0]][tmp[1]] + " turn")
-            self.message_ = self.map[tmp[0]][tmp[1]] + " turn"
+            self.message_ += self.map[tmp[0]][tmp[1]] + " turn" + "/"
             print('''Use commands:
             move x_to y_to
             attack x_attacked y_attacked
@@ -458,6 +464,7 @@ class Battle:
             creature.conter_attack = 0
             map_draw(self.window, self.map, self.width,
                      self.height, self.k, self.message_)
+            self.message_=""
             for i in range(len(self.map)):
                 for j in range(len(self.map[i])):
                     if self.map[i][j] is None:
@@ -487,7 +494,13 @@ class Battle:
                 if (abs(int(com[1]) - int(tmp[0])) +
                     abs(int(com[2]) - int(tmp[1]))) > creature.base.speed:
                     print("Can't move so far")
-                    self.message_ = "Can't move so far"
+                    self.message_ += "Can't move so far" + "/"
+                    continue
+                if creature.base.length == 2 and (self.map[int(com[1]) - 1][int(com[2])] is not None or
+                        self.map[int(com[1])][int(com[2]) + 1] is not None or self.map[int(com[1]) - 1][
+                    int(com[2]) + 1] is not None):
+                    print("Can't move on another unit")
+                    self.message_ += "Can't move on another unit" + "/"
                     continue
                 print(
                     self.move_creature(creature, int(tmp[0]), int(tmp[1]),
@@ -497,21 +510,27 @@ class Battle:
                 if (abs(int(com[1]) - int(tmp[0])) +
                     abs(int(com[2]) - int(tmp[1]))) > creature.base.speed:
                     print("Can't move so far")
-                    self.message_ = "Can't move so far"
+                    self.message_ += "Can't move so far" + "/"
                     continue
                 if creature.base.length == 1:
                     if abs(int(com[3]) - int(com[1])) > 1 or \
                             abs(int(com[4]) - int(com[2])) > 1:
                         print("Can't attack so far", creature.base.length)
-                        self.message_ = "Can't move so far"
+                        self.message_ += "Can't move so far" + "/"
                         continue
+                if creature.base.length == 2 and (self.map[int(com[1]) - 1][int(com[2])] is not None or
+                        self.map[int(com[1])][int(com[2]) + 1] is not None or self.map[int(com[1]) - 1][
+                    int(com[2]) + 1] is not None):
+                    print("Can't move on another unit")
+                    self.message_ += "Can't move on another unit" + "/"
+                    continue
                 else:
                     print(com)
                     if not (int(com[1]) - 2 <= int(com[3]) <= int(com[1]) +
                             1 and
                             int(com[2]) - 1 <= int(com[4]) <= int(com[2]) + 2):
                         print("Can't attack so far", creature.base.length)
-                        self.message_ = "Can't move so far"
+                        self.message_ += "Can't move so far" + "/"
                         continue
                 attacked_creature = None
                 for soldier in attacked_army.current_army:
@@ -520,7 +539,7 @@ class Battle:
                         attacked_creature = soldier
                 if attacked_creature is None:
                     print("Wrong target.")
-                    self.message_ = "Wrong target"
+                    self.message_ += "Wrong target" + "/"
                     continue
                 else:
                     self.map[tmp[0]][tmp[1]] = None
@@ -551,7 +570,6 @@ class Battle:
                     )
                     attacked_creature.base.position_on_battle_ground = tmp2
                     print(message[0])
-                    self.message_ = message[0]
                     self.use_info_from_message(message[1::], army,
                                                attacked_army)
                     self.next_turn(creature)
@@ -564,7 +582,7 @@ class Battle:
             elif com[0] == "range_attack":
                 if creature.base.shots == 0 or creature.base.shots is None:
                     print("could't attack on distance")
-                    self.message_ = "Could't attack on distance"
+                    self.message_ += "Could't attack on distance" + "/"
                     continue
                 attacked_creature = None
                 for soldier in attacked_army.current_army:
@@ -573,7 +591,7 @@ class Battle:
                         attacked_creature = soldier
                 if attacked_creature is None:
                     print("Wrong target.")
-                    self.message_ = "Wrong target"
+                    self.message_ += "Wrong target" + "/"
                     continue
                 else:
                     message = creature.range_attack(attacked_creature,
@@ -586,13 +604,13 @@ class Battle:
                     if abs(int(com[1]) - tmp[0]) > 1 or \
                             abs(int(com[2]) - tmp[1]) > 1:
                         print("Can't attack so far")
-                        self.message_ = "Can't attack so far"
+                        self.message_ += "Can't attack so far" + "/"
                         continue
                 else:
                     if not (tmp[0] - 2 <= int(com[1]) <= tmp[0] + 1 and
                             tmp[1] - 1 <= int(com[2]) <= tmp[1] + 2):
                         print("Can't attack so far")
-                        self.message_ = "Can't attack so far"
+                        self.message_ += "Can't attack so far" + "/"
                         continue
                 attacked_creature = None
                 for soldier in attacked_army.current_army:
@@ -601,7 +619,7 @@ class Battle:
                         attacked_creature = soldier
                 if attacked_creature is None:
                     print("Wrong target.")
-                    self.message_ = "Wrong target"
+                    self.message_ += "Wrong target" + "/"
                     continue
                 else:
                     message = creature.melee_attack(attacked_creature,
@@ -618,7 +636,7 @@ class Battle:
                 self.next_turn(creature)
             else:
                 print("wrong command")
-                self.message_ = "Wrong command"
+                self.message_ += "Wrong command" + "/"
         if len(self.first_army_status.army_on_field) == 0:
             first_win = False
         if len(self.second_army_status.army_on_field) == 0:

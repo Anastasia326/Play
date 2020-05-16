@@ -46,7 +46,7 @@ def show_unit(window, fullscreen, opened_catalog, catalogs,
         background_image_of_unit_face = pygame.image.load("textures/" +
                                                           unit_name + ".png")
     window.blit(background_image_of_unit_face, [40, 60])
-    font = pygame.font.Font(None, 20)
+    font = pygame.font.SysFont('dejavuserif', 10)
     text_to_print = (str(creature.__doc__).split("\n"))
     for number in range(len(text_to_print)):
         text = font.render(text_to_print[number], True,
