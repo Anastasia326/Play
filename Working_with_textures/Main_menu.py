@@ -5,6 +5,7 @@ import os
 
 from screeninfo import get_monitors
 
+from Battle.arrays import k_, size_
 from Working_with_textures.draw_some_buttons import draw_some_buttons
 
 
@@ -20,17 +21,7 @@ def create_window(window, fullscreen, length: int = 800, width: int = 600,
     Creating window of game(depends on format)
     Make main buttons
     """
-    k = 1
-    if length == 800:
-        k = 1
-    elif length == 1178:
-        k = 1.25
-    elif length == 1280:
-        k = 1.45
-    elif length == 1920:
-        k = 2
-    elif length == 1600:
-        k = 1.5
+    k = k_[size_.index(length)]
     if os.name == "nt":
         user32 = ctypes.windll.user32
         current_w = user32.GetSystemMetrics(0)

@@ -60,7 +60,7 @@ def option_menu(window, fullscreen):
                                  length // 3,
                                  2 * width // 5 + (
                                          2 * width // 5 - 90) // 6 + 20))
-    fond = pygame.font.Font(None, 40)
+    fond = pygame.font.SysFont('dejavuserif', 40)
     text = fond.render("* means you can't choose this parametr", True,
                        [255, 255, 255])
     window.blit(text, [length // 4, width - 40])
